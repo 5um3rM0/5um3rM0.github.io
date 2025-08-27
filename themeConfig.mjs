@@ -3,27 +3,27 @@ export const themeConfig = {
   // 站点信息
   siteMeta: {
     // 站点标题
-    title: "九天之上",
+    title: "5M茶馆",
     // 站点描述
-    description: "基于 vitepress-theme-curve 搭建的 github pages 站点",
+    description: "呃 是什么呢 大概是写点随笔的地方？",
     // 站点logo
     logo: "/images/logo/logo.webp",
     // 站点地址
-    site: "https://blog2.811520.xyz",
+    site: "https://5um3rM0.github.io",
     // 语言
     lang: "zh-CN",
     // 作者
     author: {
-      name: "雨天狂奔",
+      name: "5um3rM0",
       cover: "/images/logo/logo.webp",
-      email: "admin@24811213.xyz",
-      link: "https://daoyi.hidns.vip/#/",
+      email: "n.reed2000@outlook.com",
+      link: "https://5um3rM0.github.io",
     },
   },
   // 备案信息
-  icp: "鄂ICP备202411-001号",
+  icp: "萌ICP备114514号",
   // 建站日期
-  since: "2024-11-1",
+  since: "2025-08-27",
   // 每页文章数据
   postSize: 8,
   // inject
@@ -33,16 +33,6 @@ export const themeConfig = {
     header: [
       // favicon
       ["link", { rel: "icon", href: "/favicon.ico" }],
-      // RSS
-      [
-        "link",
-        {
-          rel: "alternate",
-          type: "application/rss+xml",
-          title: "RSS",
-          href: "https://blog2.811520.xyz/rss.xml",
-        },
-      ],
       // 预载 CDN
       [
         "link",
@@ -119,73 +109,17 @@ export const themeConfig = {
       ],
     },
     {
-      text: "专栏",
-      items: [
-        { text: "技术分享", link: "/pages/categories/技术分享", icon: "technical" },
-        { text: "我的项目", link: "/pages/project", icon: "code" },
-        { text: "收藏大全", link: "https://daoyi.hidns.vip/#/", icon: "tools" },
-        { text: "工作备忘", link: "/pages/categories/工作备忘", icon: "people" },
-        //{ text: "效率工具", link: "/pages/tools", icon: "tools" },
-      ],
-    },
-    {
-      text: "友圈",
-      items: [
-        { text: "友圈鱼塘", link: "/pages/friends", icon: "fish" },
-        { text: "友情链接", link: "/pages/link", icon: "people" },
-        { text: "畅所欲言", link: "/pages/message", icon: "chat" },
-      ],
-    },
-    {
-      text: "关于",
+      text: "我的",
       items: [
         { text: "关于本站", link: "/pages/about", icon: "contacts" },
-        { text: "隐私政策", link: "/pages/privacy", icon: "chat" },
-        { text: "版权协议", link: "/pages/cc", icon: "people" },
-        { text: "致谢名单", link: "/pages/thanks", icon: "reward" },
       ],
     },
   ],
   // 导航栏菜单 - 左侧
   navMore: [
     {
-      name: "博客",
+      name: "小工具",
       list: [
-        {
-          icon: "/images/logo/logo.webp",
-          name: "博客主站",
-          url: "https://blog.811520.xyz/",
-        },
-        {
-          icon: "/images/logo/logo.webp",
-          name: "博客演示站",
-          url: "/",
-        },
-        {
-          icon: "/images/logo/logo.webp",
-          name: "个人主页",
-          url: "https://daoyi.hidns.vip/#/",
-        },
-        {
-          icon: "/images/logo/logo.webp",
-          name: "私有工具",
-          url: "https://blog.811520.xyz/tlink/",
-        },
-      ],
-    },
-    {
-      name: "常用",
-      list: [
-        {
-          icon: "https://cover.ruom.top/favicon.ico",
-          name: "封面制作",
-          url: "https://cover.ruom.top/",
-        },
-        {
-          icon: "https://www.favicon.vip/get.php?url=img.ytian.us.kg",
-          name: "兰空图床",
-          url: "https://img.811520.xyz/",
-        },
         {
           icon: "https://pan.811520.xyz/2024-10/插入链接.webp",
           name: "短链生成",
@@ -204,32 +138,7 @@ export const themeConfig = {
         {
           icon: "https://github.githubassets.com/assets/apple-touch-icon-144x144-b882e354c005.png",
           name: "博客仓库",
-          url: "https://github.com/yutian81/yutian81.github.io",
-        },
-      ],
-    },
-    {
-      name: "服务",
-      list: [
-        {
-          icon: "https://pan.811520.xyz/2024-11/1730875618-1730875614898.webp",
-          name: "今日热榜",
-          url: "https://hot.imsyy.top/",
-        },
-        {
-          icon: "https://rss.811520.xyz/favicon.ico",
-          name: "友圈后端",
-          url: "https://rss.811520.xyz/",
-        },
-        {
-          icon: "https://pan.811520.xyz/2024-11/1730634973-Cloudflare_Logo.webp",
-          name: "CF优选",
-          url: "https://blog2.811520.xyz/blogrss/",
-        },
-        {
-          icon: "https://github.githubassets.com/assets/apple-touch-icon-144x144-b882e354c005.png",
-          name: "Serv00",
-          url: "https://github.com/yutian81/serv00-ct8-ssh",
+          url: "https://github.com/5um3rM0/5um3rM0.github.io",
         },
       ],
     },

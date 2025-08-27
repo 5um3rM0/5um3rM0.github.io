@@ -4,23 +4,23 @@
     <div class="about-content" style="grid-template-columns: 3fr 2fr">
       <!-- 介绍 -->
       <div class="about-item hello">
-        <span class="text1">你好，很高兴认识你👋</span>
-        <span class="text2 title2">我是 九天之上</span>  
-        <span class="text3">是一名 又菜又爱玩的小白</span>
+        <span class="text1">Hi👋</span>
+        <span class="text2 title2">这里5um3rM0</span>  
+        <span class="text3">是什么人呢？我也不知道啦</span>
       </div>
       <!-- 追求 -->
       <div class="about-item pursuit">
         <span class="tip">追求</span>
-        <span class="title2">源于</span>
-        <span class="title2">热爱而去开发</span>
-        <span class="title2">优秀的作品</span>
+        <span class="title2">好玩</span>
+        <span class="title2">如果喜欢的话 偶尔也好</span>
+        <span class="title2">记住我吧</span>
       </div>
     </div>
     <div class="about-content" style="grid-template-columns: 2fr 3fr">
       <!-- 技能 -->
       <div class="about-item skills">
         <span class="tip">技能</span>
-        <span class="title2">开启创造力</span>
+        <span class="title2">啥也不会啊</span>
         <div class="skills-list">
           <a
             v-for="(item, index) in skillsData"
@@ -37,140 +37,19 @@
           </a>
         </div>
       </div>
-      <!-- 生涯 -->
-      <div class="about-item career">
-        <span class="tip">生涯</span>
-        <span class="title2">
-          <i>無限進步</i>
-        </span>
-        <div class="list">
-          <span class="list-item" style="--color: #357ef5">法学学士</span>
-          <span class="list-item" style="--color: #eb372a">房地产营销管理</span>
-        </div>
-        <img
-          class="career-img"
-          src="https://pan.811520.xyz/2024-10/1728445789536.webp"
-          alt="career"
-        />
-      </div>
-    </div>
-    <div class="about-content" style="grid-template-columns: 3fr 2fr">
-      <!-- 性格 -->
-      <div class="about-item character" style="--color: #4298b4">
-        <span class="tip">性格</span>
-        <span class="title2">执政官</span>
-        <span class="title2" style="color: var(--color)">ESFJ-A</span>
-        <span class="more">
-          在
-          <a href="https://www.16personalities.com/ch/" target="_blank">16personalities</a>
-          了解更多关于
-          <a href="https://www.16personalities.com/ch/esfj-%E4%BA%BA%E6%A0%BC" target="_blank">
-            执政官
-          </a>
-        </span>
-        <img
-          src="https://pan.811520.xyz/2024-11/1730434481-1730434479289.webp"
-          alt="male"
-          class="male"
-        />
-      </div>
-      <!-- 座右铭 -->
-      <div class="about-item">
-        <span class="tip">座右铭</span>
-        <span class="title1" style="margin-top: 20px">脚踏实地，</span>
-        <span class="title2">一丝不苟。</span>
-      </div>
-    </div>
-    <div class="about-content" style="grid-template-columns: 1fr 1fr">
-      <div
-        class="about-item like image"
-        style="
-          --color: #0c0e20;
-          background-image: url(https://pan.811520.xyz/2024-11/1730613978-1730613976160.webp);
-        "
-      >
-        <div class="image-content">
-          <span class="tip">关注偏好</span>
-          <span class="title2">数码科技</span>
-          <div class="image-desc">
-            <span class="left">手机、电脑及软硬件</span>
-          </div>
-        </div>
-      </div>
-      <div
-        class="about-item like image"
-        style="
-          --color: #7b3c25;
-          background-image: url(https://pan.811520.xyz/2024-11/1730614179-1730614177198.webp);
-        "
-      >
-        <div class="image-content">
-          <span class="tip">音乐偏好</span>
-          <span class="title2">华语流行、摇滚、中国风、民谣</span>
-          <div class="image-desc">
-            <span class="left">一起欣赏更多音乐</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="about-content" style="grid-template-columns: 2fr 3fr">
-      <!-- 数据 -->
-      <div
-        class="about-item static image"
-        style="
-          --color: #0f1114;  
-          background-image: url(https://pan.811520.xyz/2024-11/1730613487-20230703084704275.webp);
-        "
-      >
-        <div class="image-content">
-          <span class="tip">数据</span>
-          <span class="title2">访问统计</span>
-          <div class="static-data">
-            <div v-for="(item, key, index) in statisticsData" :key="index" class="static-item">
-              <span class="static-name">{{ key }}</span>
-              <span class="static-num">{{ item }}</span>
-            </div>
-          </div>
-          <div class="image-desc opacity">
-            <span class="left">
-              统计信息来自 <a href="https://v6.51.la/" target="_blank">51la</a>
-            </span>
-          </div>
-        </div>
-      </div>
-      <!-- 信息 -->
-      <div class="about-item child">
-        <div
-          class="about-item map image"
-          style="background-image: url(https://pan.811520.xyz/2024-10/1730361853-1730361845894.webp)"
-        >
-          <span class="position">我现在住在 <strong>中国，武汉</strong></span>
-        </div>
-        <div class="about-item info">
-          <div class="info-item">
-            <span class="info-name">生于</span>
-            <span class="info-num" style="--color: #43a6c6">保密</span>
-          </div>
-          <div class="info-item">
-            <span class="info-name">现在职业</span>
-            <span class="info-num" style="--color: #dfac46">资深房地产营销管理</span>
-          </div>
-        </div>
-      </div>
-    </div>
     <!-- 心路历程 -->
     <div class="about-content" style="display: flex">
       <div class="about-item">
         <span class="tip">心路历程</span>
         <span class="title2">为什么建站？</span>
         <p class="text">
-          创建这个站的时候，想要就是能够有一个自己能够<strong>积累知识</strong>、<strong>积累兴趣</strong>的地方。和他人分享，会让这些成为<strong>积累和沉淀</strong>。如果能够帮助到更多的人，帮助更多人解决问题，那一定是非常棒的事情。
+          因为想要找个地方记录一下东西，嗯，如果有个网站来写博客的话就更酷了......很无语的理由，对吧？
         </p>
         <p class="text">
-          这里内容很杂，<strong>工作、生活、资源分享……</strong>什么都有，可能不太会有很多人看，权当是做个自我记录吧。当然，如果某篇文章能够帮助到你，那我也是很开心的。
+          这里内容很杂，<strong>生活、随笔、资源分享</strong>......随便写写总之。可能不太会有很多人看（真的有人看么），权当日记。
         </p>
         <p class="text">
-          这些就是创造这个小站的本意，<strong>也是我分享生活的方式</strong>。有幸能和你相遇在这里，相信我们能共同留下一段美好记忆。
+          这些就是创造这个博客的本意。有幸相遇，玩的开心。
         </p>
       </div>
     </div>
@@ -178,59 +57,13 @@
 </template>
 
 <script setup>
-import { getStatistics } from "@/api";
-
-const { theme } = useData();
-
 // 技能数据
 const skillsData = [
-  {
-    name: "JavaScript",
-    color: "#f1e05abd",
-    icon: "javascript",
-    link: "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript",
-  },
-  {
-    name: "HTML5",
-    color: "#e34f26",
-    icon: "html5",
-    link: "https://developer.mozilla.org/zh-CN/docs/Web/HTML",
-  },
-  {
-    name: "CSS3",
-    color: "#563d7c",
-    icon: "css3",
-    link: "https://developer.mozilla.org/zh-CN/docs/Web/CSS",
-  },
-  {
-    name: "Vue",
-    color: "#41b883",
-    icon: "vue",
-    link: "https://cn.vuejs.org/",
-  },
-  {
-    name: "React",
-    color: "#149ECA",
-    icon: "react",
-    link: "https://zh-hans.reactjs.org/",
-  },
-  {
-    name: "Node.js",
-    color: "#026E00",
-    icon: "nodejs",
-    link: "https://nodejs.org/",
-  },
   {
     name: "Python",
     color: "#3776AB",
     icon: "python",
     link: "https://www.python.org/",
-  },
-  {
-    name: "Docker",
-    color: "#2496f2",
-    icon: "docker",
-    link: "https://www.docker.com/",
   },
   {
     name: "Git",
@@ -251,19 +84,6 @@ const skillsData = [
     link: "https://chat.openai.com/",
   },
 ];
-
-// 站点统计数据
-const statisticsData = ref(null);
-
-// 获取站点统计数据
-const getStatisticsData = async () => {
-  const result = await getStatistics(theme.value.tongji["51la"]);
-  statisticsData.value = result;
-};
-
-onMounted(() => {
-  getStatisticsData();
-});
 </script>
 
 <style lang="scss" scoped>
@@ -308,16 +128,6 @@ onMounted(() => {
         font-size: 18px;
         margin: 0.6rem 0;
       }
-      &.child {
-        background-color: transparent;
-        border: none;
-        box-shadow: none;
-        padding: 0;
-        gap: 20px;
-        .about-item {
-          height: 100%;
-        }
-      }
       &.hello {
         justify-content: center;
         padding: 2rem;
@@ -340,38 +150,6 @@ onMounted(() => {
             -webkit-text-fill-color: transparent;
             background-repeat: no-repeat;
             background-image: linear-gradient(45deg, #fa7671 50%, #f45f7f);
-          }
-        }
-      }
-      &.character {
-        min-height: 220px;
-        cursor: pointer;
-        .more {
-          margin-top: auto;
-          font-size: 14px;
-          color: var(--main-color-gray);
-          a {
-            color: var(--main-color-gray);
-            &:hover {
-              color: var(--color);
-            }
-          }
-        }
-        .male {
-          position: absolute;
-          top: 20px;
-          right: -10px;
-          height: 140%;
-          width: auto;
-          transition: transform 0.5s;
-          transform-origin: top center;
-          @media (max-width: 768px) {
-            height: 80%;
-          }
-        }
-        &:hover {
-          .male {
-            transform: scale(1.2);
           }
         }
       }
@@ -452,129 +230,6 @@ onMounted(() => {
           }
         }
       }
-      &.game {
-        min-height: 300px;
-        @media (max-width: 768px) {
-          min-height: 240px;
-        }
-      }
-      &.like {
-        min-height: 400px;
-        @media (max-width: 768px) {
-          min-height: 300px;
-        }
-      }
-      &.image {
-        background-position: center;
-        background-size: cover;
-        background-repeat: no-repeat;
-        .image-content {
-          flex-grow: 1;
-          display: flex;
-          flex-direction: column;
-          z-index: 2;
-          color: #fff;
-          .image-desc {
-            width: 100%;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: auto;
-            &.opacity {
-              font-size: 14px;
-              color: #eee;
-              opacity: 0.8;
-              a {
-                color: #eee;
-                &:hover {
-                  color: var(--main-color);
-                }
-              }
-            }
-          }
-        }
-        &::after {
-          content: "";
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          top: 0;
-          left: 0;
-          box-shadow: inset 0 -70px 204px 10px var(--color);
-          z-index: 0;
-        }
-      }
-      &.static {
-        .static-data {
-          display: grid;
-          gap: 12px;
-          grid-template-columns: 1fr 1fr;
-          margin: 20px 0;
-          .static-item {
-            display: flex;
-            flex-direction: column;
-            .static-name {
-              font-size: 15px;
-              opacity: 0.8;
-            }
-            .static-num {
-              font-size: 34px;
-              font-weight: bold;
-            }
-          }
-        }
-      }
-      &.map {
-        min-height: 170px;
-        background-size: 100%;
-        transition: background 1.5s ease-in-out;
-        cursor: pointer;
-        @media (max-width: 768px) {
-          background-size: cover;
-          pointer-events: none;
-        }
-        .position {
-          display: block;
-          position: absolute;
-          left: 0;
-          bottom: 0;
-          width: 100%;
-          padding: 20px 30px;
-          color: #fff;
-          background-color: #636352;
-          font-size: 20px;
-          transition: bottom 1s;
-        }
-        &:hover {
-          background-size: 120%;
-          background-position-x: 0;
-          background-position-y: 36%;
-          .position {
-            bottom: -80px;
-          }
-        }
-      }
-      &.info {
-        flex-direction: row;
-        align-items: center;
-        justify-content: flex-start;
-        .info-item {
-          display: flex;
-          flex-direction: column;
-          margin-right: 32px;
-          .info-name {
-            font-size: 14px;
-            margin-bottom: 8px;
-            color: var(--main-font-second-color);
-          }
-          .info-num {
-            font-size: 34px;
-            font-weight: bold;
-            color: var(--color);
-          }
-        }
-      }
     }
     &:last-child {
       margin-bottom: 0;
@@ -583,6 +238,19 @@ onMounted(() => {
       display: flex;
       flex-direction: column;
     }
+  }
+}
+
+// 渐变动画
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }
 </style>
