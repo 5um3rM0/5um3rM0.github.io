@@ -37,6 +37,7 @@
           </a>
         </div>
       </div>
+    </div>
     <!-- 心路历程 -->
     <div class="about-content" style="display: flex">
       <div class="about-item">
