@@ -5,7 +5,7 @@ export const themeConfig = {
     // 站点标题
     title: "5M茶馆",
     // 站点描述
-    description: "呃 是什么呢 大概是写点随笔的地方？",
+    description: "Just 5um3rM0",
     // 站点logo
     logo: "/images/logo/logo.webp",
     // 站点地址
@@ -166,19 +166,11 @@ export const themeConfig = {
     social: [
       {
         icon: "email",
-        link: "mailto:admin@24811213.xyz",
+        link: "mailto:n.reed2000@outlook.com",
       },
       {
         icon: "github",
-        link: "https://github.com/yutian81/",
-      },
-      {
-        icon: "telegram",
-        link: "https://t.me/yutian88881",
-      },
-      {
-        icon: "bilibili",
-        link: "https://space.bilibili.com/677845115",
+        link: "https://www.github.com/5um3rM0/",
       },
     ],
     // sitemap
@@ -193,56 +185,19 @@ export const themeConfig = {
         ],
       },
       {
-        text: "云端平台",
-        items: [
-          { text: "Vercel", link: "https://vercel.com/", newTab: true },
-          { text: "NorthFlank", link: "https://app.northflank.com/", newTab: true },
-          { text: "Koyeb", link: "https://app.koyeb.com/", newTab: true },
-          { text: "Huawei", link: "https://www.huaweicloud.com/intl/zh-cn/", newTab: true },
-        ],
-      },
-      {
         text: "我的专栏",
         items: [
-          { text: "技术分享", link: "/pages/categories/技术分享" },
-          { text: "我的项目", link: "/pages/project" },
-          { text: "收藏大全", link: "https://daoyi.hidns.vip/#/", newTab: true },
-          { text: "工作备忘", link: "/pages/categories/工作备忘" },
-        ],
-      },
-      {
-        text: "项目推荐",
-        items: [
-          { text: "edgetunnel", link: "https://github.com/cmliu/edgetunnel", newTab: true },
-          { text: "twikoo", link: "https://github.com/yutian81/twikoo", newTab: true },
-          { text: "alist", link: "https://alist.nn.ci/zh/", newTab: true },
-          { text: "nezha", link: "https://nezha.wiki/guide/dashboard.html", newTab: true },
-        ],
-      }, 
-      {        
-        text: "页面导航",
-        items: [
-          //{ text: "畅所欲言", link: "/pages/message" },
-          { text: "关于本站", link: "/pages/about" },
-          { text: "隐私政策", link: "/pages/privacy" },
-          { text: "版权协议", link: "/pages/cc" },
-          { text: "致谢名单", link: "/pages/thanks" },
-        ],
-      },
-      {
-        text: "网站服务",
-        items: [
-          { text: "音乐时刻", link: "https://blog.811520.xyz/music/", newTab: true },
-          { text: "站点状态", link: "https://uptime.ytian.us.kg/status/service", newTab: true },
-          { text: "站点订阅", link: "https://blog2.811520.xyz/rss.xml", newTab: true },
-          { text: "问题反馈", link: "https://github.com/yutian81/yutian81.github.io/issues", newTab: true, },
+          { text: "占位1", link: "" },
+          { text: "占位2", link: "" },
+          { text: "占位3", link: "", newTab: true },
+          { text: "占位4", link: "/pages/categories/工作备忘" },
         ],
       },
     ],
   },
   // 评论
   comment: {
-    enable: true,
+    enable: false,
     // 评论系统选择
     // artalk / twikoo
     type: "twikoo",
@@ -268,7 +223,7 @@ export const themeConfig = {
     // 站点简介
     hello: {
       enable: true,
-      text: "这里有我的各种<strong>折腾笔记</strong>，也有一些<strong>工作备忘</strong>和<strong>生活随笔</strong>。又菜又爱玩，<strong>万事都不难</strong>。",
+      text: "5M的碎碎念吧......写点随笔、记录下心情之类的？",
     },
     // 目录
     toc: {
@@ -283,8 +238,8 @@ export const themeConfig = {
       enable: true,
       // 倒计时日期
       data: {
-        name: "春节",
-        date: "2025-05-01",
+        name: "高考",
+        date: "2026-06-07",
       },
     },
     // 站点数据
@@ -295,7 +250,7 @@ export const themeConfig = {
   // 友链
   friends: {
     // 友链朋友圈
-    circleOfFriends: "https://blog2.811520.xyz/blogrss/",
+    circleOfFriends: "",
     // 动态友链
     dynamicLink: {
       server: "",
@@ -319,18 +274,15 @@ export const themeConfig = {
   // 搜索
   // https://www.algolia.com/
   search: {
-    enable: true,
-    appId: "J8AAAZLZZ7",
-    apiKey: "94c1d72ea8e1533fc67c3e7244c7e196",
-    indexName: "daoyi-wiki",
+    enable: false,
   },
   // 打赏
   rewardData: {
-    enable: true,
+    enable: false,
     // 微信二维码
-    wechat: "https://pan.811520.xyz/2024-11/1730603920-wechatpay.webp",
+    wechat: "",
     // 支付宝二维码
-    alipay: "https://pan.811520.xyz/2024-11/1730603921-alipay.webp",
+    alipay: "",
   },
   // 图片灯箱
   fancybox: {
