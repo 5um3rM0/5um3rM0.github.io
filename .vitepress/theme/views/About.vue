@@ -111,8 +111,8 @@ const skillsData = [
 const mediaData = [
   { name: 'American Idiot', artist: 'Green Day', cover: 'http://p1.music.126.net/gn85AxXTWVLbOVmdAJsxrg==/109951163834085468.jpg', url: 'https://music.163.com/#/album?id=73668475' },
   { name: 'Fight Club', artist: 'Movie', cover: 'https://m.media-amazon.com/images/M/MV5BOTgyOGQ1NDItNGU3Ny00MjU3LTg2YWEtNmEyYjBiMjI1Y2M5XkEyXkFqcGc@.jpg', url: 'https://www.imdb.com/title/tt0137523/' },
-  { name: 'Uma Musume:Pretty Derby', artist: 'Game', cover: 'https://img.moegirl.org.cn/common/a/a0/Umamusume_logo2.png', url: 'https://umamusume.jp/' },
-  { name: '私が主役じゃダメですか？', artist: 'ダンツフレーム', cover: 'https://img.moegirl.org.cn/common/1/11/WINNING_LIVE_19-Cover.jpg', url: 'https://www.bilibili.com/video/BV1Kx4y187Nj/' },
+  { name: 'Uma Musume:Pretty Derby', artist: 'Game', cover: 'https://i0.hdslb.com/bfs/game-static/d7ad66db7c03dd39130f557ec7ab9590855d6bb0.png', url: 'https://umamusume.jp/' },
+  { name: '私が主役じゃダメですか？', artist: 'ダンツフレーム', cover: 'https://i1.hdslb.com/bfs/archive/bf214bc907fbdc00c0735df4baf551e37fd3b38e.jpg', url: 'https://www.bilibili.com/video/BV1Kx4y187Nj/' },
 ];
 
 // 定义博客时间轴数据
@@ -124,12 +124,12 @@ const timelineData = [
 
 // 定义自拍卡片的数据数组
 const selfies = [
-  { url: '/images/about/i_drive.png', title: 'I Drive', subtitle: 'Literally Me' },
-  { url: '/images/about/i_kill.png', title: 'I Kill', subtitle: 'Literally Me' },
-  { url: '/images/about/i_see.png', title: 'I See', subtitle: 'Literally Me' },
-  { url: '/images/about/i_shot.png', title: 'I Shot', subtitle: 'Literally Me' },
-  { url: '/images/about/i_smile.png', title: 'I Smile', subtitle: 'Literally Me' },
-  { url: '/images/about/i_stand.png', title: 'I Stand', subtitle: 'Literally Me' },
+  { url: '/images/about/i_drive.png', title: 'I Drive', subtitle: '' },
+  { url: '/images/about/i_kill.png', title: 'I Kill', subtitle: '' },
+  { url: '/images/about/i_see.png', title: 'I See', subtitle: '' },
+  { url: '/images/about/i_shot.png', title: 'I Shot', subtitle: '' },
+  { url: '/images/about/i_smile.png', title: 'I Smile', subtitle: '' },
+  { url: '/images/about/i_stand.png', title: 'I Stand', subtitle: '' },
 ];
 
 // 用于自拍卡片图片切换的状态
