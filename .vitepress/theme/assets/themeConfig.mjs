@@ -5,7 +5,7 @@ export const themeConfig = {
     // 站点标题
     title: "5M茶馆",
     // 站点描述
-    description: "呃 是什么呢 大概是写点随笔的地方？",
+    description: "Just 5um3rM0",
     // 站点logo
     logo: "/images/logo/logo.webp",
     // 站点地址
@@ -167,6 +167,7 @@ export const themeConfig = {
           { text: "近期文章", link: "/" },
           { text: "全部分类", link: "/pages/categories" },
           { text: "全部标签", link: "/pages/tags" },
+          { text: "文章归档", link: "/pages/archives" },
         ],
       },
       {
@@ -264,9 +265,9 @@ export const themeConfig = {
   rewardData: {
     enable: false,
     // 微信二维码
-    wechat: "https://pic.efefee.cn/uploads/2024/04/07/66121049d1e80.webp",
+    wechat: "",
     // 支付宝二维码
-    alipay: "https://pic.efefee.cn/uploads/2024/04/07/661206631d3b5.webp",
+    alipay: "",
   },
   // 图片灯箱
   fancybox: {

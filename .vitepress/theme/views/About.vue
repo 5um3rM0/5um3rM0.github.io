@@ -11,7 +11,7 @@
       <!-- 追求 -->
       <div class="about-item pursuit">
         <span class="tip">追求</span>
-        <span class="title2">好玩</span>
+        <span class="title2">好玩的事</span>
         <span class="title2">如果喜欢的话 偶尔也好</span>
         <span class="title2">记住我吧</span>
       </div>
@@ -20,7 +20,7 @@
       <!-- 技能 -->
       <div class="about-item skills">
         <span class="tip">技能</span>
-        <span class="title2">啥也不会啊</span>
+        <span class="title2">哇 我到底会什么？</span>
         <div class="skills-list">
           <a
             v-for="(item, index) in skillsData"
