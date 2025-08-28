@@ -217,13 +217,13 @@ export const getGreetings = () => {
   const hour = new Date().getHours();
   let hello;
   if (hour < 6) {
-    hello = "凌晨好，昨晚睡得怎么样？";
+    hello = "凌晨好，别再修仙啦！";
   } else if (hour < 9) {
     hello = "早上好，今天也要开心哦！";
   } else if (hour < 12) {
     hello = "上午好，今天也要加油哦！";
   } else if (hour < 14) {
-    hello = "中午好，吃饱了精神好！";
+    hello = "中午好，吃的好吗？";
   } else if (hour < 17) {
     hello = "下午好，继续加油！";
   } else if (hour < 19) {
@@ -249,11 +249,15 @@ export const shuffleArray = (array) => {
 // 特殊纪念日置灰
 export const specialDayGray = () => {
   const specialDays = [
-    { date: "4-4", name: "清明节" },
-    { date: "5-12", name: "汶川大地震纪念日" },
-    { date: "7-7", name: "中国人民抗日战争纪念日" },
-    { date: "9-18", name: "九·一八事变纪念日" },
-    { date: "12-13", name: "南京大屠杀死难者国家公祭日" },
+    { date: "1-4", name: "阿尔贝·加缪忌辰" },
+    { date: "2-12", name: "伊曼努尔·康德忌辰" },
+    { date: "3-14", name: "卡尔·马克思忌辰" },
+    { date: "5-7", name: "约翰·斯图尔特·密尔忌辰" },
+    { date: "6-21", name: "尼科洛·马基雅维利忌辰" },
+    { date: "7-17", name: "亚当·斯密忌辰" },
+    { date: "8-25", name: "弗里德里希·尼采忌辰" },
+    { date: "9-23", name: "西格蒙德·弗洛伊德忌辰" },
+    { date: "11-14", name: "格奥尔格·威廉·弗里德里希·黑格尔忌辰" },
   ];
   // 获取当天日期
   const today = new Date();

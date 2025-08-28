@@ -26,23 +26,15 @@ export const mainStore = defineStore("main", {
       // 搜索框显示
       searchShow: false,
       // 个性化配置显示
-      showSeetings: false,
-      // 播放器数据
-      playState: false,
-      playerShow: true,
-      playerVolume: 0.7,
-      playerData: {
-        name: "未知曲目",
-        artist: "未知艺术家",
-      },
+      showSettings: false,
       // 移动端菜单显示
       mobileMenuShow: false,
       // 使用自定义右键菜单
-      useRightMenu: false,
+      useRightMenu: true,
       // 背景模糊
       backgroundBlur: false,
       // 全站字体
-      fontFamily: "hmos",
+      fontFamily: "lxgw",
       // 全站字体大小
       fontSize: 18,
       // 信息显示位置
@@ -50,8 +42,11 @@ export const mainStore = defineStore("main", {
       // 上次滚动位置
       lastScrollY: 0,
       // 站点背景
-      backgroundType: "patterns",
+      backgroundType: "image",
       backgroundUrl: "https://t.alcy.cc/fj",
+      // 季节特效开关
+      seasonalEffects: true, 
+      lastBirthdayCelebrated: null,
     };
   },
   getters: {},
@@ -125,6 +120,8 @@ export const mainStore = defineStore("main", {
         "fontSize",
         "infoPosition",
         "backgroundUrl",
+        "seasonalEffects",
+        "lastBirthdayCelebrated",
       ],
     },
   ],

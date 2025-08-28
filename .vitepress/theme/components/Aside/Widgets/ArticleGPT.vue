@@ -16,7 +16,7 @@
     <div class="meta">
       <span class="tip">苦逼5M总结而成</span>
       <a
-        href="https://eqnxweimkr5.feishu.cn/share/base/form/shrcnCXCPmxCKKJYI3RKUfefJre"
+        href="https://www.aceshowbiz.com/images/still/drive02.jpg"
         class="report"
         target="_blank"
       >

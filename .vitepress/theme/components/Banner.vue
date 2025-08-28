@@ -3,8 +3,8 @@
     <h1 class="title">是{{ theme.siteMeta.title }}！进门往左拐~</h1>
     <div class="subtitle">
       <Transition name="fade" mode="out-in">
-        <span :key="hitokotoData?.hitokoto" class="text">
-          {{ hitokotoData?.hitokoto ? hitokotoData?.hitokoto : theme.siteMeta.description }}
+        <span class="text">
+          {{ customText ? customText : theme.siteMeta.description }}
         </span>
       </Transition>
     </div>
@@ -42,7 +42,7 @@
 
 <script setup>
 import { mainStore } from "@/store";
-import { getHitokoto } from "@/api";
+// 移除getHitokoto导入
 
 const store = mainStore();
 const { theme } = useData();
@@ -79,23 +79,11 @@ const props = defineProps({
   },
 });
 
-const hitokotoData = ref(null);
-const hitokotoTimeOut = ref(null);
+// 添加自定义文字
+const customText = ref("如果喜欢的话，偶尔也好，请记住我吧。");
 
 // banner
 const bannerType = ref(null);
-
-// 获取一言数据
-const getHitokotoData = async () => {
-  try {
-    const result = await getHitokoto();
-    const { hitokoto, from, from_who } = result;
-    hitokotoData.value = { hitokoto, from, from_who };
-  } catch (error) {
-    $message.error("一言获取失败");
-    console.error("一言获取失败：", error);
-  }
-};
 
 // 滚动至首页
 const scrollToHome = () => {
@@ -115,21 +103,14 @@ watch(
 );
 
 onMounted(() => {
-  if (props.type === "text") {
-    hitokotoTimeOut.value = setTimeout(() => {
-      getHitokotoData();
-    }, 2000);
-  }
   // 更改 banner 类型
   bannerType.value = store.bannerType;
 });
 
-onBeforeUnmount(() => {
-  clearTimeout(hitokotoTimeOut.value);
-});
 </script>
 
 <style lang="scss" scoped>
+/* 样式部分保持不变 */
 .banner {
   height: 300px;
   display: flex;

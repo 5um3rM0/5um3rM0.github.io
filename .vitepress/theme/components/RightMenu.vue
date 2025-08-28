@@ -105,15 +105,6 @@
             </a>
             <a
               v-if="clickedType === 'text' || clickedType === 'input'"
-              :href="`https://www.baidu.com/s?wd=${encodeURIComponent(clickedTypeData)}`"
-              class="btn right-menu-link"
-              target="_blank"
-            >
-              <i class="iconfont icon-baidu"></i>
-              <span class="name">使用百度搜索</span>
-            </a>
-            <a
-              v-if="clickedType === 'text' || clickedType === 'input'"
               :href="`https://cn.bing.com/search?q=${encodeURIComponent(clickedTypeData)}`"
               class="btn right-menu-link"
               target="_blank"
@@ -128,27 +119,6 @@
             >
               <i class="iconfont icon-copy"></i>
               <span class="name">复制选中文本</span>
-            </div>
-            <div
-              v-if="clickedType === 'text' && !commentCopyShow && theme.comment.type === 'artalk'"
-              class="btn"
-              @click="commentCopy(clickedTypeData)"
-            >
-              <i class="iconfont icon-chat"></i>
-              <span class="name">评论选中内容</span>
-            </div>
-          </div>
-          <!-- 通用菜单 -->
-          <div class="all-menu general">
-            <!-- 版权协议 -->
-            <div class="btn" @click="router.go('/pages/cc')">
-              <i class="iconfont icon-accessible"></i>
-              <span class="name">版权协议</span>
-            </div>
-            <!-- 隐私政策 -->
-            <div class="btn" @click="router.go('/pages/privacy')">
-              <i class="iconfont icon-privacy"></i>
-              <span class="name">隐私政策</span>
             </div>
           </div>
           <div class="all-menu general">
@@ -167,38 +137,6 @@
                   themeType === "auto" ? "深色模式" : themeType === "dark" ? "浅色模式" : "跟随系统"
                 }}
               </span>
-            </div>
-          </div>
-          <!-- 播放器控制 -->
-          <div v-if="playerShow" class="all-menu general player">
-            <div class="data">
-              <span class="name">{{ playerData.name }}</span>
-              <span class="artist">{{ playerData.artist }}</span>
-            </div>
-            <div class="volume" @click.stop>
-              <i
-                class="iconfont icon-volume-down"
-                @click="playerVolume = Math.max(0, playerVolume - 0.1)"
-              />
-              <Slider :value="playerVolume" @update="(val) => (playerVolume = val)" />
-              <i
-                class="iconfont icon-volume-up"
-                @click="playerVolume = Math.min(1, playerVolume + 0.1)"
-              />
-            </div>
-            <div class="control" @click.stop>
-              <div class="btn" title="上一曲" @click="playerControl('prev')">
-                <i class="iconfont icon-prev"></i>
-              </div>
-              <div v-if="playState" class="btn" title="暂停" @click="playerControl('toggle')">
-                <i class="iconfont icon-pause"></i>
-              </div>
-              <div v-else class="btn" title="播放" @click="playerControl('toggle')">
-                <i class="iconfont icon-play"></i>
-              </div>
-              <div class="btn" title="下一曲" @click="playerControl('next')">
-                <i class="iconfont icon-next"></i>
-              </div>
             </div>
           </div>
         </div>
@@ -371,26 +309,6 @@ const rightMenuFunc = async (type) => {
   } catch (error) {
     $message.error("右键菜单发生错误，请重试");
     console.error("右键菜单出错：", error);
-  }
-};
-
-// 播放器控制
-const playerControl = (type) => {
-  if (typeof $player !== "object" || !type) return false;
-  switch (type) {
-    case "toggle":
-      $player?.toggle();
-      break;
-    case "next":
-      $player?.skipForward();
-      $player?.play();
-      break;
-    case "prev":
-      $player?.skipBack();
-      $player?.play();
-      break;
-    default:
-      return false;
   }
 };
 

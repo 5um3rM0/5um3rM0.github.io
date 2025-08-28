@@ -4,23 +4,14 @@
     <div class="post-meta">
       <div class="meta">
         <div class="categories">
-          <a
-            v-for="(item, index) in postMetaData.categories"
-            :key="index"
-            :href="`/pages/categories/${item}`"
-            class="cat-item"
-          >
+          <a v-for="(item, index) in postMetaData.categories" :key="index" :href="`/pages/categories/${item}`"
+            class="cat-item">
             <i class="iconfont icon-folder" />
             <span class="name">{{ item }}</span>
           </a>
         </div>
         <div class="tags">
-          <a
-            v-for="(item, index) in postMetaData.tags"
-            :key="index"
-            :href="`/pages/tags/${item}`"
-            class="tag-item"
-          >
+          <a v-for="(item, index) in postMetaData.tags" :key="index" :href="`/pages/tags/${item}`" class="tag-item">
             <i class="iconfont icon-hashtag" />
             <span class="name">{{ item }}</span>
           </a>
@@ -34,19 +25,10 @@
           <i class="iconfont icon-date" />
           {{ formatTimestamp(postMetaData.date) }}
         </span>
+        <ReadTime class="meta read-time" :readTime="readTime" :wordCount="wordCount" />
         <span class="update meta">
           <i class="iconfont icon-time" />
           {{ formatTimestamp(page?.lastUpdated || postMetaData.lastModified) }}
-        </span>
-        <!-- 热度 -->
-        <span class="hot meta">
-          <i class="iconfont icon-fire" />
-          <span id="twikoo_visitors" class="artalk-pv-count">0</span>
-        </span>
-        <!-- 评论数 -->
-        <span class="chat meta hover" @click="commentRef?.scrollToComments">
-          <i class="iconfont icon-chat" />
-          <span id="twikoo_comments" class="artalk-comment-count">0</span>
         </span>
       </div>
     </div>
@@ -66,27 +48,11 @@
         <Copyright v-if="frontmatter.copyright !== false" :postData="postMetaData" />
         <!-- 其他信息 -->
         <div class="other-meta">
-          <div class="all-tags">
-            <a
-              v-for="(item, index) in postMetaData.tags"
-              :key="index"
-              :href="`/pages/tags/${item}`"
-              class="tag-item"
-            >
-              <i class="iconfont icon-hashtag" />
-              <span class="name">{{ item }}</span>
-            </a>
-          </div>
-          <a
-            href="https://baidu.com"
-            class="report"
-            target="_blank"
-          >
+          <a href="https://www.aceshowbiz.com/images/still/drive02.jpg" class="report" target="_blank">
             <i class="iconfont icon-report" />
             反馈与投诉
           </a>
         </div>
-        <RewardBtn />
         <!-- 下一篇 -->
         <NextPost />
         <!-- 相关文章 -->
@@ -96,6 +62,11 @@
       </article>
       <Aside showToc />
     </div>
+    <Teleport to="body">
+      <FloatingToc>
+        <VPContentDocOutline />
+      </FloatingToc>
+    </Teleport>
   </div>
 </template>
 
@@ -103,6 +74,10 @@
 import { formatTimestamp } from "@/utils/helper";
 import { generateId } from "@/utils/commonTools";
 import initFancybox from "@/utils/initFancybox";
+import ReadTime from "@/components/ReadTime.vue";
+import { calculateReadTime } from '@/utils/readTime';
+import FloatingToc from "@/components/FloatingToc.vue";
+import VPContentDocOutline from 'vitepress/dist/client/theme-default/components/VPContentDocOutline.vue';
 
 const { page, theme, frontmatter } = useData();
 
@@ -115,8 +90,27 @@ const postMetaData = computed(() => {
   return theme.value.postData.find((item) => item.id === postId);
 });
 
+// 定义阅读时间和字数的响应式变量
+const readTime = ref(1); // 默认1分钟，避免空值
+const wordCount = ref(0);
+
+// 页面挂载后计算阅读时间（确保文章内容已加载）
+// 在 Post.vue 的 onMounted 中
 onMounted(() => {
   initFancybox(theme.value);
+  // 从渲染后的 DOM 中获取内容，并排除代码块
+  const contentElement = document.querySelector('#page-content');
+  if (contentElement) {
+    // 克隆节点，避免直接修改页面内容
+    const clonedElement = contentElement.cloneNode(true);
+    // 移除所有代码块
+    clonedElement.querySelectorAll('pre').forEach(pre => pre.remove());
+    // 使用清理后的文本进行计算
+    const articleContent = clonedElement.textContent || '';
+    const { readTime: rt, wordCount: wc } = calculateReadTime(articleContent);
+    readTime.value = rt;
+    wordCount.value = wc;
+  }
 });
 </script>
 
@@ -128,15 +122,19 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   animation: fade-up 0.6s 0.1s backwards;
+
   .post-meta {
     padding: 2rem 0 3rem 18px;
     width: 100%;
+
     .meta {
       display: flex;
       flex-direction: row;
       align-items: center;
+
       .categories {
         margin-right: 12px;
+
         .cat-item {
           display: flex;
           flex-direction: row;
@@ -147,22 +145,27 @@ onMounted(() => {
           border-radius: 8px;
           background-color: var(--main-mask-Inverse-background);
           opacity: 0.8;
+
           .iconfont {
             margin-right: 6px;
           }
+
           &:hover {
             color: var(--main-color);
             background-color: var(--main-color-bg);
+
             .iconfont {
               color: var(--main-color);
             }
           }
         }
       }
+
       .tags {
         display: flex;
         flex-direction: row;
         align-items: center;
+
         .tag-item {
           display: flex;
           flex-direction: row;
@@ -172,14 +175,17 @@ onMounted(() => {
           font-weight: bold;
           border-radius: 8px;
           opacity: 0.8;
+
           .iconfont {
             margin-right: 4px;
             opacity: 0.6;
             font-weight: normal;
           }
+
           &:hover {
             color: var(--main-color);
             background-color: var(--main-color-bg);
+
             .iconfont {
               color: var(--main-color);
             }
@@ -187,16 +193,19 @@ onMounted(() => {
         }
       }
     }
+
     .title {
       font-size: 2.2rem;
       line-height: 1.2;
       color: var(--main-font-color);
       margin: 1.4rem 0;
     }
+
     .other-meta {
       display: flex;
       flex-direction: row;
       align-items: center;
+
       .meta {
         display: flex;
         flex-direction: row;
@@ -205,26 +214,32 @@ onMounted(() => {
         font-size: 14px;
         border-radius: 8px;
         opacity: 0.8;
+
         .iconfont {
           margin-right: 6px;
           transition: color 0.3s;
         }
+
         &.date {
           padding-left: 0;
         }
+
         &.hot {
           .iconfont {
             font-size: 18px;
           }
         }
+
         &.hover {
           transition:
             color 0.3s,
             background-color 0.3s;
           cursor: pointer;
+
           &:hover {
             color: var(--main-color);
             background-color: var(--main-color-bg);
+
             .iconfont {
               color: var(--main-color);
             }
@@ -233,29 +248,35 @@ onMounted(() => {
       }
     }
   }
+
   .post-content {
     width: 100%;
     display: flex;
     flex-direction: row;
     animation: fade-up 0.6s 0.3s backwards;
+
     .post-article {
       width: calc(100% - 300px);
       padding: 1rem 2.2rem 2.2rem 2.2rem;
       user-select: text;
       cursor: auto;
+
       &:hover {
         border-color: var(--main-card-border);
       }
+
       .expired {
         margin: 1.2rem 0 2rem 0;
         padding: 0.8rem 1.2rem;
         border-left: 6px solid var(--main-warning-color);
         border-radius: 6px 16px 16px 6px;
         user-select: none;
+
         strong {
           color: var(--main-warning-color);
         }
       }
+
       .other-meta {
         display: flex;
         flex-direction: row;
@@ -263,10 +284,12 @@ onMounted(() => {
         justify-content: space-between;
         margin: 2rem 0;
         opacity: 0.8;
+
         .all-tags {
           display: flex;
           flex-direction: row;
           align-items: center;
+
           .tag-item {
             display: flex;
             flex-direction: row;
@@ -277,20 +300,24 @@ onMounted(() => {
             border-radius: 8px;
             background-color: var(--main-card-border);
             margin-right: 12px;
+
             .iconfont {
               margin-right: 4px;
               opacity: 0.6;
               font-weight: normal;
             }
+
             &:hover {
               color: var(--main-color);
               background-color: var(--main-color-bg);
+
               .iconfont {
                 color: var(--main-color);
               }
             }
           }
         }
+
         .report {
           display: flex;
           flex-direction: row;
@@ -300,12 +327,15 @@ onMounted(() => {
           font-weight: bold;
           border-radius: 8px;
           background-color: var(--main-card-border);
+
           .iconfont {
             margin-right: 6px;
           }
+
           &:hover {
             color: #efefef;
             background-color: var(--main-error-color);
+
             .iconfont {
               color: #efefef;
             }
@@ -313,53 +343,67 @@ onMounted(() => {
         }
       }
     }
+
     .main-aside {
       width: 300px;
       padding-left: 1rem;
     }
+
     @media (max-width: 1200px) {
       .post-article {
         width: 100%;
       }
+
       .main-aside {
         display: none;
       }
     }
   }
+
   @media (max-width: 768px) {
     .post-meta {
       padding: 4rem 1.5rem;
+
       .meta {
         justify-content: center;
+
         .categories {
           margin-right: 0;
         }
+
         .tags {
           display: none;
         }
       }
+
       .title {
         font-size: 1.6rem;
         text-align: center;
         line-height: 40px;
       }
+
       .other-meta {
         justify-content: center;
       }
     }
+
     .post-content {
       .post-article {
         border: none;
         padding: 20px 30px;
+
         .other-meta {
           margin: 1rem 0 2rem 0;
           flex-direction: column;
+
           .all-tags {
             flex-wrap: wrap;
+
             .tag-item {
               margin-top: 12px;
             }
           }
+
           .report {
             margin-top: 20px;
           }

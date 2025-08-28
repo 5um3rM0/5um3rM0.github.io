@@ -12,7 +12,7 @@
       :future="{
         preserveSharedStateOnUnmount: true,
       }"
-      index-name="imsyy"
+      index-name="5um3rM0"
       @state-change="searchChange"
     >
       <ais-configure :hits-per-page.camel="8" />
