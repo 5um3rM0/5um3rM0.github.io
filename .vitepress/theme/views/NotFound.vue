@@ -2,7 +2,7 @@
   <div class="not-found">
     <div class="not-found-content">
       <h1 class="title">404</h1>
-      <span class="title-tip">什么都没有</span>
+      <span class="title-tip">Who is it that knows there is no self?</span>
       <button class="to-home" @click="router.go('/')">回到主页</button>
     </div>
   </div>

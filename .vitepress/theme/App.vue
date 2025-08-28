@@ -1,8 +1,6 @@
 <template>
   <!-- 背景图片 -->
   <Background />
-  <!-- 阅读进度条 -->
-  <ReadingProgress v-if="isPostPage" />
   <!-- 加载提示 -->
   <Loading />
   <!-- 中控台 -->
@@ -33,7 +31,7 @@
       <!-- 全局设置 -->
       <Settings />
     </div>
-    <!-- 季节特效 (已更新 v-if 的变量名) -->
+    <!-- 季节特效 -->
     <SeasonalEffects v-if="store.seasonalEffects && currentSeason" :season="currentSeason" />
     <!-- 生日特效 -->
     <BirthdayEffects v-if="showBirthdayEffect" />
@@ -48,41 +46,61 @@
 import { storeToRefs } from "pinia";
 import { mainStore } from "@/store";
 import { calculateScroll, specialDayGray } from "@/utils/helper";
-import ReadingProgress from "@/components/ReadingProgress.vue";
 import { getCurrentSeason } from "@/utils/seasonUtils.mjs";
+import { isSpecialBirthday } from "@/utils/birthdayUtils.mjs";
 import SeasonalEffects from "@/components/SeasonalEffects.vue";
 import BirthdayEffects from "@/components/BirthdayEffects.vue";
 
 const route = useRoute();
 const store = mainStore();
 const { frontmatter, page, theme } = useData();
-// 注意：这里没有解构 seasonalEffects，因为我们在 v-if 中直接使用 store.seasonalEffects
 const { loadingStatus, footerIsShow, themeValue, themeType, backgroundType, fontFamily, fontSize } =
   storeToRefs(store);
 
+// 右键菜单
 const rightMenuRef = ref(null);
+
 const currentSeason = ref(null);
 const showBirthdayEffect = ref(false);
 
+// 判断是否为文章页面
 const isPostPage = computed(() => {
   const routePath = decodeURIComponent(route.path);
   return routePath.includes("/posts/");
 });
 
-const openRightMenu = (e) => rightMenuRef.value?.openRightMenu(e);
+// 开启右键菜单
+const openRightMenu = (e) => {
+  rightMenuRef.value?.openRightMenu(e);
+};
 
+// 复制时触发
 const copyTip = () => {
   const copiedText = window.getSelection().toString();
+  // 检查文本内容是否不为空
   if (copiedText.trim().length > 0 && typeof $message !== "undefined") {
     $message.success("复制成功，转载注明5M茶馆谢谢喵");
   }
 };
 
+// 更改正确主题类别
 const changeSiteThemeType = () => {
-  const themeClasses = { dark: "dark", light: "light", auto: "auto" };
+  // 主题 class
+  const themeClasses = {
+    dark: "dark",
+    light: "light",
+    auto: "auto",
+  };
+  // 必要数据
   const htmlElement = document.documentElement;
-  Object.values(themeClasses).forEach((themeClass) => htmlElement.classList.remove(themeClass));
+  console.log("当前模式：", themeType.value);
+  // 清除所有 class
+  Object.values(themeClasses).forEach((themeClass) => {
+    htmlElement.classList.remove(themeClass);
+  });
+  // 添加新的 class
   if (themeType.value === "auto") {
+    // 根据当前操作系统颜色方案更改明暗主题
     const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
     const autoThemeClass = systemPrefersDark ? themeClasses.dark : themeClasses.light;
     htmlElement.classList.add(autoThemeClass);
@@ -98,6 +116,7 @@ const changeSiteThemeType = () => {
   }
 };
 
+// 切换系统字体样式
 const changeSiteFont = () => {
   try {
     const htmlElement = document.documentElement;
@@ -109,36 +128,42 @@ const changeSiteFont = () => {
   }
 };
 
-watch(() => [themeType.value, backgroundType.value], () => changeSiteThemeType());
-watch(() => fontFamily.value, () => changeSiteFont());
+// 监听设置变化
+watch(
+  () => [themeType.value, backgroundType.value],
+  () => changeSiteThemeType(),
+);
+watch(
+  () => fontFamily.value,
+  () => changeSiteFont(),
+);
 
 onMounted(() => {
+  console.log(frontmatter.value, page.value, theme.value);
+  // 全站置灰
   specialDayGray();
+  // 更改主题类别
   changeSiteThemeType();
+  // 切换系统字体样式
   changeSiteFont();
+  // 滚动监听
   window.addEventListener("scroll", calculateScroll);
+  // 右键监听
   window.addEventListener("contextmenu", openRightMenu);
+  // 复制监听
   window.addEventListener("copy", copyTip);
+  // 监听系统颜色
   window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", changeSiteThemeType);
 
-  // --- 特效逻辑 ---
+
   currentSeason.value = getCurrentSeason();
-  const today = new Date();
-  const month = today.getMonth() + 1;
-  const day = today.getDate();
-  if (month === 8 && day === 28) {
-    const todayStr = today.toISOString().split('T')[0];
+  if (isSpecialBirthday()) {
+    const todayStr = new Date().toISOString().split('T')[0];
     if (store.lastBirthdayCelebrated !== todayStr) {
       showBirthdayEffect.value = true;
       store.lastBirthdayCelebrated = todayStr;
     }
   }
-
-  // --- 关键诊断代码 (已更新变量名) ---
-  console.log('季节特效诊断:', {
-    开关是否开启: store.seasonalEffects,
-    当前季节是: currentSeason.value
-  });
 });
 
 onBeforeUnmount(() => {
@@ -153,6 +178,7 @@ onBeforeUnmount(() => {
   max-width: 1400px;
   margin: 0 auto;
   padding: 1rem 2rem;
+  // 手动实现加载动画
   animation: show 0.5s forwards;
   animation-duration: 0.5s;
   display: block;

@@ -1,17 +1,16 @@
 <!-- 全局设置 -->
 <template>
   <div class="settings">
-    <div class="set-btn s-card" @click="store.changeShowStatus('showSettings')">
+    <div class="set-btn s-card" @click="store.changeShowStatus('showSeetings')">
       <i class="iconfont icon-style"></i>
       <span class="set-text">个性化配置</span>
     </div>
     <!-- 设置面板 -->
-    <Modal :show="store.showSettings" title="个性化配置" titleIcon="style"
-      @mask-click="store.changeShowStatus('showSettings')" @modal-close="store.changeShowStatus('showSettings')">
+    <Modal :show="store.showSeetings" title="个性化配置" titleIcon="style"
+      @mask-click="store.changeShowStatus('showSeetings')" @modal-close="store.changeShowStatus('showSeetings')">
       <div class="set-list">
         <span class="title">字体</span>
         <div class="set-item">
-          <!-- ... 字体设置 ... -->
           <span class="set-label">全站字体</span>
           <div class="set-options">
             <span :class="['options', { choose: fontFamily === 'hmos' }]" @click="fontFamily = 'hmos'">
@@ -32,7 +31,6 @@
         </div>
         <span class="title">壁纸个性化</span>
         <div class="set-item">
-          <!-- ... 壁纸设置 ... -->
           <span class="set-label">全站背景</span>
           <div class="set-options">
             <span :class="['options', { choose: backgroundType === 'close' }]" @click="backgroundType = 'close'">
@@ -56,7 +54,6 @@
         </div>
         <span class="title">首页样式</span>
         <div class="set-item">
-          <!-- ... Banner 设置 ... -->
           <span class="set-label">Banner 高度</span>
           <div class="set-options">
             <span :class="['options', { choose: bannerType === 'half' }]" @click="bannerType = 'half'">
@@ -69,7 +66,6 @@
         </div>
         <span class="title">杂项调整</span>
         <div class="set-item">
-          <!-- ... 额外信息显示位置 ... -->
           <span class="set-label">额外信息显示位置</span>
           <div class="set-options">
             <span :class="['options', { choose: infoPosition === 'normal' }]" @click="infoPosition = 'normal'">
@@ -80,16 +76,11 @@
             </span>
           </div>
         </div>
-        <!-- === 季节特效 === -->
         <div class="set-item">
           <span class="set-label">季节氛围特效</span>
           <div class="set-options">
-            <span :class="['options', { choose: seasonalEffects }]" @click="seasonalEffects = true">
-              开启
-            </span>
-            <span :class="['options', { choose: !seasonalEffects }]" @click="seasonalEffects = false">
-              关闭
-            </span>
+            <span :class="['options', { choose: seasonalEffects }]" @click="seasonalEffects = true">开启</span>
+            <span :class="['options', { choose: !seasonalEffects }]" @click="seasonalEffects = false">关闭</span>
           </div>
         </div>
       </div>
@@ -102,20 +93,11 @@ import { storeToRefs } from "pinia";
 import { mainStore } from "@/store";
 
 const store = mainStore();
-const {
-  themeType,
-  fontFamily,
-  fontSize,
-  infoPosition,
-  backgroundType,
-  backgroundUrl,
-  bannerType,
-  seasonalEffects,
-} = storeToRefs(store);
+const { themeType, fontFamily, fontSize, infoPosition, backgroundType, backgroundUrl, bannerType, seasonalEffects } =
+  storeToRefs(store);
 </script>
 
 <style lang="scss" scoped>
-/* 您的样式完全不需要改动 */
 .settings {
   .set-btn {
     display: flex;

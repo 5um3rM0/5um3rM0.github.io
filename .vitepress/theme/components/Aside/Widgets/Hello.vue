@@ -1,3 +1,4 @@
+<!-- 侧边栏 - 欢迎 -->
 <template>
   <div class="hello s-card" @mouseleave="resetHello">
     <span class="tip" @click="changeHello">{{ helloText }}</span>
@@ -13,7 +14,7 @@
         <span class="desc">{{ theme.siteMeta.description }}</span>
       </div>
       <div class="link">
-        <a href="https://github.com/5um3rM0/" target="_blank" class="social-link">
+        <a href="https://github.com/5um3rM0" target="_blank" class="social-link">
           <i class="iconfont icon-github"></i>
         </a>
         <a href="mailto:n.reed2000@outlook.com" target="_blank" class="social-link">
@@ -64,7 +65,6 @@ const changeHello = () => {
 
 // 是否具有用户
 const isHasUser = () => {
-  if (typeof window === 'undefined') return false;
   // 检查本地存储
   const userData = localStorage.getItem("ArtalkUser");
   if (!userData) return false;

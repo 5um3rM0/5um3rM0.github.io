@@ -44,8 +44,9 @@ export const mainStore = defineStore("main", {
       // 站点背景
       backgroundType: "image",
       backgroundUrl: "https://t.alcy.cc/fj",
-      // 季节特效开关
-      seasonalEffects: true, 
+      // 季节特效
+      seasonalEffects: true,
+      // 生日判断
       lastBirthdayCelebrated: null,
     };
   },
