@@ -1,5 +1,6 @@
-import { withPwa } from "@vite-pwa/vitepress";
+import { defineConfig } from "vitepress";
 import { createRssFile } from "./theme/utils/generateRSS.mjs";
+import { generatePWA } from "./theme/utils/generatePWA.mjs";
 import {
   getAllPosts,
   getAllType,
@@ -13,18 +14,11 @@ import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import path from "path";
 
-// 获取全局数据
 const postData = await getAllPosts();
-
-// 获取主题配置
 const themeConfig = await getThemeConfig();
 
 // https://vitepress.dev/reference/site-config
-// 使用 withPwa 包裹一个配置对象，不再使用 defineConfig
-export default withPwa({
-  // ---------------------------------------------
-  // --- 所有 VitePress 配置直接写在这里 ---
-  // ---------------------------------------------
+export default defineConfig({
   title: themeConfig.siteMeta.title,
   description: themeConfig.siteMeta.description,
   lang: themeConfig.siteMeta.lang,
@@ -64,6 +58,7 @@ export default withPwa({
   },
   buildEnd: async (config) => {
     await createRssFile(config, themeConfig);
+    await generatePWA(themeConfig, config.outDir);
   },
   vite: {
     plugins: [
@@ -80,6 +75,7 @@ export default withPwa({
     ],
     resolve: {
       alias: {
+        // eslint-disable-next-line no-undef
         "@": path.resolve(new URL(import.meta.url).pathname, '..', "./theme"),
       },
     },
@@ -100,58 +96,6 @@ export default withPwa({
           pure_funcs: ["console.log"],
         },
       },
-    },
-  },
-
-  // ---------------------------------------------
-  // --- PWA 配置作为 withPwa 的一部分 ---
-  // ---------------------------------------------
-  pwa: {
-    outDir: '.vitepress/dist', // 明确指定 PWA 插件的输出目录
-    registerType: "autoUpdate",
-    selfDestroying: true,
-    workbox: {
-      clientsClaim: true,
-      skipWaiting: true,
-      cleanupOutdatedCaches: true,
-      runtimeCaching: [
-        {
-          urlPattern: /(.*?)\.(woff2|woff|ttf|css)/,
-          handler: "CacheFirst",
-          options: { cacheName: "file-cache" },
-        },
-        {
-          urlPattern: /(.*?)\.(ico|webp|png|jpe?g|svg|gif|bmp|psd|tiff|tga|eps)/,
-          handler: "CacheFirst",
-          options: { cacheName: "image-cache" },
-        },
-        {
-          urlPattern: /^https:\/\/cdn2\.codesign\.qq\.com\/.*/i,
-          handler: "CacheFirst",
-          options: {
-            cacheName: "iconfont-cache",
-            expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 2 },
-            cacheableResponse: { statuses: [0, 200] },
-          },
-        },
-      ],
-      globPatterns: ["**/*.{js,css,html,ico,png,jpg,jpeg,gif,svg,woff2,ttf}"],
-      navigateFallbackDenylist: [/^\/sitemap.xml$/, /^\/rss.xml$/, /^\/robots.txt$/],
-    },
-    manifest: {
-      name: themeConfig.siteMeta.title,
-      short_name: themeConfig.siteMeta.title,
-      description: themeConfig.siteMeta.description,
-      display: "standalone",
-      start_url: "/",
-      theme_color: "#fff",
-      background_color: "#efefef",
-      icons: [
-        { src: "/images/logo/favicon-32x32.webp", sizes: "32x32", type: "image/webp" },
-        { src: "/images/logo/favicon-96x96.webp", sizes: "96x96", type: "image/webp" },
-        { src: "/images/logo/favicon-256x256.webp", sizes: "256x256", type: "image/webp" },
-        { src: "/images/logo/favicon-512x512.webp", sizes: "512x512", type: "image/webp" },
-      ],
     },
   },
 });
