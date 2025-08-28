@@ -7,6 +7,7 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# 依赖和构建产物
 node_modules/
 .DS_Store
 dist
@@ -15,25 +16,18 @@ coverage
 *.local
 test.html
 .env
-.vitepress/dist
-.vitepress/cache
-.vitepress/components.d.ts
-.vitepress/auto-imports.d.ts
+.vitepress/dist        # 忽略 VitePress 构建输出
+.vitepress/cache       # 忽略构建缓存
+.vitepress/components.d.ts  # 自动生成的类型文件
+.vitepress/auto-imports.d.ts  # 自动导入类型文件
+
+# 主题配置相关（保留必要文件）
 themeConfig.mjs
-!.vitepress/theme/assets/themeConfig.mjs
+!.vitepress/theme/assets/themeConfig.mjs  # 例外：保留主题资产中的配置文件
 
-workflows/*
-!deploy-pages.yml
-!merge.yml
-
-posts/*
-!posts/2024-10/1010.md
-!posts/2024-11/110301.md
-
-# Editor directories and files
+# 编辑器配置
 .vscode/*
-.vscode
-!.vscode/extensions.json
+!.vscode/extensions.json  # 保留扩展推荐配置
 .idea
 *.suo
 *.ntvs*
@@ -41,4 +35,5 @@ posts/*
 *.sln
 *.sw?
 
+# 其他
 .vercel
