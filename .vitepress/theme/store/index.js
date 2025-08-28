@@ -48,6 +48,12 @@ export const mainStore = defineStore("main", {
       seasonalEffects: true,
       // 生日判断
       lastBirthdayCelebrated: null,
+      // 季节特效配置
+      effectsSettings: {
+        particleCount: 60,  // 粒子数量 (默认值)
+        interactive: true,    // 是否开启鼠标互动 (默认值)
+        intensity: 1.2,     // 互动强度 (默认值)
+      },
     };
   },
   getters: {},
@@ -123,6 +129,7 @@ export const mainStore = defineStore("main", {
         "backgroundUrl",
         "seasonalEffects",
         "lastBirthdayCelebrated",
+        "effectsSettings",
       ],
     },
   ],

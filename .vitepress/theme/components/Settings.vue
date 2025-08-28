@@ -83,6 +83,31 @@
             <span :class="['options', { choose: !seasonalEffects }]" @click="seasonalEffects = false">关闭</span>
           </div>
         </div>
+
+        <template v-if="seasonalEffects">
+          <div class="set-item">
+            <span class="set-label">粒子数量 ({{ effectsSettings.particleCount }})</span>
+            <div class="set-options slider-container">
+              <VueSlider v-model="effectsSettings.particleCount" :min="10" :max="100" :interval="1" />
+            </div>
+          </div>
+          <div class="set-item">
+            <span class="set-label">鼠标互动</span>
+            <div class="set-options">
+              <span :class="['options', { choose: effectsSettings.interactive }]"
+                @click="effectsSettings.interactive = true">开启</span>
+              <span :class="['options', { choose: !effectsSettings.interactive }]"
+                @click="effectsSettings.interactive = false">关闭</span>
+            </div>
+          </div>
+          <div v-if="effectsSettings.interactive" class="set-item">
+            <span class="set-label">互动强度 ({{ effectsSettings.intensity.toFixed(1) }})</span>
+            <div class="set-options slider-container">
+              <VueSlider v-model="effectsSettings.intensity" :min="0.5" :max="2" :interval="0.1" />
+            </div>
+          </div>
+        </template>
+
       </div>
     </Modal>
   </div>
@@ -91,9 +116,11 @@
 <script setup>
 import { storeToRefs } from "pinia";
 import { mainStore } from "@/store";
+import VueSlider from 'vue-slider-component';
+import 'vue-slider-component/theme/default.css';
 
 const store = mainStore();
-const { themeType, fontFamily, fontSize, infoPosition, backgroundType, backgroundUrl, bannerType, seasonalEffects } =
+const { themeType, fontFamily, fontSize, infoPosition, backgroundType, backgroundUrl, bannerType, seasonalEffects, effectsSettings, } =
   storeToRefs(store);
 </script>
 
@@ -236,5 +263,25 @@ const { themeType, fontFamily, fontSize, infoPosition, backgroundType, backgroun
       }
     }
   }
+}
+
+.slider-container {
+  width: 150px; // 给滑动条一个固定的宽度
+  padding: 0 1rem;
+}
+
+// 覆盖 vue-slider-component 的默认样式，使其与您的主题匹配
+:deep(.vue-slider-rail) {
+  background-color: var(--main-card-border);
+}
+:deep(.vue-slider-process) {
+  background-color: var(--main-color);
+}
+:deep(.vue-slider-dot-handle) {
+  border-color: var(--main-color);
+}
+:deep(.vue-slider-dot-tooltip-inner) {
+  background-color: var(--main-color);
+  border-color: var(--main-color);
 }
 </style>
