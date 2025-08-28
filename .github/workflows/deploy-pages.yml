@@ -40,20 +40,25 @@ jobs:
 
       - name: Deploy to GitHub Pages
         run: |
-          # 拉取已有pages分支
+          # 拉取已有pages分支（克隆时可以不用令牌，拉取公开分支没问题）
           git clone --depth 1 -b pages https://github.com/${{ env.REPO_URL }}.git temp_pages
-          rm -rf temp_pages/*
+          rm -rf temp_pages/*  # 清空旧文件
           
-          # 复制构建产物
+          # 复制构建产物到temp_pages
           cp -r $BUILD_PATH/* temp_pages/
           
-          # 提交更新
+          # 进入目录并配置认证
           cd temp_pages
           echo "$CUSTOM_DOMAIN" > CNAME
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
+          
+          # 关键：重新设置远程仓库地址，带上GITHUB_TOKEN认证
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ env.REPO_URL }}.git
+          
+          # 提交并推送（此时会用令牌认证，有权限推送）
           git add .
           git commit -m "Deploy: $(date -u +'%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
-          git push origin pages
+          git push origin pages  # 现在推送会自动带上令牌
         env:
           CI: true
