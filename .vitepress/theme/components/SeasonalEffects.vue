@@ -65,7 +65,7 @@ const handleMouseMove = (e) => {
   }
 
   @function random-range($min, $max) {
-    @return $min +math.random() * ($max - $min);
+    @return $min + math.random() * ($max - $min);
   }
 
   &.interactive:hover .particle {

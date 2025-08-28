@@ -120,7 +120,10 @@
 <script setup>
 import { storeToRefs } from "pinia";
 import { mainStore } from "@/store";
-import VueSlider from 'vue-slider-component';
+import { defineAsyncComponent } from 'vue';
+const VueSlider = defineAsyncComponent(() => 
+  import('vue-slider-component')
+);
 import 'vue-slider-component/theme/default.css';
 
 const store = mainStore();
