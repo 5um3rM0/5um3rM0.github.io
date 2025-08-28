@@ -205,7 +205,7 @@ export const themeConfig = {
     // 站点简介
     hello: {
       enable: true,
-      text: "5M的碎碎念吧......写点随笔、记录下心情之类的？",
+      text: "这里5M茶馆，请随便坐坐吧~",
     },
     // 目录
     toc: {
