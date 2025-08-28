@@ -28,27 +28,19 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20'
-          cache: 'pnpm'  # 缓存依赖
+          # 保留缓存，但不依赖pnpm全局安装
+          cache: 'npm'
 
-      - name: Install pnpm
+      # 关键：不全局安装pnpm，直接用npx临时调用（绝对不会找不到）
+      - name: Install dependencies and build (using npx)
         run: |
-          npm install -g pnpm
-          echo "PATH=$PATH:$(npm root -g)" >> $GITHUB_ENV
-
-      - name: Verify pnpm
-        run: pnpm --version
-
-      - name: Install dependencies and build
-        run: |
-          pnpm install
-          if ! pnpm build; then
-            echo "❌ 构建失败！请检查文章格式或依赖"
-            exit 1
-          fi
+          # 用npx直接调用pnpm，无需全局安装
+          npx pnpm@8 install  # 指定版本8，避免版本问题
+          npx pnpm@8 build    # 构建项目
 
       - name: Deploy to GitHub Pages
         run: |
-          # 拉取已有pages分支（保留历史）
+          # 拉取已有pages分支
           git clone --depth 1 -b pages https://github.com/${{ env.REPO_URL }}.git temp_pages
           rm -rf temp_pages/*
           
