@@ -3,53 +3,65 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # 推送到 main 分支时触发部署
+      - main
     paths-ignore:
-      - '.github/workflows/**'  # 只排除工作流文件，不要排除 .vitepress！
-      - 'pages/**'
-      - 'public/**'
-      # 删掉原来的 '.vitepress/**'，否则构建时会忽略主题配置
-  workflow_dispatch:  # 允许手动触发
+      - '.github/workflows/**'
+      - 'README.md'
+      - 'LICENSE'
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      REPO_URL: "5um3rM0/5um3rM0.github.io"  # 换成你的仓库名
-      BUILD_PATH: ".vitepress/dist"  # 构建输出路径（不变）
-      CUSTOM_DOMAIN: "5um3rM0.github.io"  # 换成你的域名
+      REPO_URL: "5um3rM0/5um3rM0.github.io"
+      BUILD_PATH: ".vitepress/dist"
+      CUSTOM_DOMAIN: "5um3rM0.github.io"
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
+          cache: 'pnpm'  # 缓存依赖
 
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0  # 新增：获取完整历史，避免构建时读取文章失败
-
-      # 安装 pnpm、安装依赖并构建项目（保留原来的步骤，确保兼容性）
       - name: Install pnpm
-        run: npm install -g pnpm
+        run: |
+          npm install -g pnpm
+          echo "PATH=$PATH:$(npm root -g)" >> $GITHUB_ENV
+
+      - name: Verify pnpm
+        run: pnpm --version
+
       - name: Install dependencies and build
         run: |
           pnpm install
-          pnpm build  # 构建时会自动处理 posts 目录的文章
+          if ! pnpm build; then
+            echo "❌ 构建失败！请检查文章格式或依赖"
+            exit 1
+          fi
 
-      # 部署步骤（不变，原来能跑就别动）
       - name: Deploy to GitHub Pages
         run: |
-          cd $BUILD_PATH       
+          # 拉取已有pages分支（保留历史）
+          git clone --depth 1 -b pages https://github.com/${{ env.REPO_URL }}.git temp_pages
+          rm -rf temp_pages/*
+          
+          # 复制构建产物
+          cp -r $BUILD_PATH/* temp_pages/
+          
+          # 提交更新
+          cd temp_pages
           echo "$CUSTOM_DOMAIN" > CNAME
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
-          git init
           git add .
-          git commit -m "Deploy to GitHub Pages: $(date -u +'%Y-%m-%d %H:%M:%S')"  # 加时间戳，避免提交冲突
-          git checkout -B pages
-          git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ env.REPO_URL }}.git
-          git push --force origin pages
+          git commit -m "Deploy: $(date -u +'%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
+          git push origin pages
         env:
           CI: true
