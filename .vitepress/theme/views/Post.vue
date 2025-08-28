@@ -69,15 +69,6 @@
       </article>
       <Aside showToc />
     </div>
-
-    <Teleport to="body">
-      <FloatingToc>
-        <template #default>
-          <div class="VPDocOutline"></div>
-        </template>
-      </FloatingToc>
-    </Teleport>
-
   </div>
 </template>
 
@@ -87,7 +78,6 @@ import { generateId } from "@/utils/commonTools";
 import initFancybox from "@/utils/initFancybox";
 import ReadTime from "@/components/ReadTime.vue";
 import { calculateReadTime } from '@/utils/readTime';
-import FloatingToc from "@/components/FloatingToc.vue";
 
 const { page, theme, frontmatter } = useData();
 
@@ -117,6 +107,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 @use "../style/post.scss";
+
 .post-content .post-article .other-meta {
   justify-content: flex-end;
 }
