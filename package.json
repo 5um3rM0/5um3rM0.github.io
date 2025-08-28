@@ -47,7 +47,7 @@
   },
   "dependencies": {
     "@types/node": "^22.10.7",
-    "@vite-pwa/vitepress": "^0.4.0",
+    "@vite-pwa/vitepress": "^1.0.0",
     "@vueuse/core": "^11.3.0",
     "algoliasearch": "^5.19.0",
     "dayjs": "^1.11.13",

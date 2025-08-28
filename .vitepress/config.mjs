@@ -120,6 +120,7 @@ export default withPwa(
     },
     // PWA
     pwa: {
+      outDir: '.vitepress/dist',
       registerType: "autoUpdate",
       selfDestroying: true,
       workbox: {
