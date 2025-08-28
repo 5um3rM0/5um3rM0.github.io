@@ -1,4 +1,5 @@
-<!-- AI 摘要（假） -->
+@use "sass:math";
+
 <template>
   <div v-if="frontmatter.articleGPT" class="article-gpt s-card">
     <div class="title">

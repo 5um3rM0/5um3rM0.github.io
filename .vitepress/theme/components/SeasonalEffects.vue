@@ -1,3 +1,5 @@
+@use "sass:math";
+
 <template>
   <div :class="['seasonal-container', season]">
     <div v-for="i in 50" :key="i" class="particle"></div>
@@ -34,7 +36,7 @@ defineProps({
   
   /* SCSS 工具函数 */
   @function random_range($min, $max) {
-    $rand: random();
+    $rand: Math.random();
     $random_range: $min + floor($rand * (($max - $min) + 1));
     @return $random_range;
   }

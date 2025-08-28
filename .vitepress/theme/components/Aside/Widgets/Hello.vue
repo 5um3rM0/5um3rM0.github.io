@@ -1,4 +1,5 @@
-<!-- .vitepress/theme/components/Aside/Widgets/Hello.vue (带随机旗帜版) -->
+@use "sass:math";
+
 <template>
   <div v-if="authorInfo" class="hello s-card">
     <span class="tip" @click="changeHello">{{ helloText }}</span>
