@@ -94,7 +94,7 @@ const show = ref(true);
       $size: math.random(10) + 5px;
       width: $size;
       height: $size;
-      left: #{math.random(100)}vw;
+      left: math.random(100) * 1vw;
       animation-duration: #{math.random(8) + 5}s;
       animation-delay: #{math.random(8)}s;
     }
