@@ -3,12 +3,12 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # 推送到main分支时触发
+      - main
     paths-ignore:
-      - '.github/workflows/**'  # 忽略工作流文件本身的变更
+      - '.github/workflows/**'
       - 'README.md'
       - 'LICENSE'
-  workflow_dispatch:  # 允许手动触发
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -21,22 +21,26 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20'
-          cache: 'pnpm'  # 缓存依赖，加速构建
+          cache: 'pnpm'  # 缓存 pnpm 依赖（关键）
 
+      # 重点：用官方方式安装 pnpm，确保全局可用
       - name: Install pnpm
-        run: npm install -g pnpm
+        uses: pnpm/action-setup@v2  # 使用 pnpm 官方安装 Action
+        with:
+          version: 8  # 指定 pnpm 版本（和本地一致最好）
+          run_install: false  # 暂时不自动安装依赖
 
       - name: Install dependencies
-        run: pnpm install  # 保持与模板一致的依赖安装方式
+        run: pnpm install  # 现在 pnpm 已可用
 
-      - name: Build
-        run: pnpm build  # 保持与模板一致的构建命令
+      - name: Build project
+        run: pnpm build  # 执行构建
 
       - name: Deploy to Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          branch: pages  # 部署到pages分支（与你之前的目标分支一致）
-          folder: .vitepress/dist  # 构建输出目录（与你之前的路径一致）
-          clean: true  # 清理旧文件
-          custom-domain: 5um3rM0.github.io  # 保留你的自定义域名
-          token: ${{ secrets.GITHUB_TOKEN }}  # 自动使用GitHub提供的令牌
+          branch: pages
+          folder: .vitepress/dist
+          clean: true
+          custom-domain: 5um3rM0.github.io
+          token: ${{ secrets.GITHUB_TOKEN }}
