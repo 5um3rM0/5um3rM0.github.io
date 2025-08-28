@@ -33,9 +33,9 @@
       <!-- 全局设置 -->
       <Settings />
     </div>
-    <!-- 季节特效 -->
-    <SeasonalEffects v-if="store.enableSeasonalEffects && currentSeason" :season="currentSeason" />
-    <!-- 生日特效-->
+    <!-- 季节特效 (已更新 v-if 的变量名) -->
+    <SeasonalEffects v-if="store.seasonalEffects && currentSeason" :season="currentSeason" />
+    <!-- 生日特效 -->
     <BirthdayEffects v-if="showBirthdayEffect" />
   </Teleport>
   <!-- 右键菜单 -->
@@ -48,11 +48,7 @@
 import { storeToRefs } from "pinia";
 import { mainStore } from "@/store";
 import { calculateScroll, specialDayGray } from "@/utils/helper";
-
-// 导入阅读进度条组件
 import ReadingProgress from "@/components/ReadingProgress.vue";
-
-// 导入季节和生日相关的工具和组件
 import { getCurrentSeason } from "@/utils/seasonUtils.mjs";
 import SeasonalEffects from "@/components/SeasonalEffects.vue";
 import BirthdayEffects from "@/components/BirthdayEffects.vue";
@@ -60,28 +56,21 @@ import BirthdayEffects from "@/components/BirthdayEffects.vue";
 const route = useRoute();
 const store = mainStore();
 const { frontmatter, page, theme } = useData();
+// 注意：这里没有解构 seasonalEffects，因为我们在 v-if 中直接使用 store.seasonalEffects
 const { loadingStatus, footerIsShow, themeValue, themeType, backgroundType, fontFamily, fontSize } =
   storeToRefs(store);
 
-// 右键菜单
 const rightMenuRef = ref(null);
-
-// 用于控制特效显示的 ref
 const currentSeason = ref(null);
 const showBirthdayEffect = ref(false);
 
-// 判断是否为文章页面
 const isPostPage = computed(() => {
   const routePath = decodeURIComponent(route.path);
   return routePath.includes("/posts/");
 });
 
-// 开启右键菜单
-const openRightMenu = (e) => {
-  rightMenuRef.value?.openRightMenu(e);
-};
+const openRightMenu = (e) => rightMenuRef.value?.openRightMenu(e);
 
-// 复制时触发
 const copyTip = () => {
   const copiedText = window.getSelection().toString();
   if (copiedText.trim().length > 0 && typeof $message !== "undefined") {
@@ -89,7 +78,6 @@ const copyTip = () => {
   }
 };
 
-// 更改正确主题类别
 const changeSiteThemeType = () => {
   const themeClasses = { dark: "dark", light: "light", auto: "auto" };
   const htmlElement = document.documentElement;
@@ -110,7 +98,6 @@ const changeSiteThemeType = () => {
   }
 };
 
-// 切换系统字体样式
 const changeSiteFont = () => {
   try {
     const htmlElement = document.documentElement;
@@ -122,51 +109,36 @@ const changeSiteFont = () => {
   }
 };
 
-// 监听设置变化
-watch(
-  () => [themeType.value, backgroundType.value],
-  () => changeSiteThemeType(),
-);
-watch(
-  () => fontFamily.value,
-  () => changeSiteFont(),
-);
+watch(() => [themeType.value, backgroundType.value], () => changeSiteThemeType());
+watch(() => fontFamily.value, () => changeSiteFont());
 
 onMounted(() => {
-  console.log(frontmatter.value, page.value, theme.value);
-  // 全站置灰
   specialDayGray();
-  // 更改主题类别
   changeSiteThemeType();
-  // 切换系统字体样式
   changeSiteFont();
-  // 滚动监听
   window.addEventListener("scroll", calculateScroll);
-  // 右键监听
   window.addEventListener("contextmenu", openRightMenu);
-  // 复制监听
   window.addEventListener("copy", copyTip);
-  // 监听系统颜色
   window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", changeSiteThemeType);
 
   // --- 特效逻辑 ---
-  // 1. 设置季节特效
   currentSeason.value = getCurrentSeason();
-
-  // 2. 检查并触发小露的生日特效
   const today = new Date();
   const month = today.getMonth() + 1;
   const day = today.getDate();
-
-  // 检查是否是 8月28日
   if (month === 8 && day === 28) {
-    const todayStr = today.toISOString().split('T')[0]; // 获取 'YYYY-MM-DD' 格式的今天日期
-    // 检查 Pinia store 中记录的日期是否不是今天
+    const todayStr = today.toISOString().split('T')[0];
     if (store.lastBirthdayCelebrated !== todayStr) {
-      showBirthdayEffect.value = true; // 触发特效显示
-      store.lastBirthdayCelebrated = todayStr; // 更新 store，记录今天已经庆祝过了
+      showBirthdayEffect.value = true;
+      store.lastBirthdayCelebrated = todayStr;
     }
   }
+
+  // --- 关键诊断代码 (已更新变量名) ---
+  console.log('季节特效诊断:', {
+    开关是否开启: store.seasonalEffects,
+    当前季节是: currentSeason.value
+  });
 });
 
 onBeforeUnmount(() => {
