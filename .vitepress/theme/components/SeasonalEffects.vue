@@ -3,10 +3,10 @@
     :class="['seasonal-container', season, { 'interactive': interactive }]"
     :style="[
       { opacity: isVisible ? 1 : 0 },
+      { '--intensity': intensity },  // 将将Vue的intensity prop传递为CSS变量
       interactive ? { 
         '--mouse-x': `${mousePosition.x * 100}%`,
-        '--mouse-y': `${mousePosition.y * 100}%`,
-        '--intensity': intensity
+        '--mouse-y': `${mousePosition.y * 100}%`
       } : {}
     ]"
     @mousemove="handleMouseMove"
@@ -89,7 +89,7 @@ const handleMouseMove = (e) => {
   // 定义CSS变量默认值
   --mouse-x: 50%;
   --mouse-y: 50%;
-  --intensity: 1;
+  --intensity: 1;  // 默认强度值
   
   .particle {
     position: absolute;
@@ -114,7 +114,7 @@ const handleMouseMove = (e) => {
         (0.5 - abs(#{random-range(-0.5, 0.5)})) * 0.1
       );
       
-      // 每隔一定数量的粒子应用交互效果（随机选择）
+      // 随机选择部分粒子应用交互效果
       @if math.random() > 0.7 {
         transform: translate(var(--offset-x), var(--offset-y));
       }
@@ -128,26 +128,26 @@ const handleMouseMove = (e) => {
         &:nth-child(#{$i}) {
           $type: if(math.random() > 0.7, "bud", "petal");
           left: random-range(0, 100) * 1%;
-          top: -10%;
+          top: -10 * 1%;
           opacity: random-range(0.5, 0.8);
           
           @if $type == "petal" {
-            width: #{random-range(6, 12)}px;
-            height: #{random-range(6, 12)}px;
+            width: random-range(6, 12) * 1px;
+            height: random-range(6, 12) * 1px;
             background-color: if(math.random() > 0.5, #ffccd5, #e6f7e9);
             border-radius: 80% 0 80% 0;
-            transform: rotate(#{random-range(0, 360)}deg);
-            animation: spring-float #{random-range(12, 25) / $intensity}s linear infinite;
-            animation-delay: -#{random-range(0, 25)}s;
+            transform: rotate(random-range(0, 360) * 1deg);
+            animation: spring-float calc(#{random-range(12, 25)}s / var(--intensity)) linear infinite;
+            animation-delay: -random-range(0, 25) * 1s;
           }
           
           @if $type == "bud" {
-            width: #{random-range(3, 6)}px;
-            height: #{random-range(8, 15)}px;
+            width: random-range(3, 6) * 1px;
+            height: random-range(8, 15) * 1px;
             background: linear-gradient(to bottom, #8bc34a, #4caf50);
             border-radius: 0 0 5px 5px;
-            animation: spring-rise #{random-range(15, 30) / $intensity}s linear infinite;
-            animation-delay: -#{random-range(0, 30)}s;
+            animation: spring-rise calc(#{random-range(15, 30)}s / var(--intensity)) linear infinite;
+            animation-delay: -random-range(0, 30) * 1s;
           }
         }
       }
@@ -165,41 +165,41 @@ const handleMouseMove = (e) => {
           opacity: 0;
           
           @if $type == "glow" {
-            bottom: -15%;
-            width: #{random-range(15, 40)}px;
-            height: #{random-range(15, 40)}px;
+            bottom: -15 * 1%;
+            width: random-range(15, 40) * 1px;
+            height: random-range(15, 40) * 1px;
             background: radial-gradient(circle, 
                       rgba(255, 240, 150, random-range(0.4, 0.7)) 0%, 
                       rgba(255, 223, 100, 0) 70%);
             border-radius: 50%;
-            animation: summer-rise #{random-range(20, 40) / $intensity}s linear infinite;
-            animation-delay: -#{random-range(0, 40)}s;
+            animation: summer-rise calc(#{random-range(20, 40)}s / var(--intensity)) linear infinite;
+            animation-delay: -random-range(0, 40) * 1s;
           }
           
           @if $type == "sunray" {
             top: random-range(5, 20) * 1%;
-            right: -5%;
-            width: #{random-range(100, 200)}px;
+            right: -5 * 1%;
+            width: random-range(100, 200) * 1px;
             height: 2px;
             background: linear-gradient(to right, 
                       rgba(255, 223, 100, 0), 
                       rgba(255, 223, 100, random-range(0.2, 0.5)), 
                       rgba(255, 223, 100, 0));
             transform-origin: left center;
-            transform: rotate(#{random-range(-45, 45)}deg);
-            animation: summer-ray #{random-range(30, 60) / $intensity}s linear infinite;
-            animation-delay: -#{random-range(0, 60)}s;
+            transform: rotate(random-range(-45, 45) * 1deg);
+            animation: summer-ray calc(#{random-range(30, 60)}s / var(--intensity)) linear infinite;
+            animation-delay: -random-range(0, 60) * 1s;
           }
           
           @if $type == "bird" {
             top: random-range(10, 30) * 1%;
-            left: -10%;
-            width: #{random-range(15, 30)}px;
-            height: #{random-range(5, 10)}px;
+            left: -10 * 1%;
+            width: random-range(15, 30) * 1px;
+            height: random-range(5, 10) * 1px;
             border-radius: 50% / 30%;
             background-color: rgba(50, 50, 50, random-range(0.3, 0.6));
-            animation: summer-fly #{random-range(40, 80) / $intensity}s linear infinite;
-            animation-delay: -#{random-range(0, 80)}s;
+            animation: summer-fly calc(#{random-range(40, 80)}s / var(--intensity)) linear infinite;
+            animation-delay: -random-range(0, 80) * 1s;
             
             &::before, &::after {
               content: '';
@@ -234,19 +234,19 @@ const handleMouseMove = (e) => {
         &:nth-child(#{$i}) {
           $type: if(math.random() > 0.85, "fruit", "leaf");
           left: random-range(0, 100) * 1%;
-          top: -10%;
+          top: -10 * 1%;
           opacity: random-range(0.7, 0.9);
           
           @if $type == "leaf" {
-            width: #{random-range(12, 20)}px;
-            height: #{random-range(10, 18)}px;
+            width: random-range(12, 20) * 1px;
+            height: random-range(10, 18) * 1px;
             background-color: if(math.random() > 0.7, 
                               if(math.random() > 0.5, #d97706, #b45309),
                               if(math.random() > 0.5, #f59e0b, #ea580c));
             border-radius: 10% 70% 30% 60%;
-            transform: rotate(#{random-range(0, 360)}deg);
-            animation: autumn-fall #{random-range(10, 25) / $intensity}s linear infinite;
-            animation-delay: -#{random-range(0, 25)}s;
+            transform: rotate(random-range(0, 360) * 1deg);
+            animation: autumn-fall calc(#{random-range(10, 25)}s / var(--intensity)) linear infinite;
+            animation-delay: -random-range(0, 25) * 1s;
             
             &::before {
               content: '';
@@ -256,13 +256,13 @@ const handleMouseMove = (e) => {
               background-color: rgba(0,0,0,0.2);
               top: 50%;
               left: 20%;
-              transform: rotate(#{random-range(-30, 30)}deg);
+              transform: rotate(random-range(-30, 30) * 1deg);
             }
           }
           
           @if $type == "fruit" {
-            width: #{random-range(6, 12)}px;
-            height: #{random-range(6, 12)}px;
+            width: random-range(6, 12) * 1px;
+            height: random-range(6, 12) * 1px;
             background-color: if(math.random() > 0.5, #dc2626, #9b2226);
             border-radius: 50%;
             
@@ -277,8 +277,8 @@ const handleMouseMove = (e) => {
               transform: rotate(45deg);
             }
             
-            animation: autumn-sway #{random-range(8, 18) / $intensity}s linear infinite;
-            animation-delay: -#{random-range(0, 18)}s;
+            animation: autumn-sway calc(#{random-range(8, 18)}s / var(--intensity)) linear infinite;
+            animation-delay: -random-range(0, 18) * 1s;
           }
         }
       }
@@ -296,19 +296,19 @@ const handleMouseMove = (e) => {
           opacity: random-range(0.6, 0.9);
           
           @if $type == "flake" {
-            top: -5%;
-            width: #{random-range(2, 7)}px;
-            height: #{random-range(2, 7)}px;
+            top: -5 * 1%;
+            width: random-range(2, 7) * 1px;
+            height: random-range(2, 7) * 1px;
             background-color: white;
             border-radius: 50%;
-            animation: winter-fall #{random-range(10, 30) / $intensity}s linear infinite;
-            animation-delay: -#{random-range(0, 30)}s;
+            animation: winter-fall calc(#{random-range(10, 30)}s / var(--intensity)) linear infinite;
+            animation-delay: -random-range(0, 30) * 1s;
           }
           
           @if $type == "flake-cluster" {
-            top: -8%;
-            width: #{random-range(8, 15)}px;
-            height: #{random-range(8, 15)}px;
+            top: -8 * 1%;
+            width: random-range(8, 15) * 1px;
+            height: random-range(8, 15) * 1px;
             
             &::before, &::after {
               content: '';
@@ -331,14 +331,14 @@ const handleMouseMove = (e) => {
               right: 10%;
             }
             
-            animation: winter-drift #{random-range(15, 35) / $intensity}s linear infinite;
-            animation-delay: -#{random-range(0, 35)}s;
+            animation: winter-drift calc(#{random-range(15, 35)}s / var(--intensity)) linear infinite;
+            animation-delay: -random-range(0, 35) * 1s;
           }
           
           @if $type == "frost" {
             top: random-range(0, 30) * 1%;
-            width: #{random-range(10, 25)}px;
-            height: #{random-range(10, 25)}px;
+            width: random-range(10, 25) * 1px;
+            height: random-range(10, 25) * 1px;
             border: 1px solid rgba(255, 255, 255, 0.7);
             border-radius: 50% 50% 30% 30%;
             
@@ -364,8 +364,8 @@ const handleMouseMove = (e) => {
               transform: translateY(-50%);
             }
             
-            animation: winter-sway #{random-range(8, 15) / $intensity}s ease-in-out infinite alternate;
-            animation-delay: -#{random-range(0, 15)}s;
+            animation: winter-sway calc(#{random-range(8, 15)}s / var(--intensity)) ease-in-out infinite alternate;
+            animation-delay: -random-range(0, 15) * 1s;
           }
         }
       }
@@ -373,7 +373,7 @@ const handleMouseMove = (e) => {
   }
 }
 
-// 动画关键帧保持不变
+// 动画关键帧定义
 @keyframes spring-float {
   0% { transform: translateY(0) rotate(0deg); opacity: 0; }
   10% { opacity: 0.8; }
@@ -396,17 +396,17 @@ const handleMouseMove = (e) => {
 }
 
 @keyframes summer-ray {
-  0% { transform: rotate(#{random-range(-45, 45)}deg) scaleX(0); opacity: 0; }
+  0% { transform: rotate(random-range(-45, 45) * 1deg) scaleX(0); opacity: 0; }
   20% { opacity: 0.5; }
   80% { opacity: 0.5; }
-  100% { transform: rotate(#{random-range(-45, 45)}deg) scaleX(1); opacity: 0; }
+  100% { transform: rotate(random-range(-45, 45) * 1deg) scaleX(1); opacity: 0; }
 }
 
 @keyframes summer-fly {
   0% { transform: translateX(0) translateY(0); opacity: 0; }
   10% { opacity: 0.6; }
   90% { opacity: 0.6; }
-  100% { transform: translateX(calc(100vw + 50px)) translateY(#{random-range(-200, 200)}px); opacity: 0; }
+  100% { transform: translateX(calc(100vw + 50px)) translateY(random-range(-200, 200) * 1px); opacity: 0; }
 }
 
 @keyframes autumn-fall {
@@ -419,16 +419,16 @@ const handleMouseMove = (e) => {
 @keyframes autumn-sway {
   0% { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0; }
   10% { opacity: 0.9; }
-  50% { transform: translateY(50vh) rotate(180deg) translateX(#{random-range(-100, 100)}px); }
+  50% { transform: translateY(50vh) rotate(180deg) translateX(random-range(-100, 100) * 1px); }
   90% { opacity: 0.9; }
-  100% { transform: translateY(110vh) rotate(360deg) translateX(#{random-range(-200, 200)}px); opacity: 0; }
+  100% { transform: translateY(110vh) rotate(360deg) translateX(random-range(-200, 200) * 1px); opacity: 0; }
 }
 
 @keyframes winter-fall {
   0% { transform: translateY(0) translateX(0); opacity: 0; }
   10% { opacity: 0.9; }
   90% { opacity: 0.9; }
-  100% { transform: translateY(110vh) translateX(#{random-range(-100, 100)}px); opacity: 0; }
+  100% { transform: translateY(110vh) translateX(random-range(-100, 100) * 1px); opacity: 0; }
 }
 
 @keyframes winter-drift {
