@@ -88,7 +88,9 @@
           <div class="set-item">
             <span class="set-label">粒子数量 ({{ effectsSettings.particleCount }})</span>
             <div class="set-options slider-container">
-              <VueSlider v-model="effectsSettings.particleCount" :min="10" :max="100" :interval="1" />
+              <ClientOnly>
+                <VueSlider v-model="effectsSettings.particleCount" :min="10" :max="100" :interval="1" />
+              </ClientOnly>
             </div>
           </div>
           <div class="set-item">
@@ -103,7 +105,9 @@
           <div v-if="effectsSettings.interactive" class="set-item">
             <span class="set-label">互动强度 ({{ effectsSettings.intensity.toFixed(1) }})</span>
             <div class="set-options slider-container">
-              <VueSlider v-model="effectsSettings.intensity" :min="0.5" :max="2" :interval="0.1" />
+              <ClientOnly>
+                <VueSlider v-model="effectsSettings.intensity" :min="0.5" :max="2" :interval="0.1" />
+              </ClientOnly>
             </div>
           </div>
         </template>
@@ -274,12 +278,15 @@ const { themeType, fontFamily, fontSize, infoPosition, backgroundType, backgroun
 :deep(.vue-slider-rail) {
   background-color: var(--main-card-border);
 }
+
 :deep(.vue-slider-process) {
   background-color: var(--main-color);
 }
+
 :deep(.vue-slider-dot-handle) {
   border-color: var(--main-color);
 }
+
 :deep(.vue-slider-dot-tooltip-inner) {
   background-color: var(--main-color);
   border-color: var(--main-color);
