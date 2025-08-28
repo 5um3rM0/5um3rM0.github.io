@@ -54,7 +54,7 @@
       <article class="post-article s-card">
         <!-- 过期提醒 -->
         <div class="expired s-card" v-if="postMetaData?.expired >= 180">
-          本文发表于 <strong>{{ postMetaData?.expired }}</strong> 天前，其中的信息可能已经事过境迁
+          本文发表于 <strong>{{ postMetaData?.expired }}</strong> 天前，注意时效性哦
         </div>
         <!-- AI 摘要 -->
         <ArticleGPT />
@@ -78,7 +78,7 @@
             </a>
           </div>
           <a
-            href="https://eqnxweimkr5.feishu.cn/share/base/form/shrcnCXCPmxCKKJYI3RKUfefJre"
+            href="https://baidu.com"
             class="report"
             target="_blank"
           >

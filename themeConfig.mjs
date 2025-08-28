@@ -121,21 +121,6 @@ export const themeConfig = {
       name: "小工具",
       list: [
         {
-          icon: "https://pan.811520.xyz/2024-10/插入链接.webp",
-          name: "短链生成",
-          url: "https://slink.yuzong.nyc.mn/duanlian",  
-        },
-        {
-          icon: "https://ctool.dev/favicon.ico",
-          name: "开发工具",
-          url: "https://ctool.dev/",
-        },
-        {
-          icon: "https://suburl.v1.mk/favicon.ico",
-          name: "图片压缩",
-          url: "https://imgtool.v1.mk/",
-        },
-        {
           icon: "https://github.githubassets.com/assets/apple-touch-icon-144x144-b882e354c005.png",
           name: "博客仓库",
           url: "https://github.com/5um3rM0/5um3rM0.github.io",
@@ -150,14 +135,11 @@ export const themeConfig = {
     // 是否开启封面显示
     showCover: {
       // 是否开启封面显示 文章不设置cover封面会显示异常，可以设置下方默认封面
-      enable: true,
+      enable: false,
       // 封面布局方式: left | right | both
       coverLayout: 'left',
       // 默认封面(随机展示)
-      defaultCover: [
-        'https://pan.811520.xyz/2024-10/1728279557702.webp',
-        'https://pan.811520.xyz/2024-10/1728387512098.webp'
-      ]
+      defaultCover: []
     }
   },
   // 页脚信息
@@ -187,10 +169,10 @@ export const themeConfig = {
       {
         text: "我的专栏",
         items: [
-          { text: "占位1", link: "" },
-          { text: "占位2", link: "" },
-          { text: "占位3", link: "", newTab: true },
-          { text: "占位4", link: "/pages/categories/工作备忘" },
+          { text: "碎碎念", link: "/pages/categories/碎碎念" },
+          { text: "存档处", link: "/pages/categories/存档处" },
+          { text: "胡思乱想", link: "/pages/categories/胡思乱想"},
+          { text: "和TA的日常", link: "/pages/categories/和TA的日常" },
         ],
       },
     ],

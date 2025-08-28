@@ -70,7 +70,7 @@ const copyTip = () => {
   const copiedText = window.getSelection().toString();
   // 检查文本内容是否不为空
   if (copiedText.trim().length > 0 && typeof $message !== "undefined") {
-    $message.success("复制成功，在转载时请标注本文地址");
+    $message.success("复制成功，转载注明5M茶馆谢谢喵");
   }
 };
 
