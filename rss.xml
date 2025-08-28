@@ -4,7 +4,7 @@
         <title>5M茶馆</title>
         <link>https://5um3rM0.github.io</link>
         <description>Just 5um3rM0</description>
-        <lastBuildDate>Thu, 28 Aug 2025 08:14:18 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 28 Aug 2025 08:59:57 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>5um3rM0</generator>
         <language>zh</language>
@@ -55,6 +55,14 @@
             <guid>https://5um3rM0.github.io/posts/2025/0006</guid>
             <pubDate>Thu, 28 Aug 2025 00:00:00 GMT</pubDate>
             <description><![CDATA[Curve 主题的 Markdown 扩展标签使用手册，涵盖了多种自定义容器、组件及数学公式的写法]]></description>
+            <author>n.reed2000@outlook.com (5um3rM0)</author>
+        </item>
+        <item>
+            <title><![CDATA[《5M茶馆藏・埃涅阿斯纪（俗谈本）：大事记》]]></title>
+            <link>https://5um3rM0.github.io/posts/2025/0007</link>
+            <guid>https://5um3rM0.github.io/posts/2025/0007</guid>
+            <pubDate>Thu, 28 Aug 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[按时间顺序梳理的5M人生大事记]]></description>
             <author>n.reed2000@outlook.com (5um3rM0)</author>
         </item>
     </channel>
