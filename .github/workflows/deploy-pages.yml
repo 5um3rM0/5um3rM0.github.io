@@ -3,56 +3,40 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # 每次推送到 main 分支时触发部署
+      - main  # 推送到main分支时触发
     paths-ignore:
-      - '.github/**'  # 替换为要排除的文件或文件夹路径
-      - 'pages/**'
-      - 'public/**'
-      - '.vitepress/**'
+      - '.github/workflows/**'  # 忽略工作流文件本身的变更
+      - 'README.md'
+      - 'LICENSE'
   workflow_dispatch:  # 允许手动触发
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
-    env:
-      REPO_URL: "5um3rM0/5um3rM0.github.io"  # 远程仓库的 URL
-      BUILD_PATH: ".vitepress/dist"  # 构建输出路径
-      CUSTOM_DOMAIN: "5um3rM0.github.io"  # 自定义域名
-
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
+          cache: 'pnpm'  # 缓存依赖，加速构建
 
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      # 安装 pnpm、安装依赖并构建项目
       - name: Install pnpm
         run: npm install -g pnpm
-      - name: Install dependencies and build
-        run: |
-          pnpm install
-          pnpm build
 
-      # 将静态文件部署到 pages 分支
-      - name: Deploy to GitHub Pages
-        run: |
-          cd $BUILD_PATH       
-          echo "$CUSTOM_DOMAIN" > CNAME  # 使用自定义域名
-          git config --global user.email "actions@github.com"
-          git config --global user.name "GitHub Actions"
-          # 初始化一个新的 git 仓库
-          git init
-          git add .
-          git commit -m "Deploy to GitHub Pages"
-          # 创建 pages 分支（如果不存在）
-          git checkout -B pages
+      - name: Install dependencies
+        run: pnpm install  # 保持与模板一致的依赖安装方式
 
-          # 添加远程仓库并推送到 pages 分支
-          git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ env.REPO_URL }}.git
-          git push --force origin pages
+      - name: Build
+        run: pnpm build  # 保持与模板一致的构建命令
 
-        env:
-          CI: true
+      - name: Deploy to Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: pages  # 部署到pages分支（与你之前的目标分支一致）
+          folder: .vitepress/dist  # 构建输出目录（与你之前的路径一致）
+          clean: true  # 清理旧文件
+          custom-domain: 5um3rM0.github.io  # 保留你的自定义域名
+          token: ${{ secrets.GITHUB_TOKEN }}  # 自动使用GitHub提供的令牌
