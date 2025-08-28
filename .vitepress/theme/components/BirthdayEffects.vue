@@ -33,6 +33,8 @@ const close = () => {
 </script>
 
 <style lang="scss" scoped>
+@use "sass:math";
+
 .birthday-wrapper {
   position: fixed;
   top: 0;
@@ -89,7 +91,7 @@ const close = () => {
     width: 8px;
     height: 15px;
     border-radius: 0;
-    background-color: hsl(random(360), 90%, 70%);
+    background-color: hsl(math.random(360), 90%, 70%);
     animation: fall 8s infinite ease-out;
   }
   &:nth-child(2n + 1) { // 上升光点
@@ -100,11 +102,11 @@ const close = () => {
   }
   @for $i from 1 through 100 {
     &:nth-child(#{$i}) {
-      $size: random(10) + 5px;
+      $size: math.random(10) + 5px;
       width: $size; height: $size;
-      left: #{random(100)}vw;
-      animation-duration: #{random(8) + 5}s;
-      animation-delay: #{random(8)}s;
+      left: #{math.random(100)}vw;
+      animation-duration: #{math.random(8) + 5}s;
+      animation-delay: #{math.random(8)}s;
     }
   }
 }

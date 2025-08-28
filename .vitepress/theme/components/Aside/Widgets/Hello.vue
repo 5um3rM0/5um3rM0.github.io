@@ -1,5 +1,3 @@
-@use "sass:math";
-
 <template>
   <div v-if="authorInfo" class="hello s-card">
     <span class="tip" @click="changeHello">{{ helloText }}</span>

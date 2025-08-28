@@ -44,6 +44,8 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+@use "sass:math";
+
 .not-found {
   position: relative;
   display: flex;
@@ -75,15 +77,15 @@ onMounted(() => {
 
     @for $i from 1 through 50 {
       &:nth-child(#{$i}) {
-        $size: random(3) + 1px;
-        top: #{random(100)}vh;
-        left: #{random(100)}vw;
+        $size: math.random(3) + 1px;
+        top: #{math.random(100)}vh;
+        left: #{math.random(100)}vw;
         width: $size;
         height: $size;
-        animation-duration: #{random(20) + 20}s;
-        animation-delay: -#{random(40)}s;
+        animation-duration: #{math.random(20) + 20}s;
+        animation-delay: -#{math.random(40)}s;
         // 让不同粒子对鼠标的反应强度不同
-        transform: translate(calc(var(--mouse-x) * -#{random(30) + 10}px), calc(var(--mouse-y) * -#{random(30) + 10}px));
+        transform: translate(calc(var(--mouse-x) * -#{math.random(30) + 10}px), calc(var(--mouse-y) * -#{math.random(30) + 10}px));
       }
     }
   }

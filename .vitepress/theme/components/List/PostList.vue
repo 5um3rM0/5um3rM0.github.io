@@ -1,5 +1,3 @@
-@use "sass:math";
-
 <template>
   <div class="post-lists" :class="{'layout-grid': layoutType === 'twoColumns'}" :style="gridStyle">
     <div
