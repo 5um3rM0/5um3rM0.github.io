@@ -3,44 +3,53 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main
+      - main  # 推送到 main 分支时触发部署
     paths-ignore:
-      - '.github/workflows/**'
-      - 'README.md'
-      - 'LICENSE'
-  workflow_dispatch:
+      - '.github/workflows/**'  # 只排除工作流文件，不要排除 .vitepress！
+      - 'pages/**'
+      - 'public/**'
+      # 删掉原来的 '.vitepress/**'，否则构建时会忽略主题配置
+  workflow_dispatch:  # 允许手动触发
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    env:
+      REPO_URL: "5um3rM0/5um3rM0.github.io"  # 换成你的仓库名
+      BUILD_PATH: ".vitepress/dist"  # 构建输出路径（不变）
+      CUSTOM_DOMAIN: "5um3rM0.github.io"  # 换成你的域名
 
+    steps:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
-          cache: 'pnpm'  # 缓存 pnpm 依赖（关键）
 
-      # 重点：用官方方式安装 pnpm，确保全局可用
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # 新增：获取完整历史，避免构建时读取文章失败
+
+      # 安装 pnpm、安装依赖并构建项目（保留原来的步骤，确保兼容性）
       - name: Install pnpm
-        uses: pnpm/action-setup@v2  # 使用 pnpm 官方安装 Action
-        with:
-          version: 8  # 指定 pnpm 版本（和本地一致最好）
-          run_install: false  # 暂时不自动安装依赖
+        run: npm install -g pnpm
+      - name: Install dependencies and build
+        run: |
+          pnpm install
+          pnpm build  # 构建时会自动处理 posts 目录的文章
 
-      - name: Install dependencies
-        run: pnpm install  # 现在 pnpm 已可用
-
-      - name: Build project
-        run: pnpm build  # 执行构建
-
-      - name: Deploy to Pages
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          branch: pages
-          folder: .vitepress/dist
-          clean: true
-          custom-domain: 5um3rM0.github.io
-          token: ${{ secrets.GITHUB_TOKEN }}
+      # 部署步骤（不变，原来能跑就别动）
+      - name: Deploy to GitHub Pages
+        run: |
+          cd $BUILD_PATH       
+          echo "$CUSTOM_DOMAIN" > CNAME
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git init
+          git add .
+          git commit -m "Deploy to GitHub Pages: $(date -u +'%Y-%m-%d %H:%M:%S')"  # 加时间戳，避免提交冲突
+          git checkout -B pages
+          git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ env.REPO_URL }}.git
+          git push --force origin pages
+        env:
+          CI: true
