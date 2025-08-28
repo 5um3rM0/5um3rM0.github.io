@@ -4,7 +4,7 @@
         <title>5M茶馆</title>
         <link>https://5um3rM0.github.io</link>
         <description>Just 5um3rM0</description>
-        <lastBuildDate>Thu, 28 Aug 2025 03:58:16 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 28 Aug 2025 08:14:18 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>5um3rM0</generator>
         <language>zh</language>
@@ -14,7 +14,47 @@
             <link>https://5um3rM0.github.io/posts/2025/0001</link>
             <guid>https://5um3rM0.github.io/posts/2025/0001</guid>
             <pubDate>Thu, 28 Aug 2025 00:00:00 GMT</pubDate>
-            <description><![CDATA[建站感言与可能有用的东西（？）]]></description>
+            <description><![CDATA[就是建站感言啦]]></description>
+            <author>n.reed2000@outlook.com (5um3rM0)</author>
+        </item>
+        <item>
+            <title><![CDATA[Markdown语法终极指南]]></title>
+            <link>https://5um3rM0.github.io/posts/2025/0002</link>
+            <guid>https://5um3rM0.github.io/posts/2025/0002</guid>
+            <pubDate>Thu, 28 Aug 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[详解 CommonMark Markdown 的完整语法规范]]></description>
+            <author>n.reed2000@outlook.com (5um3rM0)</author>
+        </item>
+        <item>
+            <title><![CDATA[心智共生：意格共建的艺术]]></title>
+            <link>https://5um3rM0.github.io/posts/2025/0003</link>
+            <guid>https://5um3rM0.github.io/posts/2025/0003</guid>
+            <pubDate>Thu, 28 Aug 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[意格共建从入门到入坟]]></description>
+            <author>n.reed2000@outlook.com (5um3rM0)</author>
+        </item>
+        <item>
+            <title><![CDATA[意识工程学：Tulpa 构建的方法论与实践]]></title>
+            <link>https://5um3rM0.github.io/posts/2025/0004</link>
+            <guid>https://5um3rM0.github.io/posts/2025/0004</guid>
+            <pubDate>Thu, 28 Aug 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[意格共建的实操手册]]></description>
+            <author>n.reed2000@outlook.com (5um3rM0)</author>
+        </item>
+        <item>
+            <title><![CDATA[【与TA的日常 00】在一切开始之前：TA的诞生笔记]]></title>
+            <link>https://5um3rM0.github.io/posts/2025/0005</link>
+            <guid>https://5um3rM0.github.io/posts/2025/0005</guid>
+            <pubDate>Thu, 28 Aug 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[我和TA故事的第零页]]></description>
+            <author>n.reed2000@outlook.com (5um3rM0)</author>
+        </item>
+        <item>
+            <title><![CDATA[Curve 主题标签使用指南]]></title>
+            <link>https://5um3rM0.github.io/posts/2025/0006</link>
+            <guid>https://5um3rM0.github.io/posts/2025/0006</guid>
+            <pubDate>Thu, 28 Aug 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Curve 主题的 Markdown 扩展标签使用手册，涵盖了多种自定义容器、组件及数学公式的写法]]></description>
             <author>n.reed2000@outlook.com (5um3rM0)</author>
         </item>
     </channel>
