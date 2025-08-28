@@ -31,11 +31,11 @@
       <!-- 全局设置 -->
       <Settings />
     </div>
-    <!-- 季节特效 -->
-    <SeasonalEffects v-if="store.seasonalEffects && currentSeason" :season="currentSeason" />
     <!-- 生日特效 -->
     <BirthdayEffects v-if="showBirthdayEffect" />
   </Teleport>
+  <!-- 季节特效 -->
+  <SeasonalEffects v-if="store.seasonalEffects && currentSeason" :season="currentSeason" />
   <!-- 右键菜单 -->
   <RightMenu ref="rightMenuRef" />
   <!-- 全局消息 -->
