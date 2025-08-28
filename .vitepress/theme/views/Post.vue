@@ -71,7 +71,11 @@
     </div>
 
     <Teleport to="body">
-      <FloatingToc />
+      <FloatingToc>
+        <template #default>
+          <div class="VPDocOutline"></div>
+        </template>
+      </FloatingToc>
     </Teleport>
 
   </div>
