@@ -36,7 +36,7 @@ defineProps({
   
   /* SCSS 工具函数 */
   @function random_range($min, $max) {
-    $rand: Math.random();
+    $rand: math.random();
     $random_range: $min + floor($rand * (($max - $min) + 1));
     @return $random_range;
   }
