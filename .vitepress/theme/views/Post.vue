@@ -3,41 +3,25 @@
     <div class="post-meta">
       <div class="meta">
         <div class="categories">
-          <a
-            v-for="(item, index) in postMetaData.categories"
-            :key="index"
-            :href="`/pages/categories/${item}`"
-            class="cat-item"
-          >
+          <a v-for="(item, index) in postMetaData.categories" :key="index" :href="`/pages/categories/${item}`"
+            class="cat-item">
             <i class="iconfont icon-folder" />
             <span class="name">{{ item }}</span>
           </a>
         </div>
         <div class="tags">
-          <a
-            v-for="(item, index) in postMetaData.tags"
-            :key="index"
-            :href="`/pages/tags/${item}`"
-            class="tag-item"
-          >
+          <a v-for="(item, index) in postMetaData.tags" :key="index" :href="`/pages/tags/${item}`" class="tag-item">
             <i class="iconfont icon-hashtag" />
             <span class="name">{{ item }}</span>
           </a>
         </div>
       </div>
-      <h1 class="title">
-        {{ postMetaData.title || "未命名文章" }}
-      </h1>
+      <h1 class="title">{{ postMetaData.title || "未命名文章" }}</h1>
       <div class="other-meta">
         <span class="meta date">
           <i class="iconfont icon-date" />
           {{ formatTimestamp(postMetaData.date) }}
         </span>
-        <ReadTime 
-          class="meta read-time" 
-          :readTime="readTime" 
-          :wordCount="wordCount" 
-        />
         <span class="update meta">
           <i class="iconfont icon-time" />
           {{ formatTimestamp(page?.lastUpdated || postMetaData.lastModified) }}
@@ -50,15 +34,12 @@
           本文发表于 <strong>{{ postMetaData?.expired }}</strong> 天前，注意时效性哦
         </div>
         <ArticleGPT />
+        <ReadTime class="meta read-time" :readTime="readTime" :wordCount="wordCount" />
         <Content id="page-content" class="markdown-main-style" />
         <References />
         <Copyright v-if="frontmatter.copyright !== false" :postData="postMetaData" />
         <div class="other-meta">
-          <a
-            href="https://www.aceshowbiz.com/images/still/drive02.jpg"
-            class="report"
-            target="_blank"
-          >
+          <a href="https://www.aceshowbiz.com/images/still/drive02.jpg" class="report" target="_blank">
             <i class="iconfont icon-report" />
             反馈与投诉
           </a>
@@ -80,7 +61,6 @@ import ReadTime from "@/components/ReadTime.vue";
 import { calculateReadTime } from '@/utils/readTime';
 
 const { page, theme, frontmatter } = useData();
-
 const commentRef = ref(null);
 
 const postMetaData = computed(() => {
@@ -108,9 +88,50 @@ onMounted(() => {
 <style lang="scss" scoped>
 @use "../style/post.scss";
 
+.post-content {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+
+  .post-article {
+    width: calc(100% - 300px);
+  }
+
+}
+
+.read-time-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.8rem;
+  margin: 2rem 0;
+  border-radius: 8px;
+  background-color: var(--main-card-second-background);
+  color: var(--main-font-second-color);
+  font-size: 0.9rem;
+
+  .iconfont {
+    margin-right: 0.3rem;
+  }
+  
+  .read-time-split {
+    color: var(--main-card-border);
+  }
+}
+
 .post-content .post-article .other-meta {
   justify-content: flex-end;
 }
+
+@media (max-width: 1200px) {
+  .post-content {
+    .post-article {
+      width: 100%;
+    }
+  }
+}
+
 @media (max-width: 768px) {
   .post-content .post-article .other-meta {
     justify-content: center;
