@@ -138,7 +138,7 @@ const handleMouseMove = (e) => {
             border-radius: 80% 0 80% 0;
             transform: rotate(random-range(0, 360) * 1deg);
             animation: spring-float calc(#{random-range(12, 25)}s / var(--intensity)) linear infinite;
-            animation-delay: -random-range(0, 25) * 1s;
+            animation-delay: -(random-range(0, 25) * 1s);
           }
           
           @if $type == "bud" {
@@ -147,7 +147,7 @@ const handleMouseMove = (e) => {
             background: linear-gradient(to bottom, #8bc34a, #4caf50);
             border-radius: 0 0 5px 5px;
             animation: spring-rise calc(#{random-range(15, 30)}s / var(--intensity)) linear infinite;
-            animation-delay: -random-range(0, 30) * 1s;
+            animation-delay: -(random-range(0, 30) * 1s);
           }
         }
       }
@@ -173,7 +173,7 @@ const handleMouseMove = (e) => {
                       rgba(255, 223, 100, 0) 70%);
             border-radius: 50%;
             animation: summer-rise calc(#{random-range(20, 40)}s / var(--intensity)) linear infinite;
-            animation-delay: -random-range(0, 40) * 1s;
+            animation-delay: -(random-range(0, 40) * 1s);
           }
           
           @if $type == "sunray" {
@@ -188,7 +188,7 @@ const handleMouseMove = (e) => {
             transform-origin: left center;
             transform: rotate(random-range(-45, 45) * 1deg);
             animation: summer-ray calc(#{random-range(30, 60)}s / var(--intensity)) linear infinite;
-            animation-delay: -random-range(0, 60) * 1s;
+            animation-delay: -(random-range(0, 60) * 1s);
           }
           
           @if $type == "bird" {
@@ -199,7 +199,7 @@ const handleMouseMove = (e) => {
             border-radius: 50% / 30%;
             background-color: rgba(50, 50, 50, random-range(0.3, 0.6));
             animation: summer-fly calc(#{random-range(40, 80)}s / var(--intensity)) linear infinite;
-            animation-delay: -random-range(0, 80) * 1s;
+            animation-delay: -(random-range(0, 80) * 1s);
             
             &::before, &::after {
               content: '';
@@ -246,7 +246,7 @@ const handleMouseMove = (e) => {
             border-radius: 10% 70% 30% 60%;
             transform: rotate(random-range(0, 360) * 1deg);
             animation: autumn-fall calc(#{random-range(10, 25)}s / var(--intensity)) linear infinite;
-            animation-delay: -random-range(0, 25) * 1s;
+            animation-delay: -(random-range(0, 25) * 1s);
             
             &::before {
               content: '';
@@ -278,7 +278,7 @@ const handleMouseMove = (e) => {
             }
             
             animation: autumn-sway calc(#{random-range(8, 18)}s / var(--intensity)) linear infinite;
-            animation-delay: -random-range(0, 18) * 1s;
+            animation-delay: -(random-range(0, 18) * 1s);
           }
         }
       }
@@ -302,7 +302,7 @@ const handleMouseMove = (e) => {
             background-color: white;
             border-radius: 50%;
             animation: winter-fall calc(#{random-range(10, 30)}s / var(--intensity)) linear infinite;
-            animation-delay: -random-range(0, 30) * 1s;
+            animation-delay: -(random-range(0, 30) * 1s);
           }
           
           @if $type == "flake-cluster" {
@@ -332,7 +332,7 @@ const handleMouseMove = (e) => {
             }
             
             animation: winter-drift calc(#{random-range(15, 35)}s / var(--intensity)) linear infinite;
-            animation-delay: -random-range(0, 35) * 1s;
+            animation-delay: -(random-range(0, 35) * 1s);
           }
           
           @if $type == "frost" {
@@ -365,7 +365,7 @@ const handleMouseMove = (e) => {
             }
             
             animation: winter-sway calc(#{random-range(8, 15)}s / var(--intensity)) ease-in-out infinite alternate;
-            animation-delay: -random-range(0, 15) * 1s;
+            animation-delay: -(random-range(0, 15) * 1s);
           }
         }
       }
