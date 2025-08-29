@@ -32,7 +32,7 @@ export const mainStore = defineStore("main", {
       // 使用自定义右键菜单
       useRightMenu: true,
       // 背景模糊
-      backgroundBlur: false,
+      backgroundBlur: true,
       // 全站字体
       fontFamily: "lxgw",
       // 全站字体大小
@@ -77,13 +77,6 @@ export const mainStore = defineStore("main", {
     },
     // 切换明暗模式
     changeThemeType() {
-      // 禁止壁纸模式切换
-      if (this.backgroundType === "image") {
-        $message.warning("无法在壁纸模式下切换明暗模式", {
-          duration: 1500,
-        });
-        return false;
-      }
       this.themeType === "auto"
         ? (this.themeType = "dark")
         : this.themeType === "dark"

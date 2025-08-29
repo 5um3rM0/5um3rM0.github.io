@@ -70,13 +70,26 @@ html {
 
 // 壁纸背景
 html {
-  &.image {
+  // 当是壁纸模式 + 深色主题时 (dark image)
+  &.dark.image {
     --main-card-background: #1b1c20de;
     --main-card-second-background: #21232ab5;
     --main-font-color: #f7f7fa;
     --main-font-second-color: #a1a2b8;
     --main-card-border: #3d3d3f63;
-    
+  }
+
+  // 当是壁纸模式 + 浅色主题时 (light image)
+  &.light.image {
+    --main-card-background: rgba(255, 255, 255, 0.85);
+    --main-card-second-background: rgba(247, 247, 249, 0.8);
+    --main-font-color: #363636;
+    --main-font-second-color: #3c43cc;
+    --main-card-border: rgba(227, 232, 247, 0.5);
+  }
+
+  // 壁纸模式下的通用样式
+  &.image {
     .main-nav {
       backdrop-filter: blur(20px);
       &.top {
@@ -181,7 +194,11 @@ a {
   }
   // 全局模糊
   &.blur {
-    filter: blur(20px);
+    .mian-layout,
+    .main-nav,
+    .main-footer {
+      filter: blur(20px);
+    }
   }
 }
 
