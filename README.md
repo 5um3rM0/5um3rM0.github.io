@@ -71,12 +71,12 @@ npm run build
 
 本项目的部署流程已通过 GitHub Actions 完全自动化。任何推送到 `main` 分支的提交都会自动触发构建和部署流程，将最新内容发布到 GitHub Pages。
 
-## 致谢 (Acknowledgements)
+## 致谢
 
 本博客的美学和功能基础源于 [imsyy](https://github.com/imsyy) 的杰出开源项目 [vitepress-theme-curve](https://github.com/imsyy/vitepress-theme-curve)。
 
 由衷感谢原作者的分享与贡献，它为本项目提供了一个优秀的起点。
 
-## 许可 (License)
+## 许可
 
 本项目采用 [MIT License](./LICENSE) 开源许可证。
