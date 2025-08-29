@@ -71,10 +71,12 @@ html {
 // 壁纸背景
 html {
   &.image {
-    --main-card-border: #3d3d3f63;
-    --main-font-second-color: #c6c6c6;
     --main-card-background: #1b1c20de;
     --main-card-second-background: #21232ab5;
+    --main-font-color: #f7f7fa;
+    --main-font-second-color: #a1a2b8;
+    --main-card-border: #3d3d3f63;
+    
     .main-nav {
       backdrop-filter: blur(20px);
       &.top {
