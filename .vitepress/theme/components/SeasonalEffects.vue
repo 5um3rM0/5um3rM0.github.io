@@ -56,9 +56,8 @@ const handleMouseMove = (e) => {
 
 <style lang="scss" scoped>
 @use "sass:math";
-@use "sass:color"; // 导入颜色工具，用于darken函数
+@use "sass:color";
 
-// 全局基础样式
 .seasonal-container {
   position: fixed;
   top: 0;
@@ -78,12 +77,18 @@ const handleMouseMove = (e) => {
     will-change: transform, opacity;
   }
 
+  // 修复核心：用基础random实现范围随机，完全抛弃fmod
+  // 功能：生成$min到$max之间的随机数，$index确保同索引粒子随机值固定
   @function random-range($min, $max, $index: 1) {
-    $seed: $index * 43 + math.random() * 1000;
-    @return $min + (math.fmod($seed, 1) * ($max - $min));
+    // 用索引生成伪随机种子（兼容低版本Sass）
+    $seed: $index * 0.123456789 + math.random();
+    // 取小数部分（替代fmod的功能）
+    $fraction: $seed - math.floor($seed);
+    // 计算范围内随机值
+    @return $min + $fraction * ($max - $min);
   }
 
-  // 1. 春天特效
+  // 春天特效
   &.spring .particle {
     @for $i from 1 through 80 {
       &:nth-child(#{$i}) {
@@ -117,7 +122,7 @@ const handleMouseMove = (e) => {
     }
   }
 
-  // 2. 夏天特效
+  // 夏天特效
   &.summer .particle {
     @for $i from 1 through 80 {
       &:nth-child(#{$i}) {
@@ -184,7 +189,7 @@ const handleMouseMove = (e) => {
     }
   }
 
-  // 3. 秋天特效
+  // 秋天特效
   &.autumn .particle {
     @for $i from 1 through 80 {
       &:nth-child(#{$i}) {
@@ -197,7 +202,6 @@ const handleMouseMove = (e) => {
           $leaf-color: if(math.random() > 0.8, #9a3412, if(math.random() > 0.6, #ea580c, if(math.random() > 0.4, #f59e0b, #d97706)));
           width: #{random-range(13, 22, $i)}px;
           height: #{random-range(11, 20, $i)}px;
-          // 修复：用color.darken替代直接darken，确保Sass正确解析
           background: linear-gradient(45deg, $leaf-color, color.darken($leaf-color, 10%));
           border-radius: 10% 70% 30% 60%;
           transform: rotate(#{random-range(0, 360, $i)}deg);
@@ -243,7 +247,7 @@ const handleMouseMove = (e) => {
     }
   }
 
-  // 4. 冬天特效
+  // 冬天特效
   &.winter .particle {
     @for $i from 1 through 80 {
       &:nth-child(#{$i}) {
@@ -306,7 +310,7 @@ const handleMouseMove = (e) => {
   }
 }
 
-// 春天动画
+// 所有动画关键帧
 @keyframes spring-float {
   0% { transform: translateY(0) rotate(0deg); opacity: 0; }
   10% { opacity: 0.8; }
@@ -320,7 +324,6 @@ const handleMouseMove = (e) => {
   100% { transform: translateY(-110vh) scale(1.2); opacity: 0; }
 }
 
-// 夏天动画
 @keyframes summer-rise {
   0% { transform: translateY(0) scale(0.5); opacity: 0; }
   20% { opacity: 0.8; }
@@ -348,7 +351,6 @@ const handleMouseMove = (e) => {
   to { transform: translateY(-5px); }
 }
 
-// 秋天动画
 @keyframes autumn-fall {
   0% { transform: translateY(0) rotate(0deg); opacity: 0; }
   10% { opacity: 0.9; }
@@ -363,7 +365,6 @@ const handleMouseMove = (e) => {
   100% { transform: translateY(110vh) rotate(360deg) translateX(#{random-range(-200, 200)}px); opacity: 0; }
 }
 
-// 冬天动画
 @keyframes winter-fall {
   0% { transform: translateY(0) translateX(0); opacity: 0; }
   10% { opacity: 0.9; }
@@ -385,7 +386,6 @@ const handleMouseMove = (e) => {
   to { transform: translateX(8px); }
 }
 
-// 响应式调整
 @media (max-width: 768px) {
   .seasonal-container .particle {
     transform: scale(0.8);
