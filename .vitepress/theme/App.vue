@@ -58,6 +58,39 @@ const rightMenuRef = ref(null);
 
 const showBirthdayEffect = ref(false);
 
+const clickEffects = ["❤", "赛马娘", "好看", "自由", "平等", "博爱", "法治", "正义", "劳动", "民族", "民权", "民生"];
+let effectIndex = 0;
+
+const createClickEffect = (event) => {
+  // 创建一个新元素
+  const effect = document.createElement('span');
+  effect.style.position = 'fixed'; // 使用 fixed 定位，相对于浏览器窗口
+  effect.style.left = `${event.clientX}px`; // X 坐标
+  effect.style.top = `${event.clientY}px`;  // Y 坐标
+  effect.style.zIndex = '9999';
+  effect.style.fontSize = '20px';
+  effect.style.fontWeight = 'bold';
+  effect.style.pointerEvents = 'none'; // 确保特效不会干扰鼠标事件
+  effect.style.color = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`; // 随机颜色
+  
+  // 设置内容
+  effect.textContent = clickEffects[effectIndex];
+  effectIndex = (effectIndex + 1) % clickEffects.length; // 循环使用数组中的内容
+  
+  document.body.appendChild(effect);
+  
+  // 添加动画
+  effect.animate([
+    { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
+    { transform: 'translate(-50%, -150%) scale(1.5)', opacity: 0 }
+  ], {
+    duration: 1000,
+    easing: 'ease-out'
+  }).onfinish = () => {
+    effect.remove();
+  };
+};
+
 // 判断是否为文章页面
 const isPostPage = computed(() => {
   const routePath = decodeURIComponent(route.path);
@@ -150,55 +183,18 @@ onMounted(() => {
   window.addEventListener("contextmenu", openRightMenu);
   // 复制监听
   window.addEventListener("copy", copyTip);
+  // 点击监听
+  window.addEventListener("click", createClickEffect);
   // 监听系统颜色
   window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", changeSiteThemeType);
-  // 彩蛋
-  if (typeof window !== 'undefined' && process.env.NODE_ENV === 'production') {
-    const signature = `
-$$$$$$$\                           $$$$$$\            $$\      $$\  $$$$$$\                              
-$$  ____|                         $$ ___$$\           $$$\    $$$ |$$$ __$$\                             
-$$ |      $$\   $$\ $$$$$$\$$$$\  \_/   $$ | $$$$$$\  $$$$\  $$$$ |$$$$\ $$ |                            
-$$$$$$$\  $$ |  $$ |$$  _$$  _$$\   $$$$$ / $$  __$$\ $$\$$\$$ $$ |$$\$$\$$ |                            
-\_____$$\ $$ |  $$ |$$ / $$ / $$ |  \___$$\ $$ |  \__|$$ \$$$  $$ |$$ \$$$$ |                            
-$$\   $$ |$$ |  $$ |$$ | $$ | $$ |$$\   $$ |$$ |      $$ |\$  /$$ |$$ |\$$$ |                            
-\$$$$$$  |\$$$$$$  |$$ | $$ | $$ |\$$$$$$  |$$ |      $$ | \_/ $$ |\$$$$$$  /                            
- \______/  \______/ \__| \__| \__| \______/ \__|      \__|     \__| \______/                             
-                                                                                                         
-                                                                                                         
-                                                                                                         
-$$\   $$\ $$\      $$\  $$$$$$\  $$\      $$\ $$\   $$\  $$$$$$\  $$\   $$\ $$\      $$\ $$$$$$$$\       
-$$ |  $$ |$$$\    $$$ |$$  __$$\ $$$\    $$$ |$$ |  $$ |$$  __$$\ $$ |  $$ |$$$\    $$$ |$$  _____|      
-$$ |  $$ |$$$$\  $$$$ |$$ /  $$ |$$$$\  $$$$ |$$ |  $$ |$$ /  \__|$$ |  $$ |$$$$\  $$$$ |$$ |            
-$$ |  $$ |$$\$$\$$ $$ |$$$$$$$$ |$$\$$\$$ $$ |$$ |  $$ |\$$$$$$\  $$ |  $$ |$$\$$\$$ $$ |$$$$$\          
-$$ |  $$ |$$ \$$$  $$ |$$  __$$ |$$ \$$$  $$ |$$ |  $$ | \____$$\ $$ |  $$ |$$ \$$$  $$ |$$  __|         
-$$ |  $$ |$$ |\$  /$$ |$$ |  $$ |$$ |\$  /$$ |$$ |  $$ |$$\   $$ |$$ |  $$ |$$ |\$  /$$ |$$ |            
-\$$$$$$  |$$ | \_/ $$ |$$ |  $$ |$$ | \_/ $$ |\$$$$$$  |\$$$$$$  |\$$$$$$  |$$ | \_/ $$ |$$$$$$$$\       
- \______/ \__|     \__|\__|  \__|\__|     \__| \______/  \______/  \______/ \__|     \__|\________|      
-                                                                                                         
-                                                                                                         
-                                                                                                         
-$$$$$$\  $$$$$$\        $$$$$$$$\ $$\   $$\ $$$$$$$$\       $$$$$$$\  $$$$$$$$\  $$$$$$\ $$$$$$$$\       
-\_$$  _|$$  __$$\       \__$$  __|$$ |  $$ |$$  _____|      $$  __$$\ $$  _____|$$  __$$\\__$$  __|      
-  $$ |  $$ /  \__|         $$ |   $$ |  $$ |$$ |            $$ |  $$ |$$ |      $$ /  \__|  $$ |         
-  $$ |  \$$$$$$\           $$ |   $$$$$$$$ |$$$$$\          $$$$$$$\ |$$$$$\    \$$$$$$\    $$ |         
-  $$ |   \____$$\          $$ |   $$  __$$ |$$  __|         $$  __$$\ $$  __|    \____$$\   $$ |         
-  $$ |  $$\   $$ |         $$ |   $$ |  $$ |$$ |            $$ |  $$ |$$ |      $$\   $$ |  $$ |         
-$$$$$$\ \$$$$$$  |         $$ |   $$ |  $$ |$$$$$$$$\       $$$$$$$  |$$$$$$$$\ \$$$$$$  |  $$ |         
-\______| \______/          \__|   \__|  \__|\________|      \_______/ \________| \______/   \__|         
-                                                                                                         
-                                                                                                         
-                                                                                                         
-    `;
-    const style = 'color: #425aef; font-weight: bold; font-family: monospace;';
-    console.log(`%c${signature}`, style);
-    console.log('%c嘿，很高兴在控制台见到你，我们是同道中人呢。', 'color: #999;');
-    console.log('%c本博客源码可在 GitHub 找到，欢迎 Star 或提出建议！', 'color: #999;');
-  }
 });
 
 onBeforeUnmount(() => {
   window.removeEventListener("scroll", calculateScroll);
   window.removeEventListener("contextmenu", openRightMenu);
+  window.removeEventListener("copy", copyTip);
+  window.matchMedia("(prefers-color-scheme: dark)").removeEventListener("change", changeSiteThemeType);
+  window.removeEventListener("click", createClickEffect); 
 });
 </script>
 
