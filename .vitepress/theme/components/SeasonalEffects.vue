@@ -3,8 +3,7 @@
     :class="['seasonal-container', season, { 'interactive': interactive }]" 
     :style="[
       { opacity: isVisible ? 1 : 0 },
-      { '--intensity': intensity },
-      interactive ? { '--mouse-x': `${mousePosition.x * 100}%`, '--mouse-y': `${mousePosition.y * 100}%` } : {}
+      { '--intensity': intensity }
     ]" 
     @mousemove="handleMouseMove"
   >
@@ -58,6 +57,8 @@ const handleMouseMove = (e) => {
 @use "sass:math";
 @use "sass:color";
 
+$base-opacity: 0.8;
+
 .seasonal-container {
   position: fixed;
   top: 0;
@@ -69,7 +70,7 @@ const handleMouseMove = (e) => {
   overflow: hidden;
   transition: opacity 0.5s ease-in-out;
   --intensity: 1;
-  --base-opacity: 0.8;
+  --base-opacity: #{$base-opacity};
 
   .particle {
     position: absolute;
@@ -77,14 +78,9 @@ const handleMouseMove = (e) => {
     will-change: transform, opacity;
   }
 
-  // 修复核心：用基础random实现范围随机，完全抛弃fmod
-  // 功能：生成$min到$max之间的随机数，$index确保同索引粒子随机值固定
   @function random-range($min, $max, $index: 1) {
-    // 用索引生成伪随机种子（兼容低版本Sass）
     $seed: $index * 0.123456789 + math.random();
-    // 取小数部分（替代fmod的功能）
     $fraction: $seed - math.floor($seed);
-    // 计算范围内随机值
     @return $min + $fraction * ($max - $min);
   }
 
@@ -95,7 +91,7 @@ const handleMouseMove = (e) => {
         $type: if(math.random() > 0.7, "bud", "petal");
         left: random-range(5, 95, $i) * 1%;
         top: -15 * 1%;
-        opacity: random-range(0.6, var(--base-opacity), $i);
+        opacity: random-range(0.6, $base-opacity, $i);
 
         @if $type == "petal" {
           width: #{random-range(7, 13, $i)}px;
@@ -135,7 +131,7 @@ const handleMouseMove = (e) => {
           width: #{random-range(18, 45, $i)}px;
           height: #{random-range(18, 45, $i)}px;
           background: radial-gradient(circle,
-            rgba(255, 240, 150, random-range(0.5, 0.8, $i)) 0%,
+            rgba(255, 240, 150, random-range(0.5, $base-opacity, $i)) 0%,
             rgba(255, 223, 100, 0) 75%
           );
           border-radius: 50%;
@@ -196,7 +192,7 @@ const handleMouseMove = (e) => {
         $type: if(math.random() > 0.85, "fruit", "leaf");
         left: random-range(5, 95, $i) * 1%;
         top: -15 * 1%;
-        opacity: random-range(0.75, var(--base-opacity), $i);
+        opacity: random-range(0.75, $base-opacity, $i);
 
         @if $type == "leaf" {
           $leaf-color: if(math.random() > 0.8, #9a3412, if(math.random() > 0.6, #ea580c, if(math.random() > 0.4, #f59e0b, #d97706)));
@@ -253,7 +249,7 @@ const handleMouseMove = (e) => {
       &:nth-child(#{$i}) {
         $type: if(math.random() > 0.8, "frost", if(math.random() > 0.7, "flake-cluster", "flake"));
         left: random-range(5, 95, $i) * 1%;
-        opacity: random-range(0.7, var(--base-opacity), $i);
+        opacity: random-range(0.7, $base-opacity, $i);
 
         @if $type == "flake" {
           top: -8 * 1%;
@@ -392,3 +388,4 @@ const handleMouseMove = (e) => {
   }
 }
 </style>
+    
