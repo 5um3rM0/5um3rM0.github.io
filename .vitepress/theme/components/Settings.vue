@@ -270,11 +270,16 @@ const { themeType, fontFamily, fontSize, infoPosition, backgroundType, backgroun
       }
     }
   }
+
+  .set-label {
+    flex-shrink: 0;
+    margin-right: 1rem;
+  }
 }
 
 .slider-container {
-  width: 150px; // 给滑动条一个固定的宽度
-  padding: 0 1rem;
+  flex-grow: 1;
+  padding: 0 0.5rem;
 }
 
 // 覆盖 vue-slider-component 的默认样式，使其与您的主题匹配

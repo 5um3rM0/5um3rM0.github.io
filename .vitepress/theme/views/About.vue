@@ -111,8 +111,8 @@ const skillsData = [
 const mediaData = [
   { name: 'American Idiot', artist: 'Green Day', cover: 'http://p1.music.126.net/gn85AxXTWVLbOVmdAJsxrg==/109951163834085468.jpg', url: 'https://music.163.com/#/album?id=73668475' },
   { name: 'Fight Club', artist: 'Movie', cover: 'https://m.media-amazon.com/images/M/MV5BOTgyOGQ1NDItNGU3Ny00MjU3LTg2YWEtNmEyYjBiMjI1Y2M5XkEyXkFqcGc@.jpg', url: 'https://www.imdb.com/title/tt0137523/' },
-  { name: 'Uma Musume:Pretty Derby', artist: 'Game', cover: 'https://i0.hdslb.com/bfs/game-static/d7ad66db7c03dd39130f557ec7ab9590855d6bb0.png', url: 'https://umamusume.jp/' },
-  { name: '私が主役じゃダメですか？', artist: 'ダンツフレーム', cover: 'https://i1.hdslb.com/bfs/archive/bf214bc907fbdc00c0735df4baf551e37fd3b38e.jpg', url: 'https://www.bilibili.com/video/BV1Kx4y187Nj/' },
+  { name: 'Uma Musume:Pretty Derby', artist: 'Game', cover: 'https://static.komoejoy.com/uma/gw/new/_nuxt/images/logo_umamusume-BHRmH5Nz.png', url: 'https://umamusume.jp/' },
+  { name: '私が主役じゃダメですか？', artist: 'ダンツフレーム', cover: 'http://p1.music.126.net/jLzwIn67sw4fGOn2a_olPQ==/109951170973803859.jpg', url: 'https://www.bilibili.com/video/BV1Kx4y187Nj/' },
 ];
 
 // 定义博客时间轴数据
