@@ -87,7 +87,7 @@
         <template v-if="seasonalEffects">
           <div class="set-item">
             <span class="set-label">粒子数量 ({{ effectsSettings.particleCount }})</span>
-            <div class="set-options slider-container">
+            <div class="slider-container">
               <ClientOnly>
                 <VueSlider v-model="effectsSettings.particleCount" :min="10" :max="100" :interval="1" />
               </ClientOnly>
@@ -104,7 +104,7 @@
           </div>
           <div v-if="effectsSettings.interactive" class="set-item">
             <span class="set-label">互动强度 ({{ effectsSettings.intensity.toFixed(1) }})</span>
-            <div class="set-options slider-container">
+            <div class="slider-container">
               <ClientOnly>
                 <VueSlider v-model="effectsSettings.intensity" :min="0.5" :max="2" :interval="0.1" />
               </ClientOnly>
@@ -121,7 +121,7 @@
 import { storeToRefs } from "pinia";
 import { mainStore } from "@/store";
 import { defineAsyncComponent } from 'vue';
-const VueSlider = defineAsyncComponent(() => 
+const VueSlider = defineAsyncComponent(() =>
   import('vue-slider-component')
 );
 import 'vue-slider-component/theme/default.css';
@@ -278,8 +278,11 @@ const { themeType, fontFamily, fontSize, infoPosition, backgroundType, backgroun
 }
 
 .slider-container {
-  flex-grow: 1;
-  padding: 0 0.5rem;
+  flex: 1;
+  min-width: 100px;
+  padding: 0 1rem; 
+  display: flex;
+  align-items: center;
 }
 
 // 覆盖 vue-slider-component 的默认样式，使其与您的主题匹配
