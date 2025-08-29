@@ -132,19 +132,6 @@ onBeforeUnmount(() => {
           margin-right: 6px;
         }
       }
-      .rss {
-        margin-right: 4px;
-        .iconfont {
-          font-weight: normal;
-          margin-right: 6px;
-        }
-      }
-      .cc {
-        .iconfont {
-          margin: 0 2px;
-          font-weight: normal;
-        }
-      }
     }
     .link {
       display: inline-flex;

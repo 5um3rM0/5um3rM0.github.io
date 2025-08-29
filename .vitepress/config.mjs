@@ -1,6 +1,4 @@
 import { defineConfig } from "vitepress";
-import { createRssFile } from "./theme/utils/generateRSS.mjs";
-import { generatePWA } from "./theme/utils/generatePWA.mjs";
 import {
   getAllPosts,
   getAllType,
@@ -55,10 +53,6 @@ export default defineConfig({
   },
   transformHtml: (html) => {
     return jumpRedirect(html, themeConfig);
-  },
-  buildEnd: async (config) => {
-    await createRssFile(config, themeConfig);
-    await generatePWA(themeConfig, config.outDir);
   },
   vite: {
     plugins: [
