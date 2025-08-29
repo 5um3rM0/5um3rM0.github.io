@@ -44,9 +44,7 @@
 import { storeToRefs } from "pinia";
 import { mainStore } from "@/store";
 import { calculateScroll, specialDayGray } from "@/utils/helper";
-import { getCurrentSeason } from "@/utils/seasonUtils.mjs";
 import { isSpecialBirthday } from "@/utils/birthdayUtils.mjs";
-import SeasonalEffects from "@/components/SeasonalEffects.vue";
 import BirthdayEffects from "@/components/BirthdayEffects.vue";
 
 const route = useRoute();
@@ -58,7 +56,6 @@ const { loadingStatus, footerIsShow, themeValue, themeType, backgroundType, font
 // 右键菜单
 const rightMenuRef = ref(null);
 
-const currentSeason = ref(null);
 const showBirthdayEffect = ref(false);
 
 // 判断是否为文章页面
@@ -137,6 +134,9 @@ watch(
 );
 
 onMounted(() => {
+  // 判断生日
+  showBirthdayEffect.value = isSpecialBirthday();
+
   console.log(frontmatter.value, page.value, theme.value);
   // 全站置灰
   specialDayGray();
@@ -152,16 +152,6 @@ onMounted(() => {
   window.addEventListener("copy", copyTip);
   // 监听系统颜色
   window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", changeSiteThemeType);
-
-
-  currentSeason.value = getCurrentSeason();
-  if (isSpecialBirthday()) {
-    const todayStr = new Date().toISOString().split('T')[0];
-    if (store.lastBirthdayCelebrated !== todayStr) {
-      showBirthdayEffect.value = true;
-      store.lastBirthdayCelebrated = todayStr;
-    }
-  }
 });
 
 onBeforeUnmount(() => {
