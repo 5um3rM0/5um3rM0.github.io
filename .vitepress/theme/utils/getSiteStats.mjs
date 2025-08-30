@@ -1,4 +1,5 @@
-import jieba from 'node-jieba';
+// /.vitepress/theme/utils/getSiteStats.mjs
+import jieba from 'nodejieba';
 import matter from 'gray-matter';
 import fs from 'fs-extra';
 
@@ -29,7 +30,8 @@ export const generateSiteStats = (posts) => {
       .replace(/---[\s\S]*?---/, '')
       .replace(/```[\s\S]*?```/g, '')
       .replace(/<[^>]+>/g, '')
-      .replace(/[#*`_~->[\]()|]/g, '')
+      // ✨ [核心修复] 对连字符 '-' 进行了转义，修复了正则表达式错误
+      .replace(/[#*`_~\->[\]()|]/g, '') 
       .toLowerCase();
 
     const wordCount = plainText.replace(/\s/g, '').length;
