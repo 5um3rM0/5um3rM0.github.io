@@ -70,7 +70,6 @@ html {
 
 // 壁纸背景
 html {
-  // 当是壁纸模式 + 深色主题时
   &.dark.image {
     --main-card-background: #1b1c20de;
     --main-card-second-background: #21232ab5;
@@ -78,7 +77,6 @@ html {
     --main-font-second-color: #a1a2b8;
     --main-card-border: #3d3d3f63;
   }
-  // 当是壁纸模式 + 浅色主题时
   &.light.image {
     --main-card-background: rgba(255, 255, 255, 0.85);
     --main-card-second-background: rgba(247, 247, 249, 0.8);
@@ -87,36 +85,44 @@ html {
     --main-card-border: rgba(227, 232, 247, 0.5);
   }
 
-  // --- 为所有直接在背景图上的内容应用自适应景深阴影 ---
+  // --- 壁纸模式下的所有样式 ---
   &.image {
-    // 目标区域：顶栏、文章标题区、页脚区
-    .main-nav:not(.down),
-    .post-meta,
-    .footer-link,
-    .main-footer {
-      // 在深色模式下：为浅色文字和图标添加柔和的深色阴影
-      html.dark.image & {
+    // --- 自适应双层阴影 ---
+    // 深色模式下的阴影
+    &.dark {
+      // 目标区域
+      .main-nav:not(.down),
+      .post-meta,
+      .footer-link,
+      .main-footer {
         * {
-          text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+          // 轮廓层 (近、实) + 景深层 (远、虚)
+          text-shadow: 0 1px 2px rgba(0,0,0,0.7), 0 2px 6px rgba(0,0,0,0.5);
         }
       }
-
-      // 在浅色模式下：为深色文字和图标添加柔和的浅色阴影（轮廓光）
-      html.light.image & {
+    }
+    
+    // 浅色模式下的阴影
+    &.light {
+      // 目标区域
+      .main-nav:not(.down),
+      .post-meta,
+      .footer-link,
+      .main-footer {
         * {
-          text-shadow: 0 1px 4px rgba(255, 255, 255, 0.5);
+          // 轮廓层 (近、实) + 景深层 (远、虚)
+          text-shadow: 0 1px 2px rgba(255,255,255,0.7), 0 2px 6px rgba(255,255,255,0.5);
         }
       }
     }
 
+    // --- 滚动后顶栏的样式 ---
     // 确保滚动后，顶栏内的阴影消失
     .main-nav.down * {
       text-shadow: none !important;
     }
-  }
-
-  // 壁纸模式下的通用样式
-  &.image {
+    
+    // --- 其他通用布局样式 ---
     .main-nav {
       backdrop-filter: blur(20px);
       &.top {
