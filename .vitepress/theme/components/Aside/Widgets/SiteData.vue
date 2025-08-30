@@ -28,7 +28,7 @@
       </div>
       <div class="data-item">
         <span class="name">
-          <i class="iconfont icon-pen"></i>
+          <i class="iconfont icon-star"></i>
           全站字数
         </span>
         <span class="num">{{ formattedWordCount }}</span>

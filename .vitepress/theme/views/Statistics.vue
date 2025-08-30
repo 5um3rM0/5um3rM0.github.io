@@ -23,8 +23,8 @@
     </div>
 
     <div class="stats-group">
-      <h2><i class="iconfont icon-pen"></i> 我的词汇 DNA</h2>
-      <p>在过滤掉常见“停用词”后，我最常使用的 Top 20 词语：</p>
+      <h2><i class="iconfont icon-star"></i> 我的词汇 DNA</h2>
+      <p>我最常使用的词语 Top 20：</p>
       <div class="word-cloud">
         <span v-for="([word, count]) in stats.topWords" :key="word" class="word-item">
           {{ word }} <sup>{{ count }}</sup>
@@ -34,7 +34,7 @@
 
     <div class="stats-group">
       <h2><i class="iconfont icon-hashtag"></i> 标签偏好</h2>
-      <p>我最常使用的 Top 10 标签，它们构成了我知识体系的核心领域：</p>
+      <p>我最常使用的标签 Top 10：</p>
       <div class="word-cloud">
         <span v-for="([tag, count]) in stats.topTags" :key="tag" class="word-item tag-item">
           {{ tag }} <sup>{{ count }}</sup>
