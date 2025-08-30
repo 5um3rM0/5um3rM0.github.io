@@ -23,7 +23,6 @@ export const mainStore = defineStore("main", {
       
       // 所有弹窗、模态框的显示状态
       controlShow: false,
-      searchShow: false,
       showSettings: false,
       mobileMenuShow: false,
       
