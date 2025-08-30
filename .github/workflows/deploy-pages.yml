@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-and-deploy: # 将 build 和 deploy 合并为一个 job，更清晰
     runs-on: ubuntu-latest
     env:
       REPO_URL: "5um3rM0/5um3rM0.github.io"
@@ -19,46 +19,66 @@ jobs:
       CUSTOM_DOMAIN: "5um3rM0.github.io"
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Checkout repository 🛎️
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      # 引入 pnpm 的官方 setup action
+      - name: Setup pnpm ⚡️
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+
+      # Node.js Action 与 pnpm 共享缓存，速度更快
+      - name: Set up Node.js 🟩
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
-          # 保留缓存，但不依赖pnpm全局安装
-          cache: 'npm'
+          cache: 'pnpm'
 
-      # 关键：不全局安装pnpm，直接用npx临时调用（绝对不会找不到）
-      - name: Install dependencies and build (using npx)
+      # 使用 pnpm 进行依赖安装和构建
+      - name: Install dependencies and build 📦
         run: |
-          # 用npx直接调用pnpm，无需全局安装
-          npx pnpm@8 install  # 指定版本8，避免版本问题
-          npx pnpm@8 build    # 构建项目
+          pnpm install --frozen-lockfile
+          pnpm run build
 
-      - name: Deploy to GitHub Pages
+      # 手动部署逻辑
+      - name: Deploy to GitHub Pages 🚀
         run: |
-          # 拉取已有pages分支（克隆时可以不用令牌，拉取公开分支没问题）
-          git clone --depth 1 -b pages https://github.com/${{ env.REPO_URL }}.git temp_pages
-          rm -rf temp_pages/*  # 清空旧文件
+          echo "Starting deployment..."
+          # 克隆 pages 分支到临时目录
+          git clone --depth 1 --branch pages https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ env.REPO_URL }}.git temp_pages
           
-          # 复制构建产物到temp_pages
-          cp -r $BUILD_PATH/* temp_pages/
-          
-          # 进入目录并配置认证
+          echo "Clearing old content..."
+          # 清空旧文件，但保留 .git 目录
           cd temp_pages
-          echo "$CUSTOM_DOMAIN" > CNAME
+          git rm -rf .
+          cd ..
+          
+          echo "Copying new build files..."
+          # 复制构建产物
+          cp -r ${{ env.BUILD_PATH }}/* temp_pages/
+          
+          # 进入部署目录并配置 git
+          cd temp_pages
+          # 检查是否需要 CNAME 文件（对于用户/组织页面，通常不需要）
+          # 如果您的仓库名就是 5um3rM0.github.io，则不需要 CNAME
+          # rm -f CNAME 
+          
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
           
-          # 关键：重新设置远程仓库地址，带上GITHUB_TOKEN认证
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ env.REPO_URL }}.git
-          
-          # 提交并推送（此时会用令牌认证，有权限推送）
+          echo "Committing and pushing changes..."
           git add .
-          git commit -m "Deploy: $(date -u +'%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
-          git push origin pages  # 现在推送会自动带上令牌
+          
+          # 检查是否有文件变动，只有在有变动时才提交
+          if git diff-index --quiet HEAD; then
+            echo "No changes to commit."
+          else
+            git commit -m "Deploy: $(date -u +'%Y-%m-%d %H:%M:%S')"
+            git push origin pages
+            echo "Deployment successful!"
+          fi
         env:
-          CI: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
