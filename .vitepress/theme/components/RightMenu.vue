@@ -142,17 +142,6 @@
         </div>
       </div>
     </Transition>
-    <!-- 快速评论 -->
-    <Modal
-      :show="commentCopyShow"
-      title="快速评论"
-      titleIcon="chat"
-      @mask-click="commentCopyClose"
-      @modal-close="commentCopyClose"
-    >
-      <span class="modal-tip"> 您无需删除现有的输入框内容，直接在下方评论即可 </span>
-      <Artalk :fill="commentCopyData" />
-    </Modal>
   </Teleport>
 </template>
 
@@ -174,10 +163,6 @@ const clickedType = ref("normal");
 const clickedTypeData = ref(null);
 const rightMenuRef = ref(null);
 const rightMenuShow = ref(false);
-
-// 快速评论
-const commentCopyShow = ref(false);
-const commentCopyData = ref(null);
 
 // 开启右键菜单
 const openRightMenu = (e) => {
@@ -232,7 +217,6 @@ const closeRightMenu = (e) => {
   rightMenuY.value = 0;
   clickedType.value = "normal";
   clickedTypeData.value = null;
-  commentCopyData.value = false;
 };
 
 // 判断点击元素类型
@@ -323,23 +307,6 @@ const isLink = (data) => {
   } catch (error) {
     return false;
   }
-};
-
-// 评论选中内容
-const commentCopy = (data) => {
-  if (!data) return false;
-  let commentData = "> " + data.trim().replace(/\s+/g, " ");
-  if (commentData.length >= 200) {
-    commentData = commentData.substring(0, 200) + "...";
-  }
-  commentCopyData.value = commentData;
-  commentCopyShow.value = true;
-};
-
-// 关闭快速评论
-const commentCopyClose = () => {
-  commentCopyShow.value = false;
-  if (typeof $comment !== "undefined") $comment.reload();
 };
 
 defineExpose({ openRightMenu });

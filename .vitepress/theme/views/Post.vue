@@ -69,8 +69,6 @@
           <NextPost />
           <!-- 相关文章 -->
           <RelatedPost />
-          <!-- 评论 -->
-          <Comments ref="commentRef" />
         </article>
         <Aside showToc />
       </div>
@@ -105,9 +103,6 @@ const checkPassword = () => {
     passwordError.value = true;
   }
 };
-
-// 评论元素
-const commentRef = ref(null);
 
 // 获取对应文章数据
 const postMetaData = computed(() => {

@@ -33,23 +33,29 @@
         <div class="set-item">
           <span class="set-label">全站背景</span>
           <div class="set-options">
-            <span :class="['options', { choose: backgroundType === 'close' }]" @click="backgroundType = 'close'">
-              关闭
-            </span>
             <span :class="['options', { choose: backgroundType === 'patterns' }]" @click="backgroundType = 'patterns'">
               纹理
             </span>
-            <span :class="['options', { choose: backgroundType === 'image' }]"
-              @click="(backgroundType = 'image'), (themeType = 'dark')">
+            <span :class="['options', { choose: backgroundType === 'image' }]" @click="(backgroundType = 'image')">
               图片
             </span>
+            <span :class="['options', { choose: backgroundType === 'selfie' }]" @click="backgroundType = 'selfie'">
+              站长自拍
+            </span>
+          </div>
+        </div>
+        <div v-if="backgroundType === 'image' || backgroundType === 'selfie'" class="set-item">
+          <span class="set-label">图片填充</span>
+          <div class="set-options">
+            <span :class="['options', { choose: imageFit === 'cover' }]" @click="imageFit = 'cover'">裁剪</span>
+            <span :class="['options', { choose: imageFit === 'contain' }]" @click="imageFit = 'contain'">适应</span>
+            <span :class="['options', { choose: imageFit === 'fill' }]" @click="imageFit = 'fill'">拉伸</span>
           </div>
         </div>
         <div v-if="backgroundType === 'image'" class="set-item">
           <span class="set-label">背景图片地址</span>
           <div class="set-options">
-            <input v-model="backgroundUrl" type="url" pattern="https?://.+" title="请输入有效的网址，例如：http://www.example.com"
-              required />
+            <input v-model="backgroundUrl" type="url" placeholder="输入图片链接或 API" />
           </div>
         </div>
         <span class="title">首页样式</span>
@@ -86,7 +92,7 @@ import { storeToRefs } from "pinia";
 import { mainStore } from "@/store";
 
 const store = mainStore();
-const { themeType, fontFamily, fontSize, infoPosition, backgroundType, backgroundUrl, bannerType } =
+const { themeType, fontFamily, fontSize, infoPosition, backgroundType, backgroundUrl, bannerType, imageFit } =
   storeToRefs(store);
 </script>
 

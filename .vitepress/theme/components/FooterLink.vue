@@ -194,21 +194,6 @@ const socialLinkData = computed(() => {
         font-weight: bold;
         // margin-left: 8px;
         color: var(--main-font-second-color);
-        &.friends {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          cursor: pointer;
-          .iconfont {
-            font-weight: normal;
-            margin-left: 6px;
-            color: var(--main-font-second-color);
-            transition: color 0.3s;
-            &:hover {
-              color: var(--main-color);
-            }
-          }
-        }
       }
       .links {
         display: flex;
