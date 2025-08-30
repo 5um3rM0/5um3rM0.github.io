@@ -274,3 +274,29 @@ a {
     color: inherit;
   }
 }
+
+.click-ripple {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  
+  // 使用 CSS 动画来创建扩散效果
+  animation: ripple-animation 0.7s forwards ease-out;
+}
+
+@keyframes ripple-animation {
+  from {
+    width: 0;
+    height: 0;
+    opacity: 0.8;
+    // 主色调变量，给一个透明度
+    border: 2px solid var(--main-color, #425aef);
+  }
+  to {
+    width: 60px;
+    height: 60px;
+    opacity: 0;
+    border: 2px solid var(--main-color, #425aef);
+  }
+}

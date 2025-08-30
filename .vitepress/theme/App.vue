@@ -44,6 +44,7 @@
 import { storeToRefs } from "pinia";
 import { mainStore } from "@/store";
 import { calculateScroll, specialDayGray } from "@/utils/helper";
+import { onMounted, onUnmounted } from 'vue';
 import { isSpecialBirthday } from "@/utils/birthdayUtils.mjs";
 import BirthdayEffects from "@/components/BirthdayEffects.vue";
 
@@ -58,37 +59,19 @@ const rightMenuRef = ref(null);
 
 const showBirthdayEffect = ref(false);
 
-const clickEffects = ["❤", "赛马娘", "好看", "自由", "平等", "博爱", "法治", "正义", "劳动", "民族", "民权", "民生"];
-let effectIndex = 0;
-
 const createClickEffect = (event) => {
-  // 创建一个新元素
-  const effect = document.createElement('span');
-  effect.style.position = 'fixed'; // 使用 fixed 定位，相对于浏览器窗口
-  effect.style.left = `${event.clientX}px`; // X 坐标
-  effect.style.top = `${event.clientY}px`;  // Y 坐标
-  effect.style.zIndex = '9999';
-  effect.style.fontSize = '20px';
-  effect.style.fontWeight = 'bold';
-  effect.style.pointerEvents = 'none'; // 确保特效不会干扰鼠标事件
-  effect.style.color = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`; // 随机颜色
-  
-  // 设置内容
-  effect.textContent = clickEffects[effectIndex];
-  effectIndex = (effectIndex + 1) % clickEffects.length; // 循环使用数组中的内容
-  
-  document.body.appendChild(effect);
-  
-  // 添加动画
-  effect.animate([
-    { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
-    { transform: 'translate(-50%, -150%) scale(1.5)', opacity: 0 }
-  ], {
-    duration: 1000,
-    easing: 'ease-out'
-  }).onfinish = () => {
-    effect.remove();
-  };
+  const ripple = document.createElement('div');
+  ripple.className = 'click-ripple'; // 给它一个 class 方便用 CSS 控制
+  document.body.appendChild(ripple);
+
+  // 设置涟漪的位置和初始大小
+  ripple.style.left = `${event.clientX}px`;
+  ripple.style.top = `${event.clientY}px`;
+
+  // 动画结束后移除元素
+  ripple.addEventListener('animationend', () => {
+    ripple.remove();
+  });
 };
 
 // 判断是否为文章页面
@@ -156,6 +139,27 @@ const changeSiteFont = () => {
   }
 };
 
+let originalFavicon = '';
+const grayFaviconPath = '/images/logo/favicon-special-96x96.webp';
+
+const handleVisibilityChange = () => {
+  const favicon = document.querySelector("link[rel~='icon']");
+  if (!favicon) return; // 如果找不到 favicon，就什么也不做
+
+  if (document.hidden) {
+    // 页面被隐藏
+    if (!originalFavicon) { // 只在第一次切出时保存原始图标
+      originalFavicon = favicon.href;
+    }
+    favicon.href = grayFaviconPath;
+  } else {
+    // 页面恢复显示
+    if (originalFavicon) { // 如果保存过原始图标，就恢复它
+      favicon.href = originalFavicon;
+    }
+  }
+};
+
 // 监听设置变化
 watch(
   () => [themeType.value, backgroundType.value],
@@ -187,6 +191,14 @@ onMounted(() => {
   window.addEventListener("click", createClickEffect);
   // 监听系统颜色
   window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", changeSiteThemeType);
+  // 获取原始 favicon 的路径
+  if (typeof window !== 'undefined') {
+    const faviconElement = document.querySelector("link[rel~='icon']");
+    if (faviconElement) {
+      originalFavicon = faviconElement.href;
+    }
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+  }
 });
 
 onBeforeUnmount(() => {
@@ -194,7 +206,13 @@ onBeforeUnmount(() => {
   window.removeEventListener("contextmenu", openRightMenu);
   window.removeEventListener("copy", copyTip);
   window.matchMedia("(prefers-color-scheme: dark)").removeEventListener("change", changeSiteThemeType);
-  window.removeEventListener("click", createClickEffect); 
+  window.removeEventListener("click", createClickEffect);
+});
+
+onUnmounted(() => {
+  if (typeof window !== 'undefined') {
+    document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }
 });
 </script>
 
