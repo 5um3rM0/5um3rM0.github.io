@@ -2,18 +2,12 @@ name: Deploy GitHub Pages
 
 on:
   push:
-    branches:
-      - main
-    paths-ignore:
-      - '.github/workflows/**'
-      - 'README.md'
-      - 'LICENSE'
+    branches: [main]
   workflow_dispatch:
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository 🛎️
         uses: actions/checkout@v4
@@ -30,7 +24,6 @@ jobs:
         with:
           node-version: '20'
           cache: 'pnpm'
-          cache-dependency-path: '**/package.json'
 
       - name: Install dependencies 📦
         run: pnpm install
@@ -43,3 +36,4 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: .vitepress/dist
+          publish_branch: pages 
