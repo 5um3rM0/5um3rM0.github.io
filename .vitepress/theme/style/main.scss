@@ -7,7 +7,7 @@
   --main-color-bg: #4259ef0d;
   --main-site-background: #f7f9fe;
   --main-card-background: #fff;
-  --main-card-second-background: #f7f7f9;
+  --main-card-second-background: #f7f79;
   --main-font-color: #363636;
   --main-font-second-color: #3c3c43cc;
   --main-card-border: #e3e8f7;
@@ -16,21 +16,7 @@
   --main-mask-background: rgba(255, 255, 255, 0.95);
   --main-mask-Inverse-background: rgba(0, 0, 0, 0.08);
   --main-mask-second-background: rgba(255, 255, 255, 0.45);
-  --main-color-opacity: rgba(255, 255, 255, 0.15);
-  --main-dark-opacity: rgba(255, 255, 255, 0.15);
   --main-dark-shadow: #0000006e;
-  --main-info-color: #50bfff;
-  --main-info-color-gray: #50bfff60;
-  --main-warning-color: #ffa500;
-  --main-warning-color-gray: #f7ba2a60;
-  --main-success-color: #13ce66;
-  --main-success-color-gray: #13ce6660;
-  --main-error-color: #ff3842;
-  --main-error-color-gray: #ff38423b;
-  --main-color-blue: #0084ff;
-  --main-color-white: #ffffff40;
-  --main-color-gray: #999;
-  --main-color-red: #ff3842;
   --main-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
     Cantarell, "Helvetica Neue", sans-serif;
 }
@@ -49,7 +35,6 @@ html.dark {
   --main-mask-background: rgba(0, 0, 0, 0.95);
   --main-mask-Inverse-background: rgba(255, 255, 255, 0.08);
   --main-mask-second-background: rgba(0, 0, 0, 0.45);
-  --main-color-opacity: rgba(0, 0, 0, 0.15);
 }
 
 // 字体
@@ -69,69 +54,43 @@ html {
 }
 
 // 壁纸背景
-html {
-  &.dark.image {
+html.image, html.selfie {
+  &.dark {
     --main-card-background: #1b1c20de;
     --main-card-second-background: #21232ab5;
     --main-font-color: #f7f7fa;
     --main-font-second-color: #a1a2b8;
     --main-card-border: #3d3d3f63;
   }
-  &.light.image {
+  &.light {
     --main-card-background: rgba(255, 255, 255, 0.85);
     --main-card-second-background: rgba(247, 247, 249, 0.8);
     --main-font-color: #363636;
-    --main-font-second-color: #3c43cc;
+    --main-font-second-color: #3c3c43cc;
     --main-card-border: rgba(227, 232, 247, 0.5);
   }
 
-  &.image {
-    .background .cover {
-      filter: brightness(0.9);
+  .background .cover {
+    &.dark {
+      filter: brightness(0.7) contrast(0.9);
     }
+    &.light {
+      filter: brightness(1.1) contrast(0.9);
+    }
+  }
 
-    .main-nav:not(.down),
-    .post-meta,
-    .footer-link,
-    .main-footer,
-    .banner .title,
-    .banner .subtitle {
-      * {
-        text-shadow: 
-          1px 1px 2px rgba(0,0,0,0.7), 
-          -1px -1px 2px rgba(0,0,0,0.7), 
-          1px -1px 2px rgba(0,0,0,0.7), 
-          -1px 1px 2px rgba(0,0,0,0.7);
-      }
+  .main-nav:not(.down) {
+    backdrop-filter: blur(10px);
+    &.light {
+      background-color: rgba(255, 255, 255, 0.25);
     }
+    &.dark {
+      background-color: rgba(0, 0, 0, 0.25);
+    }
+  }
 
-    .main-nav.down * {
-      text-shadow: none !important;
-    }
-    
-    .main-nav {
-      backdrop-filter: blur(20px);
-      &.top {
-        backdrop-filter: blur(0);
-      }
-      @media (max-width: 768px) {
-        &.down {
-          .nav-center {
-            background-color: #1b1c20 !important;
-          }
-        }
-      }
-    }
-    .loading {
-      backdrop-filter: blur(20px);
-    }
-    .tags-cloud {
-      .all-tags {
-        &::after {
-          display: none;
-        }
-      }
-    }
+  .post-meta {
+    padding: 1rem 0;
   }
 }
 
@@ -145,9 +104,7 @@ html {
   user-select: none;
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
-  // 特殊情况
   &.dark {
-    // 代码高亮
     pre {
       code {
         .line {
@@ -158,7 +115,6 @@ html {
       }
     }
   }
-  // 全站置灰
   &.gray {
     filter: grayscale(100%);
   }
@@ -191,31 +147,9 @@ a {
 #app {
   width: 100vw;
   width: 100dvw;
-  // height: 100vh;
   transition: filter 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  // 滚动条
-  .simplebar-scrollbar {
-    &::before {
-      right: 0;
-      left: 4px;
-      background: var(--main-scrolling-bar);
-      transition:
-        background 0.3s,
-        left 0.3s;
-      cursor: pointer;
-    }
-    &:hover {
-      &::before {
-        left: 2px;
-        background: var(--main-color);
-      }
-    }
-  }
-  // 全局模糊
   &.blur {
-    .mian-layout,
-    .main-nav,
-    .main-footer {
+    .mian-layout, .main-header, .footer-link, .main-footer {
       filter: blur(20px);
     }
   }
@@ -243,7 +177,6 @@ a {
   width: 6px;
   height: 6px;
 }
-
 ::-webkit-scrollbar-thumb {
   background-color: var(--main-scrollbar-bar);
   border-radius: 8px;
@@ -279,7 +212,6 @@ a {
       color: var(--main-font-color) !important;
     }
   }
-
   &.info, &.warning, &.danger, &.tip, &.summary {
     .custom-block-content {
       p, ul, ol, li {
@@ -287,29 +219,24 @@ a {
       }
     }
   }
-
-  // 标题颜色保持原样
   .custom-block-title {
     color: inherit;
   }
 }
 
+// 鼠标点击涟漪特效
 .click-ripple {
   position: fixed;
   border-radius: 50%;
   pointer-events: none;
   transform: translate(-50%, -50%);
-  
-  // 使用 CSS 动画来创建扩散效果
   animation: ripple-animation 0.7s forwards ease-out;
 }
-
 @keyframes ripple-animation {
   from {
     width: 0;
     height: 0;
     opacity: 0.8;
-    // 主色调变量，给一个透明度
     border: 2px solid var(--main-color, #425aef);
   }
   to {

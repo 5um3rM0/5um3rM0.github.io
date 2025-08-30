@@ -30,7 +30,6 @@ export const generateSiteStats = (posts) => {
       .replace(/---[\s\S]*?---/, '')
       .replace(/```[\s\S]*?```/g, '')
       .replace(/<[^>]+>/g, '')
-      // ✨ [核心修复] 对连字符 '-' 进行了转义，修复了正则表达式错误
       .replace(/[#*`_~\->[\]()|]/g, '') 
       .toLowerCase();
 
@@ -82,6 +81,9 @@ export const generateSiteStats = (posts) => {
   const topPunctuation = Object.entries(punctuationData)
     .sort((a, b) => b[1] - a[1])
     .slice(0, 8);
+  
+  const uniqueWordCount = Object.keys(wordFrequencies).length;
+  const lexicalRichness = (uniqueWordCount / allWords.length) * 100;
 
   return {
     postCount: posts.length,
@@ -94,5 +96,6 @@ export const generateSiteStats = (posts) => {
     topPunctuation,
     publishMonths,
     publishWeekdays: Object.values(publishWeekdays),
+    lexicalRichness: lexicalRichness.toFixed(2),
   };
 };

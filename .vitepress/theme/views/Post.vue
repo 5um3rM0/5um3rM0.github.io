@@ -90,7 +90,6 @@ const isAuthenticated = ref(false); // 验证状态
 const passwordInput = ref('');     // 输入的密码
 const passwordError = ref(false);  // 密码错误提示
 
-// 你可以把密码设置得更复杂一些
 const correctPassword = 'ak_20250828';
 
 const checkPassword = () => {
