@@ -73,9 +73,7 @@
           <Content id="page-content" class="markdown-main-style" />
           <!-- 秘密文章不显示版权、推荐和下一篇等社交组件 -->
         </article>
-        <div class="main-aside">
-          <Aside showToc />
-        </div>
+        <Aside showToc />
       </div>
     </div>
   </div>

@@ -79,9 +79,7 @@
         <!-- 相关文章 -->
         <RelatedPost />
       </article>
-      <div class="main-aside">
-        <Aside showToc />
-      </div>
+      <Aside showToc />
     </div>
   </div>
 </template>
