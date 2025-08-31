@@ -123,6 +123,8 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+@use "../style/post.scss";
+
 .post {
   width: 100%;
   display: flex;

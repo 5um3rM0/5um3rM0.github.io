@@ -79,7 +79,6 @@
         <!-- 相关文章 -->
         <RelatedPost />
       </article>
-      <!-- 【关键】保持这个结构，确保侧边栏正确布局 -->
       <div class="main-aside">
         <Aside showToc />
       </div>
@@ -94,7 +93,6 @@ import { formatTimestamp } from "@/utils/helper";
 import { generateId } from "@/utils/commonTools";
 import initFancybox from "@/utils/initFancybox";
 
-// 确保所有子组件都被正确导入
 import ArticleGPT from "@/components/Aside/Widgets/ArticleGPT.vue";
 import Copyright from "@/components/Copyright.vue";
 import NextPost from "@/components/NextPost.vue";
@@ -115,6 +113,8 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+@use "../style/post.scss";
+
 .post {
   width: 100%;
   display: flex;
