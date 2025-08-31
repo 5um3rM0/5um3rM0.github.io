@@ -9,11 +9,9 @@ import fs from "fs-extra";
  */
 const getPostMDFilePaths = async () => {
   try {
-    // 获取所有 md 文件路径
     let paths = await globby(["**.md"], {
       ignore: ["node_modules", "pages", ".vitepress", "README.md"],
     });
-    // 过滤路径，只包括 'posts' 目录下的文件
     return paths.filter((item) => item.includes("posts/"));
   } catch (error) {
     console.error("获取文章路径时出错:", error);
@@ -46,18 +44,23 @@ const comparePostPriority = (a, b) => {
  */
 export const getAllPosts = async () => {
   try {
-    let paths = await getPostMDFilePaths();
-    let posts = await Promise.all(
+    const paths = await getPostMDFilePaths();
+    const posts = await Promise.all(
       paths.map(async (item) => {
         try {
-          const content = await fs.readFile(item, "utf-8");
+          const fileContent = await fs.readFile(item, "utf-8");
+          const { data, content } = matter(fileContent);
+
+          if (data.hidden === true) {
+            return null;
+          }
+          
           const stat = await fs.stat(item);
           const { birthtimeMs, mtimeMs } = stat;
-          const { data } = matter(content);
           const { title, date, categories, description, tags, top } = data;
+          const wordCount = content.replace(/---[\s\S]*?---/, '').replace(/[#*`_~->[\]()|]/g, '').replace(/\s/g, '').length;
           const expired = Math.floor(
-            (new Date().getTime() - new Date(date).getTime()) /
-              (1000 * 60 * 60 * 24)
+            (new Date().getTime() - new Date(date).getTime()) / (1000 * 60 * 60 * 24),
           );
           return {
             id: generateId(item),
@@ -70,15 +73,19 @@ export const getAllPosts = async () => {
             description,
             regularPath: `/${item.replace(".md", ".html")}`,
             top,
+            wordCount,
           };
         } catch (error) {
           console.error(`处理文章文件 '${item}' 时出错:`, error);
-          throw error;
+          return null;
         }
-      })
+      }),
     );
-    posts.sort(comparePostPriority);
-    return posts;
+    
+    const visiblePosts = posts.filter(Boolean);
+
+    visiblePosts.sort(comparePostPriority);
+    return visiblePosts;
   } catch (error) {
     console.error("获取所有文章时出错:", error);
     throw error;
@@ -92,25 +99,15 @@ export const getAllPosts = async () => {
  */
 export const getAllType = (postData) => {
   const tagData = {};
-  // 遍历数据
   postData.map((item) => {
-    // 检查是否有 tags 属性
     if (!item.tags || item.tags.length === 0) return;
-    // 处理标签
     if (typeof item.tags === "string") {
-      // 以逗号分隔
       item.tags = item.tags.split(",");
     }
-    // 遍历文章的每个标签
     item.tags.forEach((tag) => {
-      // 初始化标签的统计信息，如果不存在
       if (!tagData[tag]) {
-        tagData[tag] = {
-          count: 1,
-          articles: [item],
-        };
+        tagData[tag] = { count: 1, articles: [item] };
       } else {
-        // 如果标签已存在，则增加计数和记录所属文章
         tagData[tag].count++;
         tagData[tag].articles.push(item);
       }
@@ -126,24 +123,15 @@ export const getAllType = (postData) => {
  */
 export const getAllCategories = (postData) => {
   const catData = {};
-  // 遍历数据
   postData.map((item) => {
     if (!item.categories || item.categories.length === 0) return;
-    // 处理标签
     if (typeof item.categories === "string") {
-      // 以逗号分隔
       item.categories = item.categories.split(",");
     }
-    // 遍历文章的每个标签
     item.categories.forEach((tag) => {
-      // 初始化标签的统计信息，如果不存在
       if (!catData[tag]) {
-        catData[tag] = {
-          count: 1,
-          articles: [item],
-        };
+        catData[tag] = { count: 1, articles: [item] };
       } else {
-        // 如果标签已存在，则增加计数和记录所属文章
         catData[tag].count++;
         catData[tag].articles.push(item);
       }
@@ -159,30 +147,18 @@ export const getAllCategories = (postData) => {
  */
 export const getAllArchives = (postData) => {
   const archiveData = {};
-  // 遍历数据
   postData.forEach((item) => {
-    // 检查是否有 date 属性
     if (item.date) {
-      // 将时间戳转换为日期对象
       const date = new Date(item.date);
-      // 获取年份
       const year = date.getFullYear().toString();
-      // 初始化该年份的统计信息，如果不存在
       if (!archiveData[year]) {
-        archiveData[year] = {
-          count: 1,
-          articles: [item],
-        };
+        archiveData[year] = { count: 1, articles: [item] };
       } else {
-        // 如果年份已存在，则增加计数和记录所属文章
         archiveData[year].count++;
         archiveData[year].articles.push(item);
       }
     }
   });
-  // 提取年份并按降序排序
-  const sortedYears = Object.keys(archiveData).sort(
-    (a, b) => parseInt(b) - parseInt(a)
-  );
+  const sortedYears = Object.keys(archiveData).sort((a, b) => parseInt(b) - parseInt(a));
   return { data: archiveData, year: sortedYears };
 };

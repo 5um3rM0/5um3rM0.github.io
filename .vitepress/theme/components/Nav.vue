@@ -2,7 +2,6 @@
   <header class="main-header">
     <nav :class="['main-nav', scrollData.direction, { top: scrollData.height === 0 }]">
       <div class="nav-all">
-        <!-- 导航栏左侧 -->
         <div class="left-nav">
           <div class="more-menu nav-btn" title="更多内容">
             <i class="iconfont icon-menu" />
@@ -24,21 +23,20 @@
               </div>
             </div>
           </div>
-          <div class="site-name" @click="router.go('/')">
+          <div class="site-name" @click="onSiteNameClick">
             {{ site.title }}
           </div>
         </div>
-        <!-- 导航栏菜单 -->
         <div class="nav-center">
           <div class="site-menu">
             <div v-for="(item, index) in theme.nav" :key="index" class="menu-item">
-              <span class="link-btn"> {{ item.text }}</span>
+              <span class="link-btn" @click="toPage(item.link, item.items)"> {{ item.text }}</span>
               <div v-if="item.items" class="link-child">
                 <span
                   v-for="(child, childIndex) in item.items"
                   :key="childIndex"
                   class="link-child-btn"
-                  @click="router.go(child.link)"
+                  @click="toPage(child.link)"
                 >
                   <i v-if="child.icon" :class="`iconfont icon-${child.icon}`" />
                   {{ child.text }}
@@ -51,7 +49,6 @@
           </span>
         </div>
         <div class="right-nav">
-          <!-- 随机文章 -->
           <div
             class="menu-btn nav-btn"
             title="随机前往一篇文章"
@@ -59,7 +56,6 @@
           >
             <i class="iconfont icon-shuffle"></i>
           </div>
-          <!-- 中控台 -->
           <div
             id="open-control"
             class="menu-btn nav-btn pc"
@@ -68,7 +64,6 @@
           >
             <i class="iconfont icon-dashboard" />
           </div>
-          <!-- 返回顶部 -->
           <div
             :class="[
               'to-top',
@@ -87,7 +82,6 @@
               <i class="iconfont icon-up"></i>
             </div>
           </div>
-          <!-- 移动端菜单 -->
           <div
             class="menu-btn nav-btn mobile"
             title="打开菜单"
@@ -98,7 +92,6 @@
         </div>
       </div>
     </nav>
-    <!-- 移动端菜单 -->
     <MobileMenu />
   </header>
 </template>
@@ -107,14 +100,54 @@
 import { storeToRefs } from "pinia";
 import { mainStore } from "@/store";
 import { smoothScrolling, shufflePost } from "@/utils/helper";
+import { useRouter, useData } from "vitepress";
 
 const router = useRouter();
 const store = mainStore();
 const { scrollData } = storeToRefs(store);
 const { site, theme, frontmatter, page } = useData();
+
+let secretClickCount = 0;
+let lastClickTime = 0;
+let clickTimer = null;
+
+const onSiteNameClick = () => {
+  const now = Date.now();
+  // 重置连击计数器
+  if (now - lastClickTime > 400) { // 将连击判定时间缩短为 400ms
+    secretClickCount = 1;
+  } else {
+    secretClickCount++;
+  }
+  lastClickTime = now;
+
+  // 清除上一次的单击计时器
+  if (clickTimer) clearTimeout(clickTimer);
+
+  // 如果达到连击次数
+  if (secretClickCount >= 5) {
+    secretClickCount = 0;
+    router.go('/pages/timeline.html'); // 跳转到秘密页面
+  } else {
+    // 否则，设置一个计时器，准备执行单击操作
+    clickTimer = setTimeout(() => {
+      // 只有当没有后续点击时 (即 secretClickCount 仍然是 1)，才执行返回首页
+      if(secretClickCount === 1) {
+        router.go('/');
+      }
+      secretClickCount = 0; // 无论如何，重置计数器
+    }, 250); // 250ms 后如果没有新的点击，就判定为单击
+  }
+};
+
+const toPage = (path, items) => {
+  if (!path && items) return;
+  router.go(path);
+};
 </script>
 
 <style lang="scss" scoped>
+/* 您的 Nav.vue 样式无需任何修改 */
 .main-header {
   position: relative;
   width: 100%;
@@ -589,7 +622,6 @@ const { site, theme, frontmatter, page } = useData();
         min-width: auto;
       }
       .nav-center {
-        // display: none;
         position: absolute;
         top: 0;
         left: 0;

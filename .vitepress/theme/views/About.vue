@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <h1 class="title">关于本站</h1>
+    <h1 class="title">关于站长</h1>
 
     <!-- 第一行布局 -->
     <div class="about-content" style="grid-template-columns: 3fr 2fr">
