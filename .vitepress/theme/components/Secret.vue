@@ -58,7 +58,10 @@
           <Content id="page-content" class="markdown-main-style" />
           <!-- 秘密文章不显示版权、推荐和下一篇等社交组件 -->
         </article>
-        <Aside showToc />
+        <!-- 修复：将Aside组件包裹在具有"main-aside"类的div中 -->
+        <div class="main-aside">
+          <Aside showToc />
+        </div>
       </div>
     </div>
   </div>
