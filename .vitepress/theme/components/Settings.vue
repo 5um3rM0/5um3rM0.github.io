@@ -6,17 +6,28 @@
       <span class="set-text">个性化配置</span>
     </div>
     <!-- 设置面板 -->
-    <Modal :show="store.showSeetings" title="个性化配置" titleIcon="style"
-      @mask-click="store.changeShowStatus('showSeetings')" @modal-close="store.changeShowStatus('showSeetings')">
+    <Modal
+      :show="store.showSeetings"
+      title="个性化配置"
+      titleIcon="style"
+      @mask-click="store.changeShowStatus('showSeetings')"
+      @modal-close="store.changeShowStatus('showSeetings')"
+    >
       <div class="set-list">
         <span class="title">字体</span>
         <div class="set-item">
           <span class="set-label">全站字体</span>
           <div class="set-options">
-            <span :class="['options', { choose: fontFamily === 'hmos' }]" @click="fontFamily = 'hmos'">
+            <span
+              :class="['options', { choose: fontFamily === 'hmos' }]"
+              @click="fontFamily = 'hmos'"
+            >
               HarmonyOS Sans
             </span>
-            <span :class="['options', { choose: fontFamily === 'lxgw' }]" @click="fontFamily = 'lxgw'">
+            <span
+              :class="['options', { choose: fontFamily === 'lxgw' }]"
+              @click="fontFamily = 'lxgw'"
+            >
               霞鹜文楷
             </span>
           </div>
@@ -33,13 +44,22 @@
         <div class="set-item">
           <span class="set-label">全站背景</span>
           <div class="set-options">
-            <span :class="['options', { choose: backgroundType === 'patterns' }]" @click="backgroundType = 'patterns'">
+            <span
+              :class="['options', { choose: backgroundType === 'patterns' }]"
+              @click="backgroundType = 'patterns'"
+            >
               纹理
             </span>
-            <span :class="['options', { choose: backgroundType === 'image' }]" @click="(backgroundType = 'image')">
+            <span
+              :class="['options', { choose: backgroundType === 'image' }]"
+              @click="backgroundType = 'image'"
+            >
               图片
             </span>
-            <span :class="['options', { choose: backgroundType === 'selfie' }]" @click="backgroundType = 'selfie'">
+            <span
+              :class="['options', { choose: backgroundType === 'selfie' }]"
+              @click="backgroundType = 'selfie'"
+            >
               站长自拍
             </span>
           </div>
@@ -47,9 +67,17 @@
         <div v-if="backgroundType === 'image' || backgroundType === 'selfie'" class="set-item">
           <span class="set-label">图片填充</span>
           <div class="set-options">
-            <span :class="['options', { choose: imageFit === 'cover' }]" @click="imageFit = 'cover'">裁剪</span>
-            <span :class="['options', { choose: imageFit === 'contain' }]" @click="imageFit = 'contain'">适应</span>
-            <span :class="['options', { choose: imageFit === 'fill' }]" @click="imageFit = 'fill'">拉伸</span>
+            <span :class="['options', { choose: imageFit === 'cover' }]" @click="imageFit = 'cover'"
+              >裁剪</span
+            >
+            <span
+              :class="['options', { choose: imageFit === 'contain' }]"
+              @click="imageFit = 'contain'"
+              >适应</span
+            >
+            <span :class="['options', { choose: imageFit === 'fill' }]" @click="imageFit = 'fill'"
+              >拉伸</span
+            >
           </div>
         </div>
         <div v-if="backgroundType === 'image'" class="set-item">
@@ -62,10 +90,16 @@
         <div class="set-item">
           <span class="set-label">Banner 高度</span>
           <div class="set-options">
-            <span :class="['options', { choose: bannerType === 'half' }]" @click="bannerType = 'half'">
+            <span
+              :class="['options', { choose: bannerType === 'half' }]"
+              @click="bannerType = 'half'"
+            >
               半屏
             </span>
-            <span :class="['options', { choose: bannerType === 'full' }]" @click="bannerType = 'full'">
+            <span
+              :class="['options', { choose: bannerType === 'full' }]"
+              @click="bannerType = 'full'"
+            >
               全屏
             </span>
           </div>
@@ -74,10 +108,16 @@
         <div class="set-item">
           <span class="set-label">额外信息显示位置</span>
           <div class="set-options">
-            <span :class="['options', { choose: infoPosition === 'normal' }]" @click="infoPosition = 'normal'">
+            <span
+              :class="['options', { choose: infoPosition === 'normal' }]"
+              @click="infoPosition = 'normal'"
+            >
               默认位置
             </span>
-            <span :class="['options', { choose: infoPosition === 'fixed' }]" @click="infoPosition = 'fixed'">
+            <span
+              :class="['options', { choose: infoPosition === 'fixed' }]"
+              @click="infoPosition = 'fixed'"
+            >
               右下角
             </span>
           </div>
@@ -92,8 +132,16 @@ import { storeToRefs } from "pinia";
 import { mainStore } from "@/store";
 
 const store = mainStore();
-const { themeType, fontFamily, fontSize, infoPosition, backgroundType, backgroundUrl, bannerType, imageFit } =
-  storeToRefs(store);
+const {
+  themeType,
+  fontFamily,
+  fontSize,
+  infoPosition,
+  backgroundType,
+  backgroundUrl,
+  bannerType,
+  imageFit,
+} = storeToRefs(store);
 </script>
 
 <style lang="scss" scoped>

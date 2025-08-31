@@ -1,39 +1,64 @@
-# Logs
-logs
-*.log
+# Logs - 日志文件
+logs/                  # 忽略 logs 文件夹
+*.log                  # 忽略所有 .log 文件
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-# 依赖和构建产物
-node_modules/
-.DS_Store
-dist
-dist-ssr
-coverage
-*.local
-test.html
-.env
-.vitepress/dist        # 忽略 VitePress 构建输出
-.vitepress/cache       # 忽略构建缓存
-.vitepress/components.d.ts  # 自动生成的类型文件
-.vitepress/auto-imports.d.ts  # 自动导入类型文件
+# Dependencies and Build Output - 依赖和构建产物
+node_modules/          # 忽略 node_modules 文件夹（npm install 生成）
+.DS_Store              # macOS 系统文件
+dist/                  # 通用的构建输出目录（如 Vue/Vite 的默认输出）
+dist-ssr/              # SSR（服务端渲染）的构建输出
+coverage/              # 代码覆盖率报告
+*.local                # 忽略所有以 .local 结尾的文件，例如 .env.local
+test.html              # 临时测试HTML文件
 
-# 主题配置相关（保留必要文件）
-themeConfig.mjs
-!.vitepress/theme/assets/themeConfig.mjs  # 例外：保留主题资产中的配置文件
+# Environment variables - 环境变量
+.env                   # 忽略 .env 文件（通常包含敏感信息）
+.env.local             # 忽略 .env.local 文件
+.env.*.local           # 忽略 .env.development.local 等文件
 
-# 编辑器配置
-.vscode/*
-!.vscode/extensions.json  # 保留扩展推荐配置
-.idea
+# VitePress specific files - VitePress 特有文件
+.vitepress/dist/       # 忽略 VitePress 构建输出（生成最终的静态页面）
+.vitepress/cache/      # 忽略 VitePress 构建缓存
+.vitepress/.temp/      # 忽略 VitePress 临时文件（常见的临时目录，建议添加）
+.vitepress/components.d.ts # 自动生成的组件类型声明文件
+.vitepress/auto-imports.d.ts # 自动导入类型声明文件
+
+# Project specific ignores - 项目特有忽略
+.npmrc                 # 【新增或确认】忽略 npm 配置文件，可能包含个人或敏感信息
+
+# Editor Configuration - 编辑器/IDE 配置
+.vscode/*              # 忽略 .vscode 目录下所有文件
+!.vscode/extensions.json # 但保留扩展推荐配置 (此文件不含个人信息，有益于团队协作)
+# !.vscode/settings.json # settings.json 将被 .vscode/* 忽略
+
+.idea/                 # JetBrains IDEs（如 WebStorm）的配置文件夹
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
-*.sw?
+*.sw?                  # Vim 编辑器交换文件
 
-# 其他
-.vercel
+# Other Service Configuration / Caches - 其他服务配置/缓存
+.vercel/               # 忽略 Vercel 部署服务相关的配置文件或缓存
+
+# --- 不应忽略的文件列表---
+# 这些文件应始终被 Git 跟踪和上传：
+# .eslintignore
+# .eslintrc.js
+# .gitignore (文件自身)
+# .prettierignore
+# .prettierrc.json
+# generate-selfies.js
+# index.md
+# LICENSE
+# package.json
+# page.md
+# pnpm-lock.yaml  (非常重要，用于保证依赖版本一致性)
+# README.md
+# siteSettings.mjs
+# themeConfig.mjs

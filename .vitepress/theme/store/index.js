@@ -9,32 +9,33 @@ export const mainStore = defineStore("main", {
       // 1. 使用 ES6 扩展运算符 (...) 将所有默认设置加载到 state 中。
       //    这使得默认配置与状态逻辑完全分离，易于维护。
       ...siteDefaultSettings,
-      
+
       // 2. 以下是网站运行时的“瞬时状态”，它们不应被持久化，
       //    每次访问都应重置为初始值。
-      themeValue: "light",     // 由 JS 计算得出的当前实际主题 ('light' 或 'dark')
-      loadingStatus: true,     // 页面加载状态
-      scrollData: {            // 实时滚动数据
+      themeValue: "light", // 由 JS 计算得出的当前实际主题 ('light' 或 'dark')
+      loadingStatus: true, // 页面加载状态
+      scrollData: {
+        // 实时滚动数据
         height: 0,
         percentage: 0,
         direction: "down",
       },
-      footerIsShow: false,     // 页脚是否进入视野
-      
+      footerIsShow: false, // 页脚是否进入视野
+
       // 所有弹窗、模态框的显示状态
       controlShow: false,
       showSettings: false,
       mobileMenuShow: false,
-      
+
       // 其他在单次会话中可能改变的临时数据
       lastScrollY: 0,
       lastBirthdayCelebrated: null,
     };
   },
-  
+
   // Getters 用于从 state派生出一些状态，本项目中暂未使用
   getters: {},
-  
+
   // Actions 定义了可以被调用以改变 state 的方法
   actions: {
     /**
@@ -89,7 +90,7 @@ export const mainStore = defineStore("main", {
       }
     },
   },
-  
+
   // 配置数据持久化
   persist: [
     {

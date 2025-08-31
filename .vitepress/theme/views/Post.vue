@@ -4,14 +4,23 @@
     <div class="post-meta">
       <div class="meta">
         <div class="categories">
-          <a v-for="(item, index) in postMetaData.categories" :key="index" :href="`/pages/categories/${item}`"
-            class="cat-item">
+          <a
+            v-for="(item, index) in postMetaData.categories"
+            :key="index"
+            :href="`/pages/categories/${item}`"
+            class="cat-item"
+          >
             <i class="iconfont icon-folder" />
             <span class="name">{{ item }}</span>
           </a>
         </div>
         <div class="tags">
-          <a v-for="(item, index) in postMetaData.tags" :key="index" :href="`/pages/tags/${item}`" class="tag-item">
+          <a
+            v-for="(item, index) in postMetaData.tags"
+            :key="index"
+            :href="`/pages/tags/${item}`"
+            class="tag-item"
+          >
             <i class="iconfont icon-hashtag" />
             <span class="name">{{ item }}</span>
           </a>
@@ -46,12 +55,21 @@
         <!-- 其他信息 -->
         <div class="other-meta">
           <div class="all-tags">
-            <a v-for="(item, index) in postMetaData.tags" :key="index" :href="`/pages/tags/${item}`" class="tag-item">
+            <a
+              v-for="(item, index) in postMetaData.tags"
+              :key="index"
+              :href="`/pages/tags/${item}`"
+              class="tag-item"
+            >
               <i class="iconfont icon-hashtag" />
               <span class="name">{{ item }}</span>
             </a>
           </div>
-          <a href="https://www.aceshowbiz.com/images/still/drive02.jpg" class="report" target="_blank">
+          <a
+            href="https://www.aceshowbiz.com/images/still/drive02.jpg"
+            class="report"
+            target="_blank"
+          >
             <i class="iconfont icon-report" />
             反馈与投诉
           </a>

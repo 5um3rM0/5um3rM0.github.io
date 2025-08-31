@@ -1,8 +1,16 @@
-dist
-node_modules
-pnpm-lock.yaml
-LICENSE.md
-tsconfig.json
-tsconfig.*.json
-auto-imports.d.ts
-components.d.ts
+# Ignore build output and dependency directories
+dist/
+node_modules/
+coverage/ # 如果有代码覆盖率报告，也应该忽略格式化
+
+# Ignore automatically generated files
+.vitepress/dist/        # VitePress 的最终构建输出
+.vitepress/cache/       # VitePress 的缓存文件
+.vitepress/.temp/       # VitePress 的临时文件
+.vitepress/components.d.ts
+.vitepress/auto-imports.d.ts
+
+# Ignore configuration files that are usually strictly formatted or auto-generated
+*.json
+*.yml
+*.yaml

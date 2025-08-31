@@ -52,8 +52,8 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
-import { useData } from 'vitepress';
+import { computed } from "vue";
+import { useData } from "vitepress";
 import { loadScript } from "@/utils/commonTools";
 import { daysFromNow } from "@/utils/helper";
 
@@ -71,7 +71,7 @@ onMounted(() => {
 
 const lastUpdatedText = computed(() => {
   if (!theme.value.postData || theme.value.postData.length === 0) {
-    return '暂无';
+    return "暂无";
   }
   const lastPostDate = new Date(theme.value.postData[0].date);
   const diffInMinutes = Math.floor((new Date() - lastPostDate) / 60000);
@@ -80,7 +80,7 @@ const lastUpdatedText = computed(() => {
   const diffInHours = Math.floor(diffInMinutes / 60);
   if (diffInHours < 24) return `${diffInHours} 小时前`;
   const diffInDays = Math.floor(diffInHours / 24);
-  return diffInDays === 1 ? '昨天' : `${diffInDays} 天前`;
+  return diffInDays === 1 ? "昨天" : `${diffInDays} 天前`;
 });
 
 const formattedWordCount = computed(() => {
@@ -102,8 +102,12 @@ const formattedWordCount = computed(() => {
     align-items: center;
     padding: 0 1rem;
     height: 40px;
-    .iconfont { margin-right: 8px; }
-    .title-name { font-weight: bold; }
+    .iconfont {
+      margin-right: 8px;
+    }
+    .title-name {
+      font-weight: bold;
+    }
   }
   .all-data {
     padding: 0 1rem 0.5rem;

@@ -184,8 +184,8 @@ const socialLinkData = computed(() => {
     margin: 1rem 0;
     .sitemap-item {
       display: flex;
-    flex-direction: column;
-    align-items: center;
+      flex-direction: column;
+      align-items: center;
       min-width: 120px;
       .title {
         display: inline-block;

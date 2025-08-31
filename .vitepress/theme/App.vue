@@ -31,7 +31,7 @@
 import { storeToRefs } from "pinia";
 import { mainStore } from "@/store";
 import { calculateScroll, specialDayGray } from "@/utils/helper";
-import { onMounted, onUnmounted, onBeforeUnmount } from 'vue';
+import { onMounted, onUnmounted, onBeforeUnmount } from "vue";
 import { isSpecialBirthday } from "@/utils/birthdayUtils.mjs";
 import BirthdayEffects from "@/components/BirthdayEffects.vue";
 import Secret from "@/components/Secret.vue";
@@ -47,12 +47,12 @@ const rightMenuRef = ref(null);
 const showBirthdayEffect = ref(false);
 
 const createClickEffect = (event) => {
-  const ripple = document.createElement('div');
-  ripple.className = 'click-ripple';
+  const ripple = document.createElement("div");
+  ripple.className = "click-ripple";
   document.body.appendChild(ripple);
   ripple.style.left = `${event.clientX}px`;
   ripple.style.top = `${event.clientY}px`;
-  ripple.addEventListener('animationend', () => {
+  ripple.addEventListener("animationend", () => {
     ripple.remove();
   });
 };
@@ -92,8 +92,8 @@ const changeSiteThemeType = () => {
     htmlElement.classList.add(themeClasses[themeType.value]);
     themeValue.value = themeClasses[themeType.value];
   }
-  
-  const bgTypes = ['image', 'selfie'];
+
+  const bgTypes = ["image", "selfie"];
   if (bgTypes.includes(backgroundType.value)) {
     htmlElement.classList.add("image");
   } else {
@@ -112,8 +112,8 @@ const changeSiteFont = () => {
   }
 };
 
-let originalFavicon = '';
-const grayFaviconPath = '/images/logo/favicon-special-96x96.webp';
+let originalFavicon = "";
+const grayFaviconPath = "/images/logo/favicon-special-96x96.webp";
 
 const handleVisibilityChange = () => {
   const favicon = document.querySelector("link[rel~='icon']");
@@ -149,12 +149,12 @@ onMounted(() => {
   window.addEventListener("copy", copyTip);
   window.addEventListener("click", createClickEffect);
   window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", changeSiteThemeType);
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     const faviconElement = document.querySelector("link[rel~='icon']");
     if (faviconElement) {
       originalFavicon = faviconElement.href;
     }
-    document.addEventListener('visibilitychange', handleVisibilityChange);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
   }
 });
 
@@ -162,10 +162,12 @@ onBeforeUnmount(() => {
   window.removeEventListener("scroll", calculateScroll);
   window.removeEventListener("contextmenu", openRightMenu);
   window.removeEventListener("copy", copyTip);
-  window.matchMedia("(prefers-color-scheme: dark)").removeEventListener("change", changeSiteThemeType);
+  window
+    .matchMedia("(prefers-color-scheme: dark)")
+    .removeEventListener("change", changeSiteThemeType);
   window.removeEventListener("click", createClickEffect);
-  if (typeof window !== 'undefined') {
-    document.removeEventListener('visibilitychange', handleVisibilityChange);
+  if (typeof window !== "undefined") {
+    document.removeEventListener("visibilitychange", handleVisibilityChange);
   }
 });
 

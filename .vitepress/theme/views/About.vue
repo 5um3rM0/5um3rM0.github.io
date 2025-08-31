@@ -26,8 +26,14 @@
         <span class="tip">技能</span>
         <span class="title2">哇 我到底会什么？</span>
         <div class="skills-list">
-          <a v-for="(item, index) in skillsData" :key="index" :style="{ '--color': item.color }" :href="item.link"
-            class="skills-item" target="_blank">
+          <a
+            v-for="(item, index) in skillsData"
+            :key="index"
+            :style="{ '--color': item.color }"
+            :href="item.link"
+            class="skills-item"
+            target="_blank"
+          >
             <div class="skills-logo"><i :class="`iconfont icon-${item.icon}`"></i></div>
             <span class="skills-name">{{ item.name }}</span>
           </a>
@@ -39,8 +45,14 @@
           <span class="tip">数字生活</span>
           <span class="title2">最近在看/听/玩什么</span>
           <div class="media-list">
-            <a v-for="item in mediaData" :key="item.name" class="media-item" :href="item.url" target="_blank">
-              <img :src="item.cover" :alt="item.name" class="media-cover">
+            <a
+              v-for="item in mediaData"
+              :key="item.name"
+              class="media-item"
+              :href="item.url"
+              target="_blank"
+            >
+              <img :src="item.cover" :alt="item.name" class="media-cover" />
               <div class="media-info">
                 <span class="media-title">{{ item.name }}</span>
                 <span class="media-artist">{{ item.artist }}</span>
@@ -54,7 +66,12 @@
       <div class="about-item selfie-card">
         <div class="image-container">
           <!-- 动态绑定的主图片 -->
-          <img :src="currentSelfie.url" :key="currentSelfie.url" alt="博主自拍" class="selfie-img">
+          <img
+            :src="currentSelfie.url"
+            :key="currentSelfie.url"
+            alt="博主自拍"
+            class="selfie-img"
+          />
         </div>
         <div class="selfie-overlay">
           <span class="selfie-title">{{ currentSelfie.title }}</span>
@@ -74,8 +91,12 @@
       <div class="about-item">
         <span class="tip">心路历程</span>
         <span class="title2">为什么建站？</span>
-        <p class="text">因为想要找个地方记录一下东西，嗯，如果有个网站来写博客的话就更酷了......很无语的理由，对吧？</p>
-        <p class="text">这里内容很杂，<strong>生活、随笔、资源分享</strong>......随便写写总之。可能不太会有很多人看（真的有人看么），权当日记。</p>
+        <p class="text">
+          因为想要找个地方记录一下东西，嗯，如果有个网站来写博客的话就更酷了......很无语的理由，对吧？
+        </p>
+        <p class="text">
+          这里内容很杂，<strong>生活、随笔、资源分享</strong>......随便写写总之。可能不太会有很多人看（真的有人看么），权当日记。
+        </p>
         <p class="text">这些就是创造这个博客的本意。有幸相遇，玩的开心。</p>
       </div>
     </div>
@@ -97,40 +118,70 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed, onMounted, onBeforeUnmount } from 'vue';
+import { ref, reactive, computed, onMounted, onBeforeUnmount } from "vue";
 
 // 定义技能图标数据
 const skillsData = [
   { name: "Python", color: "#3776AB", icon: "python", link: "https://www.python.org/" },
   { name: "Git", color: "#F05032", icon: "git", link: "https://git-scm.com/" },
-  { name: "Photoshop", color: "#31A8FF", icon: "photoshop", link: "https://www.adobe.com/cn/lead/creativecloud/business.html" },
+  {
+    name: "Photoshop",
+    color: "#31A8FF",
+    icon: "photoshop",
+    link: "https://www.adobe.com/cn/lead/creativecloud/business.html",
+  },
   { name: "ChatGPT", color: "#4AA181", icon: "chatgpt", link: "https://chat.openai.com/" },
 ];
 
 // 定义数字生活卡片的数据
 const mediaData = [
-  { name: 'American Idiot', artist: 'Green Day', cover: 'http://p1.music.126.net/gn85AxXTWVLbOVmdAJsxrg==/109951163834085468.jpg', url: 'https://music.163.com/#/album?id=73668475' },
-  { name: 'Fight Club', artist: 'Movie', cover: 'https://m.media-amazon.com/images/M/MV5BOTgyOGQ1NDItNGU3Ny00MjU3LTg2YWEtNmEyYjBiMjI1Y2M5XkEyXkFqcGc@.jpg', url: 'https://www.imdb.com/title/tt0137523/' },
-  { name: 'Uma Musume:Pretty Derby', artist: 'Game', cover: 'https://static.komoejoy.com/uma/gw/new/_nuxt/images/logo_umamusume-BHRmH5Nz.png', url: 'https://umamusume.jp/' },
-  { name: '私が主役じゃダメですか？', artist: 'ダンツフレーム', cover: 'http://p1.music.126.net/jLzwIn67sw4fGOn2a_olPQ==/109951170973803859.jpg', url: 'https://www.bilibili.com/video/BV1Kx4y187Nj/' },
+  {
+    name: "American Idiot",
+    artist: "Green Day",
+    cover: "http://p1.music.126.net/gn85AxXTWVLbOVmdAJsxrg==/109951163834085468.jpg",
+    url: "https://music.163.com/#/album?id=73668475",
+  },
+  {
+    name: "Fight Club",
+    artist: "Movie",
+    cover:
+      "https://m.media-amazon.com/images/M/MV5BOTgyOGQ1NDItNGU3Ny00MjU3LTg2YWEtNmEyYjBiMjI1Y2M5XkEyXkFqcGc@.jpg",
+    url: "https://www.imdb.com/title/tt0137523/",
+  },
+  {
+    name: "Uma Musume:Pretty Derby",
+    artist: "Game",
+    cover: "https://static.komoejoy.com/uma/gw/new/_nuxt/images/logo_umamusume-BHRmH5Nz.png",
+    url: "https://umamusume.jp/",
+  },
+  {
+    name: "私が主役じゃダメですか？",
+    artist: "ダンツフレーム",
+    cover: "http://p1.music.126.net/jLzwIn67sw4fGOn2a_olPQ==/109951170973803859.jpg",
+    url: "https://www.bilibili.com/video/BV1Kx4y187Nj/",
+  },
 ];
 
 // 定义博客时间轴数据
 const timelineData = [
-  { date: '2025-08-28', event: '在一时冲动下，博客的第一个版本诞生了！' },
-  { date: '2025-08-29凌晨，于部署前', event: '超级大改！感谢Google Gemini对本博客的支持（雾）' },
-  { date: '2025-08-29上午，在通宵修bug后', event: '谁给的你自信啊？修的我想死，最后还是轻量化掉了一大堆你花了数个小时睡眠时间写的功能......' },
-  { date: '未来', event: '更多好玩的功能正在构思中...' },
+  { date: "2025-08-28", event: "在一时冲动下，博客的第一个版本诞生了！" },
+  { date: "2025-08-29凌晨，于部署前", event: "超级大改！感谢Google Gemini对本博客的支持（雾）" },
+  {
+    date: "2025-08-29上午，在通宵修bug后",
+    event:
+      "谁给的你自信啊？修的我想死，最后还是轻量化掉了一大堆你花了数个小时睡眠时间写的功能......",
+  },
+  { date: "未来", event: "更多好玩的功能正在构思中..." },
 ];
 
 // 定义自拍卡片的数据数组
 const selfies = [
-  { url: '/images/about/i_drive.png', title: 'I Drive', subtitle: '' },
-  { url: '/images/about/i_kill.png', title: 'I Kill', subtitle: '' },
-  { url: '/images/about/i_see.png', title: 'I See', subtitle: '' },
-  { url: '/images/about/i_shot.png', title: 'I Shot', subtitle: '' },
-  { url: '/images/about/i_smile.png', title: 'I Smile', subtitle: '' },
-  { url: '/images/about/i_stand.png', title: 'I Stand', subtitle: '' },
+  { url: "/images/about/i_drive.png", title: "I Drive", subtitle: "" },
+  { url: "/images/about/i_kill.png", title: "I Kill", subtitle: "" },
+  { url: "/images/about/i_see.png", title: "I See", subtitle: "" },
+  { url: "/images/about/i_shot.png", title: "I Shot", subtitle: "" },
+  { url: "/images/about/i_smile.png", title: "I Smile", subtitle: "" },
+  { url: "/images/about/i_stand.png", title: "I Stand", subtitle: "" },
 ];
 
 // 用于自拍卡片图片切换的状态
@@ -178,7 +229,7 @@ const typeWriter = (element, text, speed = 150) => {
       i++;
       setTimeout(typing, speed);
     } else {
-      element.style.borderRight = 'none';
+      element.style.borderRight = "none";
     }
   };
   typing();
@@ -188,14 +239,14 @@ const typeWriter = (element, text, speed = 150) => {
 onMounted(() => {
   // 绑定鼠标视差事件
   if (helloCard.value) {
-    helloCard.value.addEventListener('mousemove', handleMouseMove);
-    helloCard.value.addEventListener('mouseleave', handleMouseLeave);
+    helloCard.value.addEventListener("mousemove", handleMouseMove);
+    helloCard.value.addEventListener("mouseleave", handleMouseLeave);
   }
 
   // 启动打字机效果
-  typeWriter(pursuitText1.value, '好玩的事');
-  setTimeout(() => typeWriter(pursuitText2.value, '如果喜欢的话 偶尔也好'), 1200);
-  setTimeout(() => typeWriter(pursuitText3.value, '记住我吧'), 3200);
+  typeWriter(pursuitText1.value, "好玩的事");
+  setTimeout(() => typeWriter(pursuitText2.value, "如果喜欢的话 偶尔也好"), 1200);
+  setTimeout(() => typeWriter(pursuitText3.value, "记住我吧"), 3200);
 
   // 启动自拍卡片图片轮播
   selfieInterval.value = setInterval(() => {
@@ -207,8 +258,8 @@ onMounted(() => {
 onBeforeUnmount(() => {
   // 移除事件监听以防止内存泄漏
   if (helloCard.value) {
-    helloCard.value.removeEventListener('mousemove', handleMouseMove);
-    helloCard.value.removeEventListener('mouseleave', handleMouseLeave);
+    helloCard.value.removeEventListener("mousemove", handleMouseMove);
+    helloCard.value.removeEventListener("mouseleave", handleMouseLeave);
   }
   // 清除定时器
   if (selfieInterval.value) {
@@ -374,7 +425,7 @@ onBeforeUnmount(() => {
 
   &::before,
   &::after {
-    content: '';
+    content: "";
     position: absolute;
   }
 
@@ -384,7 +435,12 @@ onBeforeUnmount(() => {
     left: 50%;
     width: 200%;
     height: 200%;
-    background: conic-gradient(transparent, rgba(0, 255, 255, 0.8), rgba(255, 0, 255, 0.8), transparent 30%);
+    background: conic-gradient(
+      transparent,
+      rgba(0, 255, 255, 0.8),
+      rgba(255, 0, 255, 0.8),
+      transparent 30%
+    );
     transform: translate(-50%, -50%);
     animation: rotate-border 4s linear infinite;
     opacity: 0;
@@ -421,7 +477,9 @@ onBeforeUnmount(() => {
   height: 100%;
   object-fit: cover;
   border-radius: 12px;
-  transition: transform 0.5s ease, filter 0.5s ease;
+  transition:
+    transform 0.5s ease,
+    filter 0.5s ease;
   animation: fadeIn 0.8s ease;
 
   &:hover {
@@ -483,13 +541,18 @@ onBeforeUnmount(() => {
 
   &::after {
     /* 扫描线 */
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 200%;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0) 100%);
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.05) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
     background-size: 100% 4px;
     animation: scanline 3s linear infinite;
   }
@@ -585,7 +648,7 @@ onBeforeUnmount(() => {
 
   &::before {
     /* 竖线 */
-    content: '';
+    content: "";
     position: absolute;
     left: 10px;
     top: 5px;
@@ -605,7 +668,7 @@ onBeforeUnmount(() => {
 
   &::before {
     /* 圆点 */
-    content: '';
+    content: "";
     position: absolute;
     left: -2rem;
     top: 5px;
@@ -630,20 +693,19 @@ onBeforeUnmount(() => {
 /* 动画关键帧 */
 @keyframes gradientFlow {
   0% {
-    background-position: 0% 50%
+    background-position: 0% 50%;
   }
 
   50% {
-    background-position: 100% 50%
+    background-position: 100% 50%;
   }
 
   100% {
-    background-position: 0% 50%
+    background-position: 0% 50%;
   }
 }
 
 @keyframes blink {
-
   from,
   to {
     border-color: transparent;
@@ -655,7 +717,6 @@ onBeforeUnmount(() => {
 }
 
 @keyframes breath {
-
   0%,
   100% {
     transform: scale(1);
@@ -697,7 +758,6 @@ onBeforeUnmount(() => {
 }
 
 @keyframes text-flicker {
-
   0%,
   18%,
   22%,
@@ -705,7 +765,15 @@ onBeforeUnmount(() => {
   53%,
   57%,
   100% {
-    text-shadow: 0 0 4px #fff, 0 0 11px #fff, 0 0 19px #fff, 0 0 40px #0fa, 0 0 80px #0fa, 0 0 90px #0fa, 0 0 100px #0fa, 0 0 150px #0fa;
+    text-shadow:
+      0 0 4px #fff,
+      0 0 11px #fff,
+      0 0 19px #fff,
+      0 0 40px #0fa,
+      0 0 80px #0fa,
+      0 0 90px #0fa,
+      0 0 100px #0fa,
+      0 0 150px #0fa;
   }
 
   20%,

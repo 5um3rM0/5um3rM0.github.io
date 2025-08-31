@@ -6,7 +6,11 @@
         <a :href="theme.siteMeta.author.link" class="author link" target="_blank">
           {{ theme.siteMeta.author.name }}
         </a>
-        <a class="icp link" href="https://www.aceshowbiz.com/images/still/drive02.jpg" target="_blank">
+        <a
+          class="icp link"
+          href="https://www.aceshowbiz.com/images/still/drive02.jpg"
+          target="_blank"
+        >
           <i class="iconfont icon-safe" />
           {{ theme.icp }}
         </a>

@@ -106,7 +106,6 @@ onMounted(() => {
   // 更改 banner 类型
   bannerType.value = store.bannerType;
 });
-
 </script>
 
 <style lang="scss" scoped>

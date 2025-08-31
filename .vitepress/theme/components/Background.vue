@@ -1,11 +1,11 @@
 <template>
   <Teleport to="body">
-    <div 
+    <div
       :class="[
-        'background', 
+        'background',
         isLoading ? 'patterns' : backgroundType,
-        themeValue, 
-        { 'is-loading': isLoading }
+        themeValue,
+        { 'is-loading': isLoading },
       ]"
     >
       <Transition name="fade-bg">
@@ -26,14 +26,14 @@
 </template>
 
 <script setup>
-import { ref, watch, onUnmounted, nextTick } from 'vue';
+import { ref, watch, onUnmounted, nextTick } from "vue";
 import { storeToRefs } from "pinia";
 import { mainStore } from "@/store";
 
 const store = mainStore();
 const { backgroundType, backgroundUrl, themeValue, imageFit } = storeToRefs(store);
 
-const imageUrl = ref('');
+const imageUrl = ref("");
 const isLoading = ref(false);
 let selfieInterval = null;
 
@@ -46,14 +46,14 @@ const onImageError = () => {
   if (imageUrl.value) {
     $message.error("背景图片加载失败");
   }
-  imageUrl.value = '';
+  imageUrl.value = "";
   isLoading.value = false;
 };
 
 const getImageUrl = (url) => {
-  if (!url) return '';
-  if (url.includes('t.alcy.cc/fj')) {
-    return `${url}${url.includes('?') ? '&' : '?'}t=${Date.now()}`;
+  if (!url) return "";
+  if (url.includes("t.alcy.cc/fj")) {
+    return `${url}${url.includes("?") ? "&" : "?"}t=${Date.now()}`;
   }
   return url;
 };
@@ -70,7 +70,7 @@ const startSelfieMode = async () => {
       imageUrl.value = selfieList[currentIndex];
       currentIndex = (currentIndex + 1) % selfieList.length;
     };
-    
+
     showNextSelfie();
     selfieInterval = setInterval(showNextSelfie, 10000);
   } catch (error) {
@@ -85,22 +85,26 @@ const stopSelfieMode = () => {
   }
 };
 
-watch(backgroundType, (newType) => {
-  stopSelfieMode();
-  if (newType === 'image') {
-    isLoading.value = true;
-    imageUrl.value = getImageUrl(backgroundUrl.value);
-  } else if (newType === 'selfie') {
-    isLoading.value = true;
-    startSelfieMode();
-  } else {
-    imageUrl.value = '';
-    isLoading.value = false;
-  }
-}, { immediate: true });
+watch(
+  backgroundType,
+  (newType) => {
+    stopSelfieMode();
+    if (newType === "image") {
+      isLoading.value = true;
+      imageUrl.value = getImageUrl(backgroundUrl.value);
+    } else if (newType === "selfie") {
+      isLoading.value = true;
+      startSelfieMode();
+    } else {
+      imageUrl.value = "";
+      isLoading.value = false;
+    }
+  },
+  { immediate: true },
+);
 
 watch(backgroundUrl, (newUrl) => {
-  if (backgroundType.value === 'image') {
+  if (backgroundType.value === "image") {
     isLoading.value = true;
     imageUrl.value = getImageUrl(newUrl);
   }

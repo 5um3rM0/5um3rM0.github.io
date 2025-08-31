@@ -14,11 +14,7 @@
     </div>
     <div class="meta">
       <span class="tip">苦逼5M总结而成</span>
-      <a
-        href="https://www.aceshowbiz.com/images/still/drive02.jpg"
-        class="report"
-        target="_blank"
-      >
+      <a href="https://www.aceshowbiz.com/images/still/drive02.jpg" class="report" target="_blank">
         投诉
       </a>
     </div>
@@ -72,8 +68,7 @@ const initAbstract = () => {
 // 输出摘要介绍
 const showOther = () => {
   if (loading.value) return false;
-  const text =
-    "假的GPT 全是我写的！";
+  const text = "假的GPT 全是我写的！";
   showIndex.value = 0;
   loading.value = true;
   abstractData.value = "";

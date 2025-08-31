@@ -54,11 +54,14 @@ export const getAllPosts = async () => {
           if (data.hidden === true) {
             return null;
           }
-          
+
           const stat = await fs.stat(item);
           const { birthtimeMs, mtimeMs } = stat;
           const { title, date, categories, description, tags, top } = data;
-          const wordCount = content.replace(/---[\s\S]*?---/, '').replace(/[#*`_~>\-[\]()|]/g, '').replace(/\s/g, '').length;
+          const wordCount = content
+            .replace(/---[\s\S]*?---/, "")
+            .replace(/[#*`_~>\-[\]()|]/g, "")
+            .replace(/\s/g, "").length;
           const expired = Math.floor(
             (new Date().getTime() - new Date(date).getTime()) / (1000 * 60 * 60 * 24),
           );
@@ -81,7 +84,7 @@ export const getAllPosts = async () => {
         }
       }),
     );
-    
+
     const visiblePosts = posts.filter(Boolean);
 
     visiblePosts.sort(comparePostPriority);

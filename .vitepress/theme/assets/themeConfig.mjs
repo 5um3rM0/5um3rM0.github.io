@@ -23,12 +23,40 @@ export const themeConfig = {
       ["link", { rel: "icon", href: "/favicon.ico" }],
       ["link", { crossorigin: "", rel: "preconnect", href: "https://s1.hdslb.com" }],
       ["link", { crossorigin: "", rel: "preconnect", href: "https://mirrors.sustech.edu.cn" }],
-      ["link", { crossorigin: "anonymous", rel: "stylesheet", href: "https://s1.hdslb.com/bfs/static/jinkela/long/font/regular.css" }],
-      ["link", { crossorigin: "anonymous", rel: "stylesheet", href: "https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/lxgw-wenkai-screen-webfont/1.7.0/style.css" }],
-      ["link", { crossorigin: "anonymous", rel: "stylesheet", href: "https://cdn2.codesign.qq.com/icons/g5ZpEgx3z4VO6j2/latest/iconfont.css" }],
+      [
+        "link",
+        {
+          crossorigin: "anonymous",
+          rel: "stylesheet",
+          href: "https://s1.hdslb.com/bfs/static/jinkela/long/font/regular.css",
+        },
+      ],
+      [
+        "link",
+        {
+          crossorigin: "anonymous",
+          rel: "stylesheet",
+          href: "https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/lxgw-wenkai-screen-webfont/1.7.0/style.css",
+        },
+      ],
+      [
+        "link",
+        {
+          crossorigin: "anonymous",
+          rel: "stylesheet",
+          href: "https://cdn2.codesign.qq.com/icons/g5ZpEgx3z4VO6j2/latest/iconfont.css",
+        },
+      ],
       ["link", { rel: "preconnect", href: "https://use.sevencdn.com" }],
       ["link", { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: "" }],
-      ["link", { crossorigin: "anonymous", href: "https://use.sevencdn.com/css2?family=Fira+Code:wght@300..700&display=swap", rel: "stylesheet" }],
+      [
+        "link",
+        {
+          crossorigin: "anonymous",
+          href: "https://use.sevencdn.com/css2?family=Fira+Code:wght@300..700&display=swap",
+          rel: "stylesheet",
+        },
+      ],
       ["link", { href: "https://X5EBEZB53I-dsn.algolia.net", rel: "preconnect", crossorigin: "" }],
     ],
   },
@@ -83,7 +111,7 @@ export const themeConfig = {
         items: [
           { text: "碎碎念", link: "/pages/categories/碎碎念" },
           { text: "存档处", link: "/pages/categories/存档处" },
-          { text: "胡思乱想", link: "/pages/categories/胡思乱想"},
+          { text: "胡思乱想", link: "/pages/categories/胡思乱想" },
           { text: "和TA的日常", link: "/pages/categories/和TA的日常" },
         ],
       },
@@ -108,9 +136,20 @@ export const themeConfig = {
   jumpRedirect: {
     enable: true,
     exclude: [
-      "cf-friends-link", "upyun", "icp", "author", "power", "social-link",
-      "link-text", "travellings", "post-link", "report", "more-link", "skills-item",
-      "right-menu-link", "link-card",
+      "cf-friends-link",
+      "upyun",
+      "icp",
+      "author",
+      "power",
+      "social-link",
+      "link-text",
+      "travellings",
+      "post-link",
+      "report",
+      "more-link",
+      "skills-item",
+      "right-menu-link",
+      "link-card",
     ],
   },
 };

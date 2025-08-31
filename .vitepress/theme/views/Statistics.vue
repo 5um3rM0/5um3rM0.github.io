@@ -24,10 +24,20 @@
         </div>
       </div>
       <div class="stats-list">
-        <div><strong>最长文章：</strong><a :href="stats.longestPost.regularPath">{{ stats.longestPost.title }}</a> ({{
-          stats.longestPost.wordCount }} 字)</div>
-        <div><strong>最短文章：</strong><a :href="stats.shortestPost.regularPath">{{ stats.shortestPost.title }}</a> ({{
-          stats.shortestPost.wordCount }} 字)</div>
+        <div>
+          <strong>最长文章：</strong
+          ><a :href="stats.longestPost.regularPath">{{ stats.longestPost.title }}</a> ({{
+            stats.longestPost.wordCount
+          }}
+          字)
+        </div>
+        <div>
+          <strong>最短文章：</strong
+          ><a :href="stats.shortestPost.regularPath">{{ stats.shortestPost.title }}</a> ({{
+            stats.shortestPost.wordCount
+          }}
+          字)
+        </div>
       </div>
     </div>
 
@@ -35,7 +45,7 @@
       <h2><i class="iconfont icon-star"></i> 我的词汇 DNA</h2>
       <p>我最常使用的词语 Top 20：</p>
       <div class="word-cloud">
-        <span v-for="([word, count]) in stats.topWords" :key="word" class="word-item">
+        <span v-for="[word, count] in stats.topWords" :key="word" class="word-item">
           {{ word }} <sup>{{ count }}</sup>
         </span>
       </div>
@@ -45,7 +55,7 @@
       <h2><i class="iconfont icon-hashtag"></i> 标签偏好</h2>
       <p>我最常使用的标签 Top 10：</p>
       <div class="word-cloud">
-        <span v-for="([tag, count]) in stats.topTags" :key="tag" class="word-item tag-item">
+        <span v-for="[tag, count] in stats.topTags" :key="tag" class="word-item tag-item">
           {{ tag }} <sup>{{ count }}</sup>
         </span>
       </div>
@@ -55,19 +65,21 @@
       <h2><i class="iconfont icon-quote"></i> 标点符号情结</h2>
       <p>从标点符号的使用频率，或许能一窥我的写作风格：</p>
       <div class="punctuation-list">
-        <div v-for="([punc, count]) in stats.topPunctuation" :key="punc" class="punc-item">
+        <div v-for="[punc, count] in stats.topPunctuation" :key="punc" class="punc-item">
           <span class="punc">{{ punc }}</span>
-          <div class="punc-bar" :style="{ width: `${(count / stats.topPunctuation[0][1]) * 100}%` }"></div>
+          <div
+            class="punc-bar"
+            :style="{ width: `${(count / stats.topPunctuation[0][1]) * 100}%` }"
+          ></div>
           <span class="count">{{ count }} 次</span>
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
 <script setup>
-import { useData } from 'vitepress';
+import { useData } from "vitepress";
 const { theme } = useData();
 const stats = theme.value.siteStats;
 </script>
@@ -115,7 +127,7 @@ p {
 
 .stats-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 1rem;
   text-align: center;
 }

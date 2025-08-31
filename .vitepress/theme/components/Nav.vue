@@ -114,7 +114,8 @@ let clickTimer = null;
 const onSiteNameClick = () => {
   const now = Date.now();
   // 重置连击计数器
-  if (now - lastClickTime > 400) { // 将连击判定时间缩短为 400ms
+  if (now - lastClickTime > 400) {
+    // 将连击判定时间缩短为 400ms
     secretClickCount = 1;
   } else {
     secretClickCount++;
@@ -127,13 +128,13 @@ const onSiteNameClick = () => {
   // 如果达到连击次数
   if (secretClickCount >= 5) {
     secretClickCount = 0;
-    router.go('/pages/timeline.html'); // 跳转到秘密页面
+    router.go("/pages/timeline.html"); // 跳转到秘密页面
   } else {
     // 否则，设置一个计时器，准备执行单击操作
     clickTimer = setTimeout(() => {
       // 只有当没有后续点击时 (即 secretClickCount 仍然是 1)，才执行返回首页
-      if(secretClickCount === 1) {
-        router.go('/');
+      if (secretClickCount === 1) {
+        router.go("/");
       }
       secretClickCount = 0; // 无论如何，重置计数器
     }, 250); // 250ms 后如果没有新的点击，就判定为单击

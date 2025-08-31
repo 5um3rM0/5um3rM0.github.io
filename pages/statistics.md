@@ -1,6 +1,6 @@
 ---
-layout: 'Statistics'
-title: '站点数据档案馆'
+layout: "Statistics"
+title: "站点数据档案馆"
 ---
 
 <script setup>

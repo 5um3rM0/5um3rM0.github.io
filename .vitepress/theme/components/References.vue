@@ -14,7 +14,7 @@
         target="_blank"
       >
         <span class="item-title">{{ item.title }}</span>
-    </a>
+      </a>
     </ul>
   </div>
 </template>

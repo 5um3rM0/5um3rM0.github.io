@@ -64,7 +64,7 @@ export default defineConfig({
     if (siteConfig.isBuild) {
       const version = getTimestampVersion();
       const versionComment = `<!-- Deployment Version: ${version} -->`;
-      const headEndIndex = processedHtml.indexOf('</head>');
+      const headEndIndex = processedHtml.indexOf("</head>");
       if (headEndIndex !== -1) {
         processedHtml =
           processedHtml.slice(0, headEndIndex) +
@@ -89,7 +89,7 @@ export default defineConfig({
     ],
     resolve: {
       alias: {
-        "@": path.resolve(new URL(import.meta.url).pathname, '..', "./theme"),
+        "@": path.resolve(new URL(import.meta.url).pathname, "..", "./theme"),
       },
     },
     css: {
