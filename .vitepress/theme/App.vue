@@ -6,12 +6,11 @@
   <main :class="['mian-layout', { loading: loadingStatus, 'is-post': isPostPage }]">
     <Secret v-if="frontmatter.secret" />
     <Statistics v-else-if="frontmatter.layout === 'Statistics'" />
-    <Timeline v-else-if="frontmatter.layout === 'Timeline'" />
     <template v-else>
       <NotFound v-if="page.isNotFound" />
       <Home v-else-if="frontmatter.layout === 'home'" showHeader />
       <template v-else>
-        <Post v-if="isPostPage || frontmatter.layout === 'Post'" />
+        <Post v-if="isPostPage" />
         <Page v-else />
       </template>
     </template>
@@ -37,7 +36,6 @@ import { isSpecialBirthday } from "@/utils/birthdayUtils.mjs";
 import BirthdayEffects from "@/components/BirthdayEffects.vue";
 import Secret from "@/views/Secret.vue";
 import Statistics from "@/views/Statistics.vue";
-import Timeline from "@/views/Timeline.vue";
 
 const route = useRoute();
 const store = mainStore();
