@@ -71,7 +71,7 @@ import { formatTimestamp } from "@/utils/helper";
 import { generateId } from "@/utils/commonTools";
 import initFancybox from "@/utils/initFancybox";
 import Aside from '@/components/Aside/index.vue';
-import ArticleGPT from '@/components/ArticleGPT.vue';
+import ArticleGPT from '@/components/Aside/Widgets/ArticleGPT.vue';
 
 const { page, theme, frontmatter } = useData();
 

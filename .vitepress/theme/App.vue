@@ -34,7 +34,7 @@ import { calculateScroll, specialDayGray } from "@/utils/helper";
 import { onMounted, onUnmounted, onBeforeUnmount } from 'vue';
 import { isSpecialBirthday } from "@/utils/birthdayUtils.mjs";
 import BirthdayEffects from "@/components/BirthdayEffects.vue";
-import Secret from "@/views/Secret.vue";
+import Secret from "@/components/Secret.vue";
 import Statistics from "@/views/Statistics.vue";
 
 const route = useRoute();
