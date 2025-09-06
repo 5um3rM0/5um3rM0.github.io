@@ -154,58 +154,66 @@ const formattedWordCount = computed(() => {
 });
 
 onMounted(() => {
-  const initBusuanzi = () => {
-    const pvElement = document.getElementById('busuanzi_value_site_pv');
-    const uvElement = document.getElementById('busuanzi_value_site_uv');
-    if (!pvElement || !uvElement) {
-      let retryTimes = 0;
-      const retryInterval = setInterval(() => {
-        if (retryTimes >= 10) {
-          clearInterval(retryInterval);
-          scriptLoadStatus.value = 'error';
-          return;
-        }
-        if (
-          document.getElementById('busuanzi_value_site_pv') &&
-          document.getElementById('busuanzi_value_site_uv')
-        ) {
-          clearInterval(retryInterval);
-          initBusuanzi();
-        }
-        retryTimes++;
-      }, 100);
-      return;
-    }
+  console.log('SiteData 组件挂载完成，开始初始化不蒜子'); // 调试日志1
 
-    const oldScript = document.querySelector('script[src*="busuanzi.ibruce.info"]');
-    if (oldScript) oldScript.remove();
+  // 1. 直接加载脚本（弱化DOM检查，先确保脚本发起请求）
+  const loadBusuanziScript = () => {
+    try {
+      // 清除旧脚本
+      const oldScript = document.querySelector('script[src*="busuanzi.ibruce.info"]');
+      if (oldScript) {
+        console.log('清除旧脚本:', oldScript); // 调试日志2
+        oldScript.remove();
+      }
 
-    const script = document.createElement('script');
-    script.src = `https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js?t=${Date.now()}`; // 加时间戳避免缓存
-    script.async = true;
+      // 创建新脚本
+      const script = document.createElement('script');
+      script.src = `https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js?t=${Date.now()}`;
+      script.async = true;
+      console.log('创建新脚本，准备加载:', script.src); // 调试日志3
 
-    script.onload = () => {
-      // 给脚本留500ms初始化时间
-      setTimeout(() => {
-        // 手动调用不蒜子的 fetch（获取数据）和 display（注入DOM）方法
-        if (window.busuanzi) {
-          window.busuanzi.fetch(); // 强制获取最新数据
-          window.busuanzi.display(); // 强制将数据注入DOM
-          scriptLoadStatus.value = 'success';
-        } else {
-          scriptLoadStatus.value = 'error';
-        }
-      }, 500);
-    };
+      // 脚本加载成功：尝试注入数据
+      script.onload = () => {
+        console.log('不蒜子脚本加载成功，开始初始化数据'); // 调试日志4
+        let checkTimes = 0;
+        const checkInterval = setInterval(() => {
+          // 检查是否获取到数据缓存
+          if (window.busuanzi?.cache) {
+            clearInterval(checkInterval);
+            scriptLoadStatus.value = 'success';
+            console.log('数据获取成功:', window.busuanzi.cache); // 调试日志5（关键：看是否有site_pv/site_uv）
+            // 手动更新DOM（兜底）
+            const pvEl = document.getElementById('busuanzi_value_site_pv');
+            const uvEl = document.getElementById('busuanzi_value_site_uv');
+            if (pvEl) pvEl.textContent = window.busuanzi.cache.site_pv;
+            if (uvEl) uvEl.textContent = window.busuanzi.cache.site_uv;
+          } else if (checkTimes >= 10) {
+            // 重试10次后失败
+            clearInterval(checkInterval);
+            scriptLoadStatus.value = 'error';
+            console.log('数据初始化失败：未找到 window.busuanzi.cache'); // 调试日志6
+          }
+          checkTimes++;
+        }, 300); // 每300ms检查一次数据
+      };
 
-    script.onerror = () => {
+      // 脚本加载失败（网络问题）
+      script.onerror = (err) => {
+        scriptLoadStatus.value = 'error';
+        console.error('不蒜子脚本加载失败:', err); // 调试日志7
+      };
+
+      // 添加到DOM，触发加载
+      document.head.appendChild(script);
+      console.log('脚本已添加到DOM，等待加载'); // 调试日志8
+    } catch (err) {
       scriptLoadStatus.value = 'error';
-    };
-
-    document.head.appendChild(script);
+      console.error('加载脚本过程中出现异常:', err); // 调试日志9
+    }
   };
 
-  initBusuanzi();
+  // 2. 延迟100ms启动（给DOM渲染留一点时间，避免元素完全不存在）
+  setTimeout(loadBusuanziScript, 100);
 });
 </script>
 
