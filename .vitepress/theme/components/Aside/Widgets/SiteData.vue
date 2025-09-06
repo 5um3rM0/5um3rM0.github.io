@@ -5,7 +5,7 @@
       <span class="title-name">站点数据</span>
     </div>
     <div class="all-data">
-      <!-- 文章总数 -->
+      <!-- 其他数据项（文章总数、建站天数等，这些是静态的，无需 ClientOnly） -->
       <div class="data-item">
         <span class="name">
           <i class="iconfont icon-article"></i>
@@ -13,8 +13,6 @@
         </span>
         <span class="num">{{ articleCount }} 篇</span>
       </div>
-
-      <!-- 建站天数 -->
       <div class="data-item">
         <span class="name">
           <i class="iconfont icon-date"></i>
@@ -22,8 +20,6 @@
         </span>
         <span class="num">{{ runningDays || '未知' }} 天</span>
       </div>
-
-      <!-- 最后更新 -->
       <div class="data-item">
         <span class="name">
           <i class="iconfont icon-time"></i>
@@ -31,8 +27,6 @@
         </span>
         <span class="num">{{ lastUpdatedText }}</span>
       </div>
-
-      <!-- 全站字数 -->
       <div class="data-item">
         <span class="name">
           <i class="iconfont icon-star"></i>
@@ -41,44 +35,59 @@
         <span class="num">{{ formattedWordCount }}</span>
       </div>
 
-      <!-- 总访问量 -->
-      <div class="data-item">
-        <span class="name">
-          <i class="iconfont icon-visibility"></i>
-          总访问量
-        </span>
-        <span class="num">
-          <template v-if="scriptLoadStatus === 'loading'">获取中...</template>
-          <template v-else-if="scriptLoadStatus === 'error'">获取失败</template>
-          <template v-else id="busuanzi_value_site_pv"></template>
-        </span>
-      </div>
+      <!-- 关键：用 ClientOnly 包裹访问量相关的动态内容 -->
+      <ClientOnly>
+        <template #fallback>
+          <!-- 服务器预渲染时显示的占位内容（避免空白） -->
+          <div class="data-item">
+            <span class="name"><i class="iconfont icon-visibility"></i>总访问量</span>
+            <span class="num">加载中...</span>
+          </div>
+          <div class="data-item">
+            <span class="name"><i class="iconfont icon-account"></i>总访客数</span>
+            <span class="num">加载中...</span>
+          </div>
+        </template>
 
-      <!-- 总访客数 -->
-      <div class="data-item">
-        <span class="name">
-          <i class="iconfont icon-account"></i>
-          总访客数
-        </span>
-        <span class="num">
-          <template v-if="scriptLoadStatus === 'loading'">获取中...</template>
-          <template v-else-if="scriptLoadStatus === 'error'">获取失败</template>
-          <template v-else id="busuanzi_value_site_uv"></template>
-        </span>
-      </div>
+        <!-- 客户端渲染的实际内容 -->
+        <div class="data-item">
+          <span class="name">
+            <i class="iconfont icon-visibility"></i>
+            总访问量
+          </span>
+          <span class="num">
+            <template v-if="scriptLoadStatus === 'loading'">获取中...</template>
+            <template v-else-if="scriptLoadStatus === 'error'">获取失败</template>
+            <template v-else>
+              <span id="busuanzi_value_site_pv">--</span>
+            </template>
+          </span>
+        </div>
+        <div class="data-item">
+          <span class="name">
+            <i class="iconfont icon-account"></i>
+            总访客数
+          </span>
+          <span class="num">
+            <template v-if="scriptLoadStatus === 'loading'">获取中...</template>
+            <template v-else-if="scriptLoadStatus === 'error'">获取失败</template>
+            <template v-else>
+              <span id="busuanzi_value_site_uv">--</span>
+            </template>
+          </span>
+        </div>
+      </ClientOnly>
     </div>
   </div>
 </template>
 
 <script setup>
 import { computed, onMounted, ref } from 'vue';
-import { useData } from 'vitepress';
-import { loadScript } from '@/utils/commonTools'; // 项目内工具：加载脚本
-import { daysFromNow } from '@/utils/helper'; // 项目内工具：计算天数差
+import { useData, ClientOnly } from 'vitepress'; // 导入 ClientOnly 组件
+import { daysFromNow } from '@/utils/helper';
 
-// 状态管理
-const scriptLoadStatus = ref('loading'); // 访问量脚本状态：loading/error/success
-const { theme } = useData(); // 获取VitePress主题配置（含postData）
+const scriptLoadStatus = ref('loading');
+const { theme } = useData();
 
 // 文章总数
 const articleCount = computed(() => {
@@ -154,66 +163,35 @@ const formattedWordCount = computed(() => {
 });
 
 onMounted(() => {
-  console.log('SiteData 组件挂载完成，开始初始化不蒜子'); // 调试日志1
+  // 现在日志应该能输出了（水合错误解决后，onMounted 正常执行）
+  console.log('[SiteData] 组件挂载完成，开始加载不蒜子');
 
-  // 1. 直接加载脚本（弱化DOM检查，先确保脚本发起请求）
-  const loadBusuanziScript = () => {
-    try {
-      // 清除旧脚本
-      const oldScript = document.querySelector('script[src*="busuanzi.ibruce.info"]');
-      if (oldScript) {
-        console.log('清除旧脚本:', oldScript); // 调试日志2
-        oldScript.remove();
-      }
+  // 不蒜子加载逻辑（使用之前的回调监听方式）
+  const script = document.createElement('script');
+  script.src = `https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js?t=${Date.now()}`;
+  script.async = true;
+  document.head.appendChild(script);
 
-      // 创建新脚本
-      const script = document.createElement('script');
-      script.src = `https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js?t=${Date.now()}`;
-      script.async = true;
-      console.log('创建新脚本，准备加载:', script.src); // 调试日志3
-
-      // 脚本加载成功：尝试注入数据
-      script.onload = () => {
-        console.log('不蒜子脚本加载成功，开始初始化数据'); // 调试日志4
-        let checkTimes = 0;
-        const checkInterval = setInterval(() => {
-          // 检查是否获取到数据缓存
-          if (window.busuanzi?.cache) {
-            clearInterval(checkInterval);
-            scriptLoadStatus.value = 'success';
-            console.log('数据获取成功:', window.busuanzi.cache); // 调试日志5（关键：看是否有site_pv/site_uv）
-            // 手动更新DOM（兜底）
-            const pvEl = document.getElementById('busuanzi_value_site_pv');
-            const uvEl = document.getElementById('busuanzi_value_site_uv');
-            if (pvEl) pvEl.textContent = window.busuanzi.cache.site_pv;
-            if (uvEl) uvEl.textContent = window.busuanzi.cache.site_uv;
-          } else if (checkTimes >= 10) {
-            // 重试10次后失败
-            clearInterval(checkInterval);
-            scriptLoadStatus.value = 'error';
-            console.log('数据初始化失败：未找到 window.busuanzi.cache'); // 调试日志6
-          }
-          checkTimes++;
-        }, 300); // 每300ms检查一次数据
-      };
-
-      // 脚本加载失败（网络问题）
-      script.onerror = (err) => {
-        scriptLoadStatus.value = 'error';
-        console.error('不蒜子脚本加载失败:', err); // 调试日志7
-      };
-
-      // 添加到DOM，触发加载
-      document.head.appendChild(script);
-      console.log('脚本已添加到DOM，等待加载'); // 调试日志8
-    } catch (err) {
+  // 监听不蒜子的 JSONP 回调
+  window.BusuanziCallback = function (data) {
+    console.log('[不蒜子] 数据回调:', data);
+    if (data?.site_pv !== undefined && data?.site_uv !== undefined) {
+      scriptLoadStatus.value = 'success';
+      // 手动更新 DOM
+      document.getElementById('busuanzi_value_site_pv').textContent = data.site_pv;
+      document.getElementById('busuanzi_value_site_uv').textContent = data.site_uv;
+    } else {
       scriptLoadStatus.value = 'error';
-      console.error('加载脚本过程中出现异常:', err); // 调试日志9
     }
   };
 
-  // 2. 延迟100ms启动（给DOM渲染留一点时间，避免元素完全不存在）
-  setTimeout(loadBusuanziScript, 100);
+  // 超时兜底
+  setTimeout(() => {
+    if (scriptLoadStatus.value === 'loading') {
+      scriptLoadStatus.value = 'error';
+      console.log('[不蒜子] 超时未加载');
+    }
+  }, 10000);
 });
 </script>
 
