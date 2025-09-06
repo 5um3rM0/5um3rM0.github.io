@@ -83,7 +83,7 @@
 
 <script setup>
 import { computed, onMounted, ref } from 'vue';
-import { useData, ClientOnly } from 'vitepress'; // 导入 ClientOnly 组件
+import { useData } from 'vitepress'; // 导入 ClientOnly 组件
 import { daysFromNow } from '@/utils/helper';
 
 const scriptLoadStatus = ref('loading');
