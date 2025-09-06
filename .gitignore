@@ -30,6 +30,7 @@ test.html
 
 # Project specific ignores - 项目特有忽略
 .npmrc
+TODO.md
 
 # Editor Configuration - 编辑器/IDE 配置
 .vscode/*
