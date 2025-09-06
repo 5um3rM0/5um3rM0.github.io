@@ -59,7 +59,7 @@ TODO.md
 # LICENSE
 # package.json
 # page.md
-# pnpm-lock.yaml  (非常重要，用于保证依赖版本一致性)
+# pnpm-lock.yaml
 # README.md
 # siteSettings.mjs
 # themeConfig.mjs

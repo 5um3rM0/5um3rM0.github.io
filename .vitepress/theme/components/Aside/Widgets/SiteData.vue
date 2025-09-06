@@ -155,26 +155,59 @@ const formattedWordCount = computed(() => {
 
 // 访问量脚本加载
 onMounted(() => {
-  // 超时处理
-  const timeoutId = setTimeout(() => {
-    if (scriptLoadStatus.value === 'loading') {
-      scriptLoadStatus.value = 'error';
-    }
-  }, 5000);
+  // 清除可能存在的旧脚本（避免缓存干扰）
+  const oldScript = document.querySelector('script[src*="busuanzi.ibruce.info"]');
+  if (oldScript) oldScript.remove();
 
-  // 加载不蒜子脚本
-  loadScript('https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js', {
-    async: true,
-  })
-    .then(() => {
-      clearTimeout(timeoutId); // 清除超时
-      // 验证脚本是否加载成功（检测window.busuanzi）
-      scriptLoadStatus.value = window.busuanzi ? 'success' : 'error';
-    })
-    .catch(() => {
-      clearTimeout(timeoutId); // 清除超时
+  // 加载脚本
+  const script = document.createElement('script');
+  script.src = 'https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js';
+  script.async = true;
+  document.head.appendChild(script);
+
+  // 延迟检测 + 重试机制
+  let checkTimes = 0; // 重试次数
+  const maxCheckTimes = 5; // 最大重试5次
+  const checkInterval = 500; // 每次间隔500ms
+
+  const checkBusuanzi = () => {
+    // 若已超过最大重试次数，标记为失败
+    if (checkTimes >= maxCheckTimes) {
       scriptLoadStatus.value = 'error';
-    });
+      return;
+    }
+
+    // 检查 window.busuanzi 是否存在（初始化完成）
+    if (window.busuanzi) {
+      scriptLoadStatus.value = 'success';
+      // 手动触发一次统计（确保数据更新）
+      if (window.busuanzi.fetch) window.busuanzi.fetch();
+    } else {
+      // 未初始化完成，继续重试
+      checkTimes++;
+      setTimeout(checkBusuanzi, checkInterval);
+    }
+  };
+
+  // 脚本加载完成后开始检测（给初始化留时间）
+  script.onload = () => {
+    setTimeout(checkBusuanzi, 300); // 先等300ms再开始检测
+  };
+
+  // 脚本加载失败（网络问题）
+  script.onerror = () => {
+    scriptLoadStatus.value = 'error';
+  };
+
+  // 超时兜底（总耗时 = 300ms + 5*500ms = 2800ms，避免无限等待）
+  setTimeout(
+    () => {
+      if (scriptLoadStatus.value === 'loading') {
+        scriptLoadStatus.value = 'error';
+      }
+    },
+    300 + maxCheckTimes * checkInterval
+  );
 });
 </script>
 
