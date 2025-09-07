@@ -27,7 +27,7 @@
         </div>
       </div>
       <h1 class="title">
-        {{ postMetaData.title || "未命名文章" }}
+        {{ postMetaData.title || '未命名文章' }}
       </h1>
       <div class="other-meta">
         <span class="meta date">
@@ -46,8 +46,6 @@
         <div class="expired s-card" v-if="postMetaData?.expired >= 180">
           本文发表于 <strong>{{ postMetaData?.expired }}</strong> 天前，注意时效性哦
         </div>
-        <!-- AI 摘要 -->
-        <ArticleGPT />
         <!-- 文章内容 -->
         <Content id="page-content" class="markdown-main-style" />
         <!-- 版权 -->
@@ -85,17 +83,16 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from "vue";
-import { useData } from "vitepress";
-import { formatTimestamp } from "@/utils/helper";
-import { generateId } from "@/utils/commonTools";
-import initFancybox from "@/utils/initFancybox";
+import { computed, onMounted } from 'vue';
+import { useData } from 'vitepress';
+import { formatTimestamp } from '@/utils/helper';
+import { generateId } from '@/utils/commonTools';
+import initFancybox from '@/utils/initFancybox';
 
-import ArticleGPT from "@/components/Aside/Widgets/ArticleGPT.vue";
-import Copyright from "@/components/Copyright.vue";
-import NextPost from "@/components/NextPost.vue";
-import RelatedPost from "@/components/RelatedPost.vue";
-import Aside from "@/components/Aside/index.vue";
+import Copyright from '@/components/Copyright.vue';
+import NextPost from '@/components/NextPost.vue';
+import RelatedPost from '@/components/RelatedPost.vue';
+import Aside from '@/components/Aside/index.vue';
 
 const { page, theme, frontmatter } = useData();
 
@@ -111,7 +108,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-@use "../style/post.scss";
+@use '../style/post.scss';
 
 .post {
   width: 100%;

@@ -49,7 +49,7 @@
             </a>
           </div>
         </div>
-        <h1 class="title">{{ postMetaData.title || "未命名文章" }}</h1>
+        <h1 class="title">{{ postMetaData.title || '未命名文章' }}</h1>
         <div class="other-meta">
           <span class="meta date">
             <i class="iconfont icon-date" />
@@ -63,13 +63,12 @@
       </div>
       <!-- 对于没有元数据的页面 (比如 /pages/ 下的页面)，也提供一个标题 -->
       <div v-else class="post-meta">
-        <h1 class="title">{{ frontmatter.title || "秘密档案" }}</h1>
+        <h1 class="title">{{ frontmatter.title || '秘密档案' }}</h1>
       </div>
 
       <!-- 渲染正文内容 -->
       <div class="post-content">
         <article class="post-article s-card">
-          <ArticleGPT v-if="frontmatter.articleGPT" />
           <Content id="page-content" class="markdown-main-style" />
           <!-- 秘密文章不显示版权、推荐和下一篇等社交组件 -->
         </article>
@@ -80,40 +79,39 @@
 </template>
 
 <script setup>
-import { computed, ref, onMounted } from "vue";
-import { useData } from "vitepress";
-import { formatTimestamp } from "@/utils/helper";
-import { generateId } from "@/utils/commonTools";
-import initFancybox from "@/utils/initFancybox";
-import Aside from "@/components/Aside/index.vue";
-import ArticleGPT from "@/components/Aside/Widgets/ArticleGPT.vue";
+import { computed, ref, onMounted } from 'vue';
+import { useData } from 'vitepress';
+import { formatTimestamp } from '@/utils/helper';
+import { generateId } from '@/utils/commonTools';
+import initFancybox from '@/utils/initFancybox';
+import Aside from '@/components/Aside/index.vue';
 
 const { page, theme, frontmatter } = useData();
 
 const isAuthenticated = ref(false);
-const passwordInput = ref("");
+const passwordInput = ref('');
 const passwordError = ref(false);
-const correctPassword = "ak_20250828";
+const correctPassword = 'ak_20250828';
 
 const checkPassword = () => {
   if (passwordInput.value === correctPassword) {
     isAuthenticated.value = true;
     passwordError.value = false;
-    sessionStorage.setItem("secret_auth_token", "granted");
+    sessionStorage.setItem('secret_auth_token', 'granted');
   } else {
     passwordError.value = true;
   }
 };
 
 const postMetaData = computed(() => {
-  const isPost = page.value.filePath.startsWith("posts/");
+  const isPost = page.value.filePath.startsWith('posts/');
   if (!isPost) return null;
   const postId = generateId(page.value.relativePath);
   return theme.value.postData.find((item) => item.id === postId);
 });
 
 onMounted(() => {
-  if (sessionStorage.getItem("secret_auth_token") === "granted") {
+  if (sessionStorage.getItem('secret_auth_token') === 'granted') {
     isAuthenticated.value = true;
   }
   initFancybox(theme.value);
@@ -121,7 +119,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-@use "../style/post.scss";
+@use '../style/post.scss';
 
 .post {
   width: 100%;
@@ -327,7 +325,7 @@ onMounted(() => {
     background-color: var(--main-warning-color);
     color: white;
     padding: 8px 16px;
-    font-family: "SimSun", "宋体", serif;
+    font-family: 'SimSun', '宋体', serif;
     font-weight: bold;
     text-align: left;
   }
